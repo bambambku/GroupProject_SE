@@ -15,7 +15,7 @@
             <div class="login-container-background-ins">
                 <div class="login-container">
                     <form>
-                        <input type="text" placeholder="Username" required>
+                        <input type="text" placeholder="Email Address" required>
                         <input type="password" placeholder="Password" required>
                         <input type="submit" value="Login">
                     </form>
