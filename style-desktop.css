@@ -111,6 +111,11 @@ body
     background-color: #59291E;
     display: flex;
     height: 20px;
+    /* margin-left: 50px; */
+}
+
+.sidebar-padding{
+  margin-left: 20px;
 }
 .sidebar {
     width: 250px;
@@ -121,6 +126,7 @@ body
     flex-direction: column;
     padding-top: 10px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
+    /* padding-left: 20px; */
   }
   .name-txt
   {
@@ -153,10 +159,12 @@ body
     padding-inline: 0;
   }
 
+
   .menu li {
     padding-top: 15px;
     padding-bottom: 15px;
-    width: 250px;
+    padding-left: 20px;
+    width: 230px;
     cursor: pointer;
     text-align: Left;
     background-color: #e3c0b4;
@@ -175,4 +183,8 @@ body
     color: #333;
     text-decoration: none;
     display: block;
+  }
+
+  .underlogo {
+    margin: 20px;
   }
