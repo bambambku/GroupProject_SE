@@ -17,6 +17,7 @@
                     <form>
                         <input type="text" placeholder="Email Address" required>
                         <input type="password" placeholder="Password" required>
+                        <a href="">Forgot Password?</a>
                         <input type="submit" value="Login">
                     </form>
                 </div>
