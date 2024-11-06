@@ -1,6 +1,6 @@
 <?php
-include ("dbconnect.php");
-include ("querry.php");
+include ("../Model/dbconnect.php");
+include ("../Model/query.php");
 
 $products = makeQuerry("SELECT ID, name, description, price, weight, size, CPU, GPU, RAM, hard_drive FROM Product", $conn);
 ?>

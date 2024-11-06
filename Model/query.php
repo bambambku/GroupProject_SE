@@ -1,13 +1,16 @@
 <?php
-include("db_connection.php");
-// $db = new SQLite3("C:\\xampp\\htdocs\\assessment\\database\\Enigma.db");
+include("dbconnect.php");
 
-function makeQuery ($sql, $db){
-// $db = new SQLITE3('GET YOUR DB FILE PATH HERE!');
-$stmt = $db->prepare($sql);
-$result = $stmt->execute();
-while ($row = $result->fetchArray()){ // use fetchArray(SQLITE3_NUM) - another approach
-    $arrayResult [] = $row; //adding a record until end of records
+function makeQuerry ($sql, $conn){
+    $arrayResult = [];
+    $result = $conn->query($sql);
+    if ($result){
+        while ($row = $result->fetch_assoc()) {
+            $arrayResult[] = $row; 
+        }
     }
-return $arrayResult;
+    else {
+        echo "Error: " . $conn->error;
+    }  
+    return $arrayResult; 
 }
