@@ -14,7 +14,7 @@
                 <div class="underlogo">
                     <h2 class="name-txt">John Doe</h2>
                     <p class="job-title-txt">Employee</p>
-        </div>
+                </div>
             <ul class="menu">
                 <li><a href="">New Sale</a></li>
                 <li><a href="">Stock</a></li>
