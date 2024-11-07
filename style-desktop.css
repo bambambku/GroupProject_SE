@@ -4,7 +4,6 @@ body
     padding: 0;
     outline: 0;
     font-family: sans-serif;
-    overflow: hidden;
  }
 /*Login Page START*/
  #background1
@@ -104,12 +103,13 @@ body
 #background2
 {
     background-color: #F2D683;
+    
 }
+/* NAV bar START */
 .decoration-bar
 {
     width: 250px;
     background-color: #59291E;
-    display: flex;
     height: 20px;
     /* margin-left: 50px; */
 }
@@ -118,14 +118,14 @@ body
   margin-left: 20px;
 }
 .sidebar {
+    position: fixed;
+    height: 100%;
     width: 250px;
-    height: 100vh;  /*100vh will be replaced */
-    background-color: #fff;
+    background-color: #FAF9F6;
     color: #333333;
     display: flex;
     flex-direction: column;
     padding-top: 10px;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
     /* padding-left: 20px; */
   }
   .name-txt
@@ -188,3 +188,47 @@ body
   .underlogo {
     margin: 20px;
   }
+
+  /*NAV bar END */
+
+  /* Footer START */
+  footer {
+    background-color: #FAF9F6; 
+    color: #333;
+    text-align: center;
+    padding: 10px 0;
+    position:fixed;
+    width: 100%;
+    bottom: 0;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer nav ul {
+    list-style: none;
+    padding: 0;
+    margin:1px 0 0;
+    display: flex;
+    gap: 30px;
+}
+
+footer nav ul li {
+    display: inline;
+}
+
+footer nav ul li a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer nav ul li a:hover {
+    color: #f0a500; 
+}
+
+  /* Footer END */
