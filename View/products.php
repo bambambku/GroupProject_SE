@@ -31,8 +31,8 @@ if (!empty($data)) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style-products-desktop.css">
-    <link rel="stylesheet" href="style-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../CSS/style-products-desktop.css">
+    <link rel="stylesheet" href="../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
     <title>Product View</title>
 </head>
 <body>
