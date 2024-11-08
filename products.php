@@ -92,9 +92,9 @@ if (!empty($data)) {
                 echo "<td>" . htmlspecialchars($row['RAM']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['hard_drive']) . "</td>";
                 echo "<td>";
-                echo "<button id='edit_" . htmlspecialchars($row['ID']) . "' onclick=\"window.location.href='edit.php?id=" . htmlspecialchars($row['ID']) . "'\">Edit</button> | ";
-                echo "<a href='details.php?id=" . htmlspecialchars($row['ID']) . "' id='details_" . htmlspecialchars($row['ID']) . "'>Details</a> | ";
-                echo "<a href='delete.php?id=" . htmlspecialchars($row['ID']) . "' id='delete_" . htmlspecialchars($row['ID']) . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</a>";
+                echo "<button id='editButton" . htmlspecialchars($row['ID']) . htmlspecialchars($row['ID']) . "'\">Edit</button> | ";
+                echo "<button id='details_" . htmlspecialchars($row['ID']) . "' id='details_" . htmlspecialchars($row['ID']) . "'>Details</button> | ";
+                echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "' id='deleteButton" . htmlspecialchars($row['ID']) . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</button>";
                 echo "</td>";
                 echo "</tr>";
             }
@@ -130,8 +130,8 @@ addBtn.onclick = async function() {
     const productGPU = document.getElementById("productGPU").value;
     const productRAM = document.getElementById("productRAM").value;
     const productHardDrive = document.getElementById("productHard-Drive").value;
-    console.log("Hello");
-    // Validation for fields
+    // Validation for fields, Don't allow null values etc
+
 
     // Send AJAX request to add the product
     const response = await fetch('products.php', {
@@ -149,28 +149,21 @@ addBtn.onclick = async function() {
             hard_drive: productHardDrive
         })
     });
-    const result = await response.text();
-    console.log("Server response:", result);
-    if (result.trim() === 'success') {
-        alert("Product added successfully");
-        window.location.reload();
-    } else {
-        alert("Error adding product: " + result);
-    }
+    window.location.reload();
 };
 
 
-
-
-
-
 // Edit Product
-const editLink = document.getElementById(`edit_${productId}`);
-editLink.onclick = function(){
-    console.log("Edit Clicked");
+var editBtn = document.getElementById("editButton");
+editBtn.onclick = function() {
+    console.log("Edit Pressed");
 }
 
 // Delete Product
+var deleteBtn = document.getElementById("deleteButton");
+deleteBtn.onclick = function() {
+    console.log("Delete Pressed");
+}
 
 
 </script>
