@@ -31,7 +31,7 @@ if (isset($_SESSION["user_role"])){
 </head>
 <body id="background1">
         <div class="logo-container">
-            <img src="../Pictures\logo.png.png" alt="Logo" class="logo-pic">
+            <img src="../Pictures\logo.png" alt="Logo" class="logo-pic">
         </div>
         <div class="login-container-background-out">
             <div class="login-container-background-ins">

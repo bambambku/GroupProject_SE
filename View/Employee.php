@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
     <title>Employee</title>
 </head>
 <body id="background2">
         <div class="decoration-bar"></div>
         <div class="sidebar">
             <div class="menu-picture-container">
-                <img src="Pictures/logo.png" alt="logo" class="menu-picture">
+                <img src="../Pictures/logo.png" alt="logo" class="menu-picture">
                 <div class="underlogo">
                     <h2 class="name-txt">John Doe</h2>
                     <p class="job-title-txt">Employee</p>
