@@ -1,8 +1,31 @@
+<!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -ADD NEW PRODUCT-->
 <?php
 include ("dbconnect.php");
-include ("querry.php");
+include ("query.php");
 
-$products = makeQuerry("SELECT ID, name, description, price, weight, size, CPU, GPU, RAM, hard_drive FROM Product", $conn);
+$products = makeQuery("SELECT ID, name, description, price, weight, size, CPU, GPU, RAM, hard_drive FROM Product", $conn);
+
+$data = json_decode(file_get_contents("php://input"), true);
+if (!empty($data)) {
+    // Get data values
+    $name = $data['name'];
+    $description = $data['description'];
+    $price = $data['price'];
+    $weight = $data['weight'];
+    $size = $data['size'];
+    $CPU = $data['CPU'];
+    $GPU = $data['GPU'];
+    $RAM = $data['RAM'];
+    $hard_drive = $data['hard_drive'];
+    $insertQuery = "INSERT INTO Product (name, description, price, weight, size, CPU, GPU, RAM, hard_drive)
+                    VALUES ('$name', '$description', '$price', '$weight', '$size', '$CPU', '$GPU', '$RAM', '$hard_drive')";
+
+    if (makeQuery($insertQuery, $conn)) {
+        echo "success";
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
 ?>
 
 <html lang="en">
@@ -10,7 +33,6 @@ $products = makeQuerry("SELECT ID, name, description, price, weight, size, CPU, 
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style-products-desktop.css">
     <link rel="stylesheet" href="style-desktop.css" media="screen and (min-width: 1025px)">
-    
     <title>Product View</title>
 </head>
 <body>
@@ -36,16 +58,11 @@ $products = makeQuerry("SELECT ID, name, description, price, weight, size, CPU, 
             <input type="text" id="productRAM" name="productRAM"><br>
             <label for="Hard-Drive">Hard-Drive:</label><br>
             <input type="text" id="productHard-Drive" name="productHard-Drive"><br>
-            <button id="close">Close</button>
-            <button id="save">Save</button>
+            <button type="button" id="closeButton">Close</button>
+            <button type="button" id="addButton">Add</button>
         </form>
         
     </div>
-    <?php  
-    // Insert new product
-    // $insertQuery = "INSERT INTO Product (name, description, price, weight, size, CPU, GPU, RAM, hard_drive) VALUES ('$name', '$description', '$price', '$weight', '$size', '$cpu', '$gpu', '$ram', '$hard_drive')";
-    // makeQuerry($insertQuery, $conn);
-    ?>
     <table>
         <tr>
             <th>ID</th>
@@ -75,9 +92,9 @@ $products = makeQuerry("SELECT ID, name, description, price, weight, size, CPU, 
                 echo "<td>" . htmlspecialchars($row['RAM']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['hard_drive']) . "</td>";
                 echo "<td>";
-                echo "<a href='edit.php?id=" . htmlspecialchars($row['ID']) . "'>Edit</a> | ";
-                echo "<a href='details.php?id=" . htmlspecialchars($row['ID']) . "'>Details</a> | ";
-                echo "<a href='delete.php?id=" . htmlspecialchars($row['ID']) . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</a>";
+                echo "<button id='edit_" . htmlspecialchars($row['ID']) . "' onclick=\"window.location.href='edit.php?id=" . htmlspecialchars($row['ID']) . "'\">Edit</button> | ";
+                echo "<a href='details.php?id=" . htmlspecialchars($row['ID']) . "' id='details_" . htmlspecialchars($row['ID']) . "'>Details</a> | ";
+                echo "<a href='delete.php?id=" . htmlspecialchars($row['ID']) . "' id='delete_" . htmlspecialchars($row['ID']) . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }
@@ -87,31 +104,75 @@ $products = makeQuerry("SELECT ID, name, description, price, weight, size, CPU, 
         ?>
     </table>
 <script>
-// Get the modal
 var modal = document.getElementById("modalWindowProducts");
-
-// Get the button that opens the modal
-var btn = document.getElementById("modalButtonProducts");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
+var openBtn = document.getElementById("modalButtonProducts");
+// Open Modal
+openBtn.onclick = function() {
+    modal.style.display = "flex";
 }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+// Close Modal
+var closeBtn = document.getElementById("closeButton");
+closeBtn.onclick = function() {
   modal.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
+// Add Product
+var addBtn = document.getElementById("addButton");
+
+addBtn.onclick = async function() {
+    const productName = document.getElementById("productName").value;
+    const productDescription = document.getElementById("productDescription").value;
+    const productPrice = document.getElementById("productPrice").value;
+    const productWeight = document.getElementById("productWeight").value;
+    const productSize = document.getElementById("productSize").value;
+    const productCPU = document.getElementById("productCPU").value;
+    const productGPU = document.getElementById("productGPU").value;
+    const productRAM = document.getElementById("productRAM").value;
+    const productHardDrive = document.getElementById("productHard-Drive").value;
+    console.log("Hello");
+    // Validation for fields
+
+    // Send AJAX request to add the product
+    const response = await fetch('products.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: productName,
+            description: productDescription,
+            price: productPrice,
+            weight: productWeight,
+            size: productSize,
+            CPU: productCPU,
+            GPU: productGPU,
+            RAM: productRAM,
+            hard_drive: productHardDrive
+        })
+    });
+    const result = await response.text();
+    console.log("Server response:", result);
+    if (result.trim() === 'success') {
+        alert("Product added successfully");
+        window.location.reload();
+    } else {
+        alert("Error adding product: " + result);
+    }
+};
+
+
+
+
+
+
+// Edit Product
+const editLink = document.getElementById(`edit_${productId}`);
+editLink.onclick = function(){
+    console.log("Edit Clicked");
 }
+
+// Delete Product
+
+
 </script>
 </body>
 </html>
