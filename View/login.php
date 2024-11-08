@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if (isset($_SESSION["user_role"])){
-  header("Location: s_home.php");
+  header("Location: ../s_home.php");
 }
 ?>
 
@@ -9,7 +9,7 @@ if (isset($_SESSION["user_role"])){
 <html lang="en">
 <head>
   <title>HMS :: Login</title>
-  <?php include('includes/header.php'); ?>
+  <?php include('../includes/header.php'); ?>
   <style>
     form {
       position: relative;
@@ -31,7 +31,7 @@ if (isset($_SESSION["user_role"])){
 </head>
 <body id="background1">
         <div class="logo-container">
-            <img src="Pictures\logo.png.png" alt="Logo" class="logo-pic">
+            <img src="../Pictures\logo.png.png" alt="Logo" class="logo-pic">
         </div>
         <div class="login-container-background-out">
             <div class="login-container-background-ins">
@@ -40,7 +40,7 @@ if (isset($_SESSION["user_role"])){
                   if (isset($_POST["login"])){
                     $email_address = $_POST["email"];
                     $password = $_POST["password"];
-                    require_once "includes/config.php";
+                    require_once "../includes/config.php";
                     $sql = "SELECT * FROM users WHERE email = '$email_address'";
                     $email_result= mysqli_query($conn, $sql);
                     $user = mysqli_fetch_array($email_result, MYSQLI_ASSOC);
@@ -55,13 +55,13 @@ if (isset($_SESSION["user_role"])){
                       $_SESSION['user_id']=$user['user_id'];
             
                       if ($user['role']=='Admin'){
-                        header("Location: admin/a_home.php");
+                        header("Location: ../admin/a_home.php");
                       } elseif ($user['role']=='Staff'){
-                        header("Location: staff_member/s_home.php");
+                        header("Location: ../staff_member/s_home.php");
                       } elseif ($user['role']=='Manager'){
-                        header("Location: manager/m_home.php");
+                        header("Location: ../manager/m_home.php");
                       } elseif ($user['role']=='Stock Manager'){
-                        header("Location: stock_manager/sm_home.php");
+                        header("Location: ../stock_manager/sm_home.php");
                       } else {
                         echo $user['role'];
                       }
