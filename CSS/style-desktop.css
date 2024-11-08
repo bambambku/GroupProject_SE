@@ -2,18 +2,17 @@ body
 {
     margin: 0;
     padding: 0;
+    outline: 0;
     font-family: sans-serif;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
  }
-
+/*Login Page START*/
  #background1
  {
     background-color: #1A4A5A;
-
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
  }
 
 .logo-container
@@ -57,7 +56,7 @@ body
 {
     padding: 50px 33%;
     height: 100%;
-    text-align: center;
+    text-align: left;
 }
 .login-container input[type="text"],
 .login-container input[type="password"] 
@@ -86,3 +85,150 @@ body
 {
     background-color: #127e7e;     
 }
+
+.frgt-passwrd
+{
+    margin-bottom: 10px;
+    color: #333333;
+    text-decoration: none;
+}
+.frgt-passwrd:hover
+{
+    color: #7B008D;
+}
+
+/*Login Page END*/
+
+/* Employee Page START */
+#background2
+{
+    background-color: #F2D683;
+    
+}
+/* NAV bar START */
+.decoration-bar
+{
+    width: 250px;
+    background-color: #59291E;
+    height: 20px;
+    /* margin-left: 50px; */
+}
+
+.sidebar-padding{
+  margin-left: 20px;
+}
+.sidebar {
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    background-color: #FAF9F6;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    /* padding-left: 20px; */
+  }
+  .name-txt
+  {
+    margin-block: 0; /* Got rid of the default style here */
+  }
+
+  .menu-picture 
+  {
+    margin-left: 75px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; 
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
+
+  }
+ .menu-picture-container
+ {
+    margin-bottom: 50%;
+ }
+
+ .job-title-txt
+ {
+    margin-block-start: 0;
+    margin-block-end: 0; /* Got rid of the default style here */
+ }
+
+  .menu {
+    list-style: none;
+    width: 80%;
+    padding-inline: 0;
+  }
+
+
+  .menu li {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    width: 230px;
+    cursor: pointer;
+    text-align: Left;
+    background-color: #e3c0b4;
+    
+    margin-block-start: 0.5em;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
+
+  }
+
+  .menu li:hover {
+    background-color: #B86141;
+    transition: 0.8s;
+  }
+
+  .menu a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+  }
+
+  .underlogo {
+    margin: 20px;
+  }
+
+  /*NAV bar END */
+
+  /* Footer START */
+  footer {
+    background-color: #FAF9F6; 
+    color: #333;
+    text-align: center;
+    padding: 10px 0;
+    position:fixed;
+    width: 100%;
+    bottom: 0;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer nav ul {
+    list-style: none;
+    padding: 0;
+    margin:1px 0 0;
+    display: flex;
+    gap: 30px;
+}
+
+footer nav ul li {
+    display: inline;
+}
+
+footer nav ul li a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer nav ul li a:hover {
+    color: #f0a500; 
+}
+
+  /* Footer END */
