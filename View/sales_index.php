@@ -2,7 +2,7 @@
 include("../Model/query.php");
 include("../Model/db_connection.php");
 
-$products = makeQuerry("SELECT * FROM Customers", $db);
+$products = makeQuery("SELECT * FROM Customers", $db);
 
 include('index.php');
 
