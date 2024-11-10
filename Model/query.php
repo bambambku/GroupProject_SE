@@ -1,7 +1,7 @@
 <?php
 include("dbconnect.php");
 
-function makeQuerry ($sql, $conn){
+function makeQuery ($sql, $conn){
     $arrayResult = [];
     $result = $conn->query($sql);
     if ($result){

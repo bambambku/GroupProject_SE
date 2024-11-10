@@ -59,7 +59,7 @@ body
     height: 100%;
     text-align: center;
 }
-.login-container input[type="text"],
+.login-container input[type="email"],
 .login-container input[type="password"] 
 {
     width: 100%;
@@ -86,3 +86,27 @@ body
 {
     background-color: #127e7e;     
 }
+
+.error_message{
+    margin-top: -20px;
+    color: red;
+    font-family: Arial, sans-serif;
+}
+
+form {
+    position: relative;
+  }
+  
+  .forgot-password {
+    position: absolute;
+    right: 0;
+    bottom: -25px; /* Adjusts the vertical positioning of the link */
+    font-size: 14px;
+    text-decoration: none;
+    color: #007bff; /* Blue color for the link */
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  
