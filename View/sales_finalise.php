@@ -3,16 +3,21 @@ include("../Model/query.php");
 include("../Model/dbconnect.php");
 include("../Model/sales_basket.php");
 
-if (isset($_GET['add'])) {
-    addToBasket($_GET['add']);
-} elseif (isset($_GET['remove'])) {
-    removeFromBasket($_GET['remove']);
-}
 
 $basket = $_SESSION['basket'];
 $currentBranch = 1;
 
+if (!empty($basket)) {
+    foreach ($basket as $item) {
+        $productId = $item['ID'];
+        $quantityPurchased = $item['quantity'];
+        $stmt = $conn->prepare("UPDATE stock SET quantity = quantity - ? WHERE product = ? AND branch = ?");
+        $stmt->bind_param("iii", $quantityPurchased, $productId, $currentBranch);
+        $stmt->execute();
+        $stmt->close();
+    }}
 ?>
+
 
 <div class="sales-tables-basket">
     <h2>Basket</h2>
@@ -28,9 +33,6 @@ $currentBranch = 1;
                 <td><?php echo $product['name']?></td>
                 <td><?php echo $product['quantity']?></td>
                 <td><?php echo $product['price']?></td>
-                <td>
-                    <a href="sales_index.php?remove=<?php echo $product['ID']; ?>">Remove</a>
-                </td>
             </tr>
         <?php } ?>
     </table>
@@ -53,4 +55,7 @@ $currentBranch = 1;
 </div> -->
 
 
-<?php include("../Model/modalStyleAndScript.php"); ?>
+<?php
+include("../Model/modalStyleAndScript.php"); 
+unset($_SESSION['basket']);
+?>
