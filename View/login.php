@@ -8,7 +8,7 @@ if (isset($_SESSION["user_role"])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>HMS :: Login</title>
+  <title>IMS :: Login</title>
   <?php include('../includes/header.php'); ?>
   <style>
     form {
