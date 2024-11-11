@@ -36,7 +36,9 @@ if (!empty($data)) {
     <title>Product View</title>
 </head>
 <body>
-    <h1>Products:</h1>
+<?php include '../Controller/navbar.php'; ?>
+<main class="main-container">
+<h1>Products:</h1>
     <button id="modalButtonProducts">Create New</button>
     <div id="modalWindowProducts" class="modal">
         <form>
@@ -103,6 +105,8 @@ if (!empty($data)) {
         }
         ?>
     </table>
+</main>
+   
 <script>
 var modal = document.getElementById("modalWindowProducts");
 var openBtn = document.getElementById("modalButtonProducts");
@@ -164,8 +168,7 @@ var deleteBtn = document.getElementById("deleteButton");
 deleteBtn.onclick = function() {
     console.log("Delete Pressed");
 }
-
-
 </script>
+<?php include '../Controller/footer.php'; ?>
 </body>
 </html>
