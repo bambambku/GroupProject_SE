@@ -36,7 +36,9 @@ if (!empty($data)) {
     <title>Product View</title>
 </head>
 <body>
-    <h1>Products:</h1>
+<?php include '../Controller/navbar.php'; ?>
+<main class="main-container">
+<h1>Products:</h1>
     <button id="modalButtonProducts">Create New</button>
     <div id="modalWindowProducts" class="modal">
         <form>
