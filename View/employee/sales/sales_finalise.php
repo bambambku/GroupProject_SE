@@ -1,7 +1,7 @@
 <?php
-include("../Model/query.php");
-include("../Model/dbconnect.php");
-include("../Model/sales_basket.php");
+include("../../../Model/query.php");
+include("../../../Model/dbconnect.php");
+include("sales_basket.php");
 
 
 $basket = $_SESSION['basket'];
@@ -56,6 +56,6 @@ if (!empty($basket)) {
 
 
 <?php
-include("../Model/modalStyleAndScript.php"); 
+include("modalStyleAndScript.php"); 
 unset($_SESSION['basket']);
 ?>
