@@ -11,9 +11,6 @@ closeBtn.onclick = function() {
   modal.style.display = "none";
 }
 
-// Edit Button Modal
-
-
 // Add Product
 var addBtn = document.getElementById("addButton");
 
@@ -50,6 +47,7 @@ addBtn.onclick = async function() {
 
 // Delete Product
 var deleteButtons = document.querySelectorAll("[id^='deleteButton']");
+
 deleteButtons.forEach(button => {
     button.onclick = function(){
         if (confirm(`Are you sure you want to delete this product?`)){
