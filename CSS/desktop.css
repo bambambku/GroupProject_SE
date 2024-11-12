@@ -100,10 +100,10 @@ form {
   .forgot-password {
     position: absolute;
     right: 0;
-    bottom: -25px; /* Adjusts the vertical positioning of the link */
+    bottom: -25px; 
     font-size: 14px;
     text-decoration: none;
-    color: #007bff; /* Blue color for the link */
+    color: #007bff; 
   }
   
   .forgot-password:hover {

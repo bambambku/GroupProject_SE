@@ -5,6 +5,10 @@ body
     outline: 0;
     font-family: sans-serif;
  }
+ .main-container /* This Will be the default setting for all the "Main". Wont go behing NAV bar. */
+ {
+  margin-left: 250px; 
+ }
 /*Login Page START*/
  #background1
  {
@@ -232,3 +236,22 @@ footer nav ul li a:hover {
 }
 
   /* Footer END */
+
+/* Basic Table CSS START */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 20px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; 
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Basic Table CSS END */
+

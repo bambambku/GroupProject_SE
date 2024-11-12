@@ -1,16 +1,16 @@
 <?php 
 session_start();
 if (isset($_SESSION["user_role"])){
-  header("Location: ../s_home.php");
+  header("Location: ../stockManager/test.php");
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>HMS :: Login</title>
-  <?php include('../includes/header.php'); ?>
-  <style>
+  <title>IMS :: Login</title>
+  <?php include('../../includes/header.php'); ?>
+  <!-- <style>
     form {
       position: relative;
     }
@@ -27,11 +27,11 @@ if (isset($_SESSION["user_role"])){
     .forgot-password:hover {
       text-decoration: underline;
     }
-  </style>
+  </style> -->
 </head>
 <body id="background1">
         <div class="logo-container">
-            <img src="../Pictures\logo.png" alt="Logo" class="logo-pic">
+            <img src="../../Pictures\logo.png" alt="Logo" class="logo-pic">
         </div>
         <div class="login-container-background-out">
             <div class="login-container-background-ins">
@@ -40,7 +40,7 @@ if (isset($_SESSION["user_role"])){
                   if (isset($_POST["login"])){
                     $email_address = $_POST["email"];
                     $password = $_POST["password"];
-                    require_once "../includes/config.php";
+                    require_once "../../includes/config.php";
                     $sql = "SELECT * FROM users WHERE email = '$email_address'";
                     $email_result= mysqli_query($conn, $sql);
                     $user = mysqli_fetch_array($email_result, MYSQLI_ASSOC);
@@ -54,6 +54,7 @@ if (isset($_SESSION["user_role"])){
                       $_SESSION['email_address']=$user['email'];
                       $_SESSION['user_id']=$user['user_id'];
             
+                      // Change this to actual pages when they are created.
                       if ($user['role']=='Admin'){
                         header("Location: ../admin/a_home.php");
                       } elseif ($user['role']=='Staff'){
