@@ -2,6 +2,8 @@
 include("../../../Model/query.php");
 include("../../../Model/dbconnect.php");
 include("sales_basket.php");
+include("../../../includes/header.php");
+include("../../../includes/navbar.php");
 
 if (isset($_GET['add'])) {
     addToBasket($_GET['add']);
@@ -111,6 +113,9 @@ $products = $stmt->get_result();
     </div>
 </div>
 
-<?php include("modalStyleAndScript.php"); ?>
+<?php 
+include("modalStyleAndScript.php"); 
+include("../../../includes/footer.php");
+?>
 
     
