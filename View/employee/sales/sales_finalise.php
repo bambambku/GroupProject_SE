@@ -1,7 +1,7 @@
 <?php
 include("../../../Model/query.php");
 include("../../../Model/dbconnect.php");
-include("../../../Model/sales_basket.php");
+include("sales_basket.php");
 
 
 $basket = $_SESSION['basket'];
