@@ -2,6 +2,8 @@
 include("../../../Model/query.php");
 include("../../../Model/dbconnect.php");
 include("sales_basket.php");
+include("../../../includes/header.php");
+include("../../../includes/navbar.php");
 
 
 $basket = $_SESSION['basket'];
@@ -58,4 +60,6 @@ if (!empty($basket)) {
 <?php
 include("modalStyleAndScript.php"); 
 unset($_SESSION['basket']);
+
+include("../../../includes/navbar.php");
 ?>
