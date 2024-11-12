@@ -1,4 +1,4 @@
-// Modal
+// Add Button Modal
 var modal = document.getElementById("modalWindowProducts");
 var openBtn = document.getElementById("modalButtonProducts");
 
@@ -10,6 +10,9 @@ var closeBtn = document.getElementById("closeButton");
 closeBtn.onclick = function() {
   modal.style.display = "none";
 }
+
+// Edit Button Modal
+
 
 // Add Product
 var addBtn = document.getElementById("addButton");
@@ -63,7 +66,6 @@ deleteButtons.forEach(button => {
         .then(response => response.json())
         .then(data =>{
             if (!data.failure) {
-                console.log("Product deleted successfully:", productId);
                 window.location.reload();  
             } else {
                 console.error("Failed to delete product:", data.message);
@@ -73,6 +75,14 @@ deleteButtons.forEach(button => {
 });
 
 // Edit Products
-var editBtn = document.getElementById("editButton");
+var editButtons = document.getElementById("[id^='editButton']");
+editButtons.forEach(button => {
+    button.onclick = function(){
+        const productId = this.id.replace("editButton", "");
+        
+    
+    }
+
+})
 
 // Product Details
