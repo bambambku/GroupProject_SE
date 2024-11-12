@@ -1,7 +1,7 @@
 <?php
-include("../Model/query.php");
-include("../Model/dbconnect.php");
-include("../Model/sales_basket.php");
+include("../../../Model/query.php");
+include("../../../Model/dbconnect.php");
+include("sales_basket.php");
 
 if (isset($_GET['add'])) {
     addToBasket($_GET['add']);
@@ -111,6 +111,6 @@ $products = $stmt->get_result();
     </div>
 </div>
 
-<?php include("../Model/modalStyleAndScript.php"); ?>
+<?php include("modalStyleAndScript.php"); ?>
 
     
