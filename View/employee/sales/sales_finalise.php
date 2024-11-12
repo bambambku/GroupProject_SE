@@ -61,5 +61,5 @@ if (!empty($basket)) {
 include("modalStyleAndScript.php"); 
 unset($_SESSION['basket']);
 
-include("../../../includes/navbar.php");
+include("../../../includes/footer.php");
 ?>
