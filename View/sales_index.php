@@ -7,6 +7,8 @@ if (isset($_GET['add'])) {
     addToBasket($_GET['add']);
 } elseif (isset($_GET['remove'])) {
     removeFromBasket($_GET['remove']);
+} elseif (isset($_GET['clear'])) {
+    $_SESSION['basket'] = [];
 }
 
 $basket = $_SESSION['basket'];
@@ -70,6 +72,7 @@ $products = $stmt->get_result();
 
         <div class="sales-tables-basket">
             <h2>Basket</h2>
+            <a href="sales_index.php?clear"><button type="button">Clear</button></a>
             <table>
                 <tr>
                     <th>Product Name</th>
