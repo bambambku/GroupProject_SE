@@ -1,3 +1,7 @@
+<?php
+define("ROOT", __DIR__ ."/");
+var_dump(ROOT);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
