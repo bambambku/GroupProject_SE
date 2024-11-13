@@ -4,7 +4,6 @@ body
     padding: 0;
     outline: 0;
     font-family: sans-serif;
-    background-color: black;
  }
  .main-container /* This Will be the default setting for all the "Main". Wont go behing NAV bar. */
  {
@@ -255,4 +254,20 @@ th {
 }
 
 /* Basic Table CSS END */
+
+
+
+
+/* Michael's CSS */
+.sales-tables {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 90%;
+  margin: auto;
+  gap: 20px;
+}
+
+.sales-tables-stock, .sales-tables-basket {
+  width: 50%;
+}
 

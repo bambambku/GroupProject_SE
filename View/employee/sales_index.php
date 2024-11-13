@@ -1,9 +1,9 @@
 <?php
-include("../../../Model/query.php");
-include("../../../Model/dbconnect.php");
+include("../../Model/query.php");
+include("../../Model/dbconnect.php");
 include("sales_basket.php");
-include("../../../includes/header.php");
-include("../../../includes/navbar.php");
+include("../../includes/header.php");
+include("../../includes/navbar.php");
 
 if (isset($_GET['add'])) {
     addToBasket($_GET['add']);
@@ -39,18 +39,30 @@ $stmt->execute();
 $products = $stmt->get_result();
 
 ?>
-
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../CSS/test.css" media="screen and (min-width: 1025px)">
+    <title>Employee</title>
+</head>
+<body> -->
+<main class="main-container">
 <div class="sales-tables">
     <div class="sales-tables-stock">
-        <h2>Stock</h2>
-        <div class="form">
-        <form action="" method="post">
-            <label for="search">Search</label><br>
-            <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($searchTerm ? $_POST['search'] : ''); ?>">
-            <input type="submit" value="Search" name="salesSearch">
-            <a href="sales_index.php">Clear</a>         
-        </form>
-        
+        <div class="sales-title">
+            <h2>Stock</h2>
+            <h2>Stock</h2>
+            <div class="form">
+                <form action="" method="post">
+                    <label for="search">Search</label><br>
+                    <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($searchTerm ? $_POST['search'] : ''); ?>">
+                    <input type="submit" value="Search" name="salesSearch">
+                    <a href="sales_index.php">Clear</a>         
+                </form>
+            </div>
+        </div>
         <table>
             <tr>
                 <th>Product Name</th>
@@ -70,12 +82,14 @@ $products = $stmt->get_result();
 
                 <?php }?>
         </table>
-        </div>
+    </div>
 
-        <div class="sales-tables-basket">
+    <div class="sales-tables-basket">
+        <div class="sales-title">
             <h2>Basket</h2>
             <a href="sales_index.php?clear"><button type="button">Clear</button></a>
-            <table>
+        </div>
+        <table>
                 <tr>
                     <th>Product Name</th>
                     <th>Quantity</th>
@@ -92,12 +106,9 @@ $products = $stmt->get_result();
                         </td>
                     </tr>
                 <?php } ?>
-            </table>
-            <div>
+        </table>
                 <h3>Total: <?php echo array_sum(array_column($basket, 'price')) ?></h3>
-            </div>
             <button type="button" onclick="openModal('finaliseSaleModal')">Finalise Sale</button>
-        </div>
     </div>
 </div>
 
@@ -115,7 +126,7 @@ $products = $stmt->get_result();
 
 <?php 
 include("modalStyleAndScript.php"); 
-include("../../../includes/footer.php");
+include("../../includes/footer.php");
 ?>
 
     
