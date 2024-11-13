@@ -158,16 +158,4 @@ th {
 
 
 
-/* Michael's CSS */
-.sales-tables {
-  display: flex;
-  flex-wrap: nowrap;
-  width: 90%;
-  margin: auto;
-  gap: 20px;
-}
-
-.sales-tables-stock, .sales-tables-basket {
-  width: 50%;
-}
 
