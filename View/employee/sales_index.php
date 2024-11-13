@@ -3,6 +3,13 @@ include("../../Model/query.php");
 include("../../Model/dbconnect.php");
 include("sales_basket.php");
 include("../../includes/header.php");
+?>
+
+<link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
+</header>
+<body id="employee-background">
+
+<?php
 include("../../includes/navbar.php");
 
 if (isset($_GET['add'])) {
@@ -123,7 +130,7 @@ $products = $stmt->get_result();
         
     </div>
 </div>
-
+</main>
 <?php 
 include("modalStyleAndScript.php"); 
 include("../../includes/footer.php");
