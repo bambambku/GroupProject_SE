@@ -27,7 +27,7 @@ addBtn.onclick = async function() {
     // Validation for fields, Don't allow null values etc
 
     // AJAX request to add the product
-    const response = await fetch('../Model/add_product.php', {
+    const response = await fetch('../../Model/add_product.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -54,7 +54,7 @@ deleteButtons.forEach(button => {
             const productId = this.id.replace("deleteButton", "");
 
         // AJAX request to delete product
-        fetch('../Model/delete_product.php',{
+        fetch('../../Model/delete_product.php',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -72,15 +72,99 @@ deleteButtons.forEach(button => {
     }
 });
 
-// Edit Products
-var editButtons = document.getElementById("[id^='editButton']");
-editButtons.forEach(button => {
-    button.onclick = function(){
-        const productId = this.id.replace("editButton", "");
-        
-    
-    }
+// Edit Button Modal
+// Opens modal and fills fields, WHERE ID = productId
+var editButtons = document.querySelectorAll("[id^='editButton']");
 
+editButtons.forEach(button => {
+    button.onclick = async function(){
+        
+        const productId = this.id.replace("editButton", "");
+
+        const response = await fetch('../../Model/get_product.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productID: productId })
+        });
+        const product = await response.json();
+
+        document.getElementById("editProductId").value = productId;
+        document.getElementById("editProductName").value = product.name;
+        document.getElementById("editProductDescription").value = product.description;
+        document.getElementById("editProductPrice").value = product.price;
+        document.getElementById("editProductWeight").value = product.weight;
+        document.getElementById("editProductSize").value = product.size;
+        document.getElementById("editProductCPU").value = product.CPU;
+        document.getElementById("editProductGPU").value = product.GPU;
+        document.getElementById("editProductRAM").value = product.RAM;
+        document.getElementById("editProductHardDrive").value = product.hard_drive;
+        
+        document.getElementById("modalWindowProductsEdit").style.display = "flex";
+    }
 })
 
+var closeButtonEdit = document.getElementById("closeButtonEdit")
+
+closeButtonEdit.onclick = function() {
+    document.getElementById("modalWindowProductsEdit").style.display = "none";
+}
+
+// Save button within Edit Modal
+var saveEditButton = document.getElementById("saveEditButton");
+
+saveEditButton.onclick = async function(){
+    const productId = document.getElementById("editProductId").value;
+    const productName = document.getElementById("editProductName").value;
+    const productDescription = document.getElementById("editProductDescription").value;
+    const productPrice = document.getElementById("editProductPrice").value;
+    const productWeight = document.getElementById("editProductWeight").value;
+    const productSize = document.getElementById("editProductSize").value;
+    const productCPU = document.getElementById("editProductCPU").value;
+    const productGPU = document.getElementById("editProductGPU").value;
+    const productRAM = document.getElementById("editProductRAM").value;
+    const productHardDrive = document.getElementById("editProductHardDrive").value;
+
+    const response = await fetch('../../Model/update_product.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            productID: productId,
+            name: productName,
+            description: productDescription,
+            price: productPrice,
+            weight: productWeight,
+            size: productSize,
+            CPU: productCPU,
+            GPU: productGPU,
+            RAM: productRAM,
+            hard_drive: productHardDrive 
+        })
+    });
+    const result = await response.json();
+    if (result.success) {
+        window.location.reload();
+    } else {
+        console.error("Failed to update product:", result.message);
+    }
+}
+
 // Product Details
+
+var detailsButton = document.getElementById("detailsButton");
+
+detailsButton.onclick = async function(){
+
+}
+
+// Search Button
+
+var searchButton = document.getElementById("searchButton");
+var searchInput = document.getElementById("searchInput");
+// If valid input, ,repopulate table ,Bring relevant rows to the top of table.
+
+searchButton.onclick = async function(){
+    if (searchInput){
+
+    }
+}
+
