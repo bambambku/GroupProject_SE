@@ -1,7 +1,7 @@
 <!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -->
 <?php
-include ("../Model/dbconnect.php");
-include ("../Model/query.php");
+include ("../../Model/dbconnect.php");
+include ("../../Model/query.php");
 
 
 $products = makeQuery("SELECT ID, name, description, price, weight, size, CPU, GPU, RAM, hard_drive FROM Product", $conn);
@@ -31,12 +31,13 @@ if (!empty($data)) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../CSS/style-products-desktop.css">
-    <link rel="stylesheet" href="../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../../CSS/style-products-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../../CSS/stock-manager.css" media="screen and (min-width: 1025px)">
     <title>Product View</title>
 </head>
 <body>
-<?php include '../Controller/navbar.php'; ?>
+<?php include '../../includes/navbar.php'; ?>
 <main class="main-container">
 <h1>Products:</h1>
     <button id="modalButtonProducts">Create New</button>
@@ -105,6 +106,9 @@ if (!empty($data)) {
         ?>
     </table>
     <script src="../js/productActions.js"></script>
+    </main>
+    
+<?php include '../../includes/footer.php'; ?>
 </body>
 </html>
 
