@@ -31,8 +31,9 @@ if (!empty($data)) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../CSS/style-products-desktop.css">
+    <link rel="stylesheet" href="../../CSS/style-products-desktop.css" media="screen and (min-width: 1025px)">
     <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../../CSS/stock-manager.css" media="screen and (min-width: 1025px)">
     <title>Product View</title>
 </head>
 <body>
@@ -131,7 +132,14 @@ if (!empty($data)) {
         }
         ?>
     </table>
+<<<<<<< HEAD
     <script src="../../js/productActions.js"></script>
+=======
+    <script src="../js/productActions.js"></script>
+    </main>
+    
+<?php include '../../includes/footer.php'; ?>
+>>>>>>> development
 </body>
 </html>
 
