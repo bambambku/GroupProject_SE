@@ -1,7 +1,7 @@
-<!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -Details button -->
+<!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -->
 <?php
-include ("../../Model/dbconnect.php");
-include ("../../Model/query.php");
+include ("../Model/dbconnect.php");
+include ("../Model/query.php");
 
 
 $products = makeQuery("SELECT ID, name, description, price, weight, size, CPU, GPU, RAM, hard_drive FROM Product", $conn);
@@ -31,18 +31,13 @@ if (!empty($data)) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../CSS/style-products-desktop.css" media="screen and (min-width: 1025px)">
-    <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
-    <link rel="stylesheet" href="../../CSS/stock-manager.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../CSS/style-products-desktop.css">
+    <link rel="stylesheet" href="../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
     <title>Product View</title>
 </head>
 <body>
-<?php include '../../includes/navbar.php'; ?>
-<main class="main-container">
-<h1>Products:</h1>
+    <h1>Products:</h1>
     <button id="modalButtonProducts">Create New</button>
-    <button id="searchButton">Search</button>
-    <input type="text" id="searchInput"><br>
     <div id="modalWindowProducts" class="modal">
         <form>
             <label for="Name">Product name:</label><br>
@@ -65,32 +60,7 @@ if (!empty($data)) {
             <input type="text" id="productHard-Drive" name="productHard-Drive"><br>
             <button type="button" id="closeButton">Close</button>
             <button type="button" id="addButton">Add</button>
-        </form>
-    </div>
-        <div id="modalWindowProductsEdit" class="modal">
-        <form>
-            <input type="hidden" id="editProductId">
-            <label for="Name">Product name:</label><br>
-            <input type="text" id="editProductName" name="productName"><br>
-            <label for="Description">Description:</label><br>
-            <input type="text" id="editProductDescription" name="productDescription"><br>
-            <label for="Price">Price:</label><br>
-            <input type="text" id="editProductPrice" name="productPrice"><br>
-            <label for="Weight">Weight:</label><br>
-            <input type="text" id="editProductWeight" name="productWeight"><br>
-            <label for="Size">Size:</label><br>
-            <input type="text" id="editProductSize" name="productSize"><br>
-            <label for="CPU">CPU:</label><br>
-            <input type="text" id="editProductCPU" name="productCPU"><br>
-            <label for="GPU">GPU:</label><br>
-            <input type="text" id="editProductGPU" name="productGPU"><br>
-            <label for="RAM">RAM:</label><br>
-            <input type="text" id="editProductRAM" name="productRAM"><br>
-            <label for="Hard-Drive">Hard-Drive:</label><br>
-            <input type="text" id="editProductHardDrive" name="productHard-Drive"><br>
-            <button type="button" id="closeButtonEdit">Close</button>
-            <button type="button" id="saveEditButton">Save</button>
-        </form>      
+        </form>       
     </div>
     <table>
         <tr>
@@ -121,9 +91,9 @@ if (!empty($data)) {
                 echo "<td>" . htmlspecialchars($row['RAM']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['hard_drive']) . "</td>";
                 echo "<td>";
-                echo "<button id='editButton" . htmlspecialchars($row['ID']) . "'>Edit</button> | ";
-                echo "<button id='detailsButton" . htmlspecialchars($row['ID']) . "'>Details</button> | ";
-                echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "''>Delete</button>";
+                echo "<button id='editButton" . htmlspecialchars($row['ID']) . htmlspecialchars($row['ID']) . "'\">Edit</button> | ";
+                echo "<button id='details_" . htmlspecialchars($row['ID']) . "' id='details_" . htmlspecialchars($row['ID']) . "'>Details</button> | ";
+                echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "' id='deleteButton" . htmlspecialchars($row['ID']) . "''>Delete</button>";
                 echo "</td>";
                 echo "</tr>";
             }
@@ -132,14 +102,7 @@ if (!empty($data)) {
         }
         ?>
     </table>
-<<<<<<< HEAD
-    <script src="../../js/productActions.js"></script>
-=======
     <script src="../js/productActions.js"></script>
-    </main>
-    
-<?php include '../../includes/footer.php'; ?>
->>>>>>> development
 </body>
 </html>
 
