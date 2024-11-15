@@ -12,8 +12,16 @@ include ("../../Model/dbconnect.php");
 
     <title>Employee</title>
 </head>
+
 <body id="employee-background">
 <?php include '../../includes/navbar.php'; ?>
-<?php include '../../includes/footer.php'; ?>
+<main class="main-container">
+        <div class="general-content-out">
+                <div class="general-content-bttn-area"></div>
+                <div class="general-content-in"></div>
+        </div>
+        </main>
+        <?php include '../../includes/footer.php'; ?>
 </body>
+
 </html>
