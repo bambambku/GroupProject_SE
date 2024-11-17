@@ -11,6 +11,7 @@ include("../../includes/header.php");
 
 <?php
 include("../../includes/navbar.php");
+echo "SALES INDEX";
 
 if (isset($_GET['add'])) {
     addToBasket($_GET['add']);

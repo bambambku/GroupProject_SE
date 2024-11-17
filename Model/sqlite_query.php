@@ -1,6 +1,6 @@
 <?php
 
-include("sqliteconnect.php");
+include("dbconnect.php");
 
 function makeQuerry ($sql, $db){
 $stmt = $db->prepare($sql);
