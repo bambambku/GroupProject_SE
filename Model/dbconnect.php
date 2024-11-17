@@ -17,6 +17,8 @@ if ($conn->connect_error) {
 <!-- <?php
 
 // HOSTED DATABASE CONNECTION (NOT IN USE YET!)
+// https://dash.infinityfree.com/accounts/if0_37729593/databases
+// password: Canabana333
 
 $servername = "sql202.infinityfree.com";
 $username = "if0_37729593";
