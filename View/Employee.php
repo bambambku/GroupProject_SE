@@ -1,3 +1,10 @@
+<?php 
+session_start();
+if ($_SESSION["user_role"]!=2){
+  header("Location: ../View/logout.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +25,7 @@
                 <ul class="menu">
                     <li><a href="">New Sale</a></li>
                     <li><a href="">Stock</a></li>
-                    <li class="bttn-logout"><a href="">Logout</a></li>
+                    <li class="bttn-logout"><a href="logout.php">Logout</a></li>
                 </ul>
              </div>
         </div>   

@@ -1,4 +1,9 @@
-
+<?php
+session_start();
+if (isset($_SESSION["user_role"])) {
+    header("Location: logout.php");
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +19,6 @@
             <div class="login-container-background-ins">
                 <div class="login-container">
                 <?php
-                session_start();
-                if (isset($_SESSION["user_role"])) {
-                    header("Location: ../s_home.php");
-                }
-
                 if (isset($_POST["login"])) {
                     $email_address = $_POST["email"];
                     $password = $_POST["password"];
