@@ -53,8 +53,8 @@
                                     // You'd either have to accept it's redundant or change it.
                                     if ($user['role_id'] == 1) {
                                         header("Location: ../admin/a_home.php");
-                                    } elseif ($user['role_id'] == 'Staff') {
-                                        header("Location: ../staff_member/s_home.php");
+                                    } elseif ($user['role_id'] == 2) {
+                                        header("Location: Employee.php");
                                     } elseif ($user['role_id'] == 'Manager') {
                                         header("Location: ../manager/m_home.php");
                                     } elseif ($user['role_id'] == 'Stock Manager') {
