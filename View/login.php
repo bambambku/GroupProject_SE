@@ -1,9 +1,4 @@
-<?php 
-session_start();
-if (isset($_SESSION["user_role"])){
-  header("Location: ../s_home.php");
-}
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,44 +13,71 @@ if (isset($_SESSION["user_role"])){
         <div class="login-container-background-out">
             <div class="login-container-background-ins">
                 <div class="login-container">
-                <?php 
-                  if (isset($_POST["login"])){
+                <?php
+                session_start();
+                if (isset($_SESSION["user_role"])) {
+                    header("Location: ../s_home.php");
+                }
+
+                if (isset($_POST["login"])) {
                     $email_address = $_POST["email"];
                     $password = $_POST["password"];
-                    require_once "../includes/config.php";
-                    $sql = "SELECT * FROM users WHERE email = '$email_address'";
-                    $email_result= mysqli_query($conn, $sql);
-                    $user = mysqli_fetch_array($email_result, MYSQLI_ASSOC);
-                    if($user){
-                      if($password == $user["password"]){
-                      session_start();
+                
+                    require_once "../includes/dbconnect.php";
+                
+                    // Debugging: Check if connection is working
+                    if (!$myPDO) {
+                        die("Database connection failed: " . implode(":", $myPDO->errorInfo()));
+                    }
+                  
+                    // Test with a simpler query
+                    try {
+                        $sql = "SELECT * FROM Staff WHERE email = :email";  // Adjust column name if needed
+                        $stmt = $myPDO->prepare($sql);
+                        $stmt->bindParam(':email', $email_address, PDO::PARAM_STR);
+                        $stmt->execute();
 
-                      $_SESSION['user_role']=$user['role'];
-                      $_SESSION['user_firstName']= $user['fname'];
-                      $_SESSION['user_surname']=$user['sname'];
-                      $_SESSION['email_address']=$user['email'];
-                      $_SESSION['user_id']=$user['user_id'];
-            
-                      if ($user['role']=='Admin'){
-                        header("Location: ../admin/a_home.php");
-                      } elseif ($user['role']=='Staff'){
-                        header("Location: ../staff_member/s_home.php");
-                      } elseif ($user['role']=='Manager'){
-                        header("Location: ../manager/m_home.php");
-                      } elseif ($user['role']=='Stock Manager'){
-                        header("Location: ../stock_manager/sm_home.php");
-                      } else {
-                        echo $user['role'];
-                      }
-                      die();
-                      } else{
-                        echo "<p class='error_message'>Invalid Email or Password</p>";
-                      }
-                      } else{
-                        echo "<p class='error_message'>Invalid Email or Password</p>";
-                      }
-                  }
+                        // Checking if the statement prepared properly / isn't empty
+                        if ($stmt) {
+                            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                            if ($user) {
+                                if ($password == $user["password"]) {
+                                    $_SESSION['user_role'] = $user['role_id'];
+                                    $_SESSION['user_firstName'] = $user['f_name'];
+                                    $_SESSION['user_surname'] = $user['l_name'];
+                                    $_SESSION['email_address'] = $user['email'];
+                                    $_SESSION['user_id'] = $user['staff_id'];
+
+                                    // In this section here: it makes more sense to have user
+                                    // role stored as the actual role title rather than a number.
+                                    // You'd either have to accept it's redundant or change it.
+                                    if ($user['role_id'] == 1) {
+                                        header("Location: ../admin/a_home.php");
+                                    } elseif ($user['role_id'] == 'Staff') {
+                                        header("Location: ../staff_member/s_home.php");
+                                    } elseif ($user['role_id'] == 'Manager') {
+                                        header("Location: ../manager/m_home.php");
+                                    } elseif ($user['role_id'] == 'Stock Manager') {
+                                        header("Location: ../stock_manager/sm_home.php");
+                                    } else {
+                                        echo $user['role_id'];
+                                    }
+                                    die();
+                                } else {
+                                    echo "<p class='error_message'>Invalid Email or Password</p>";
+                                }
+                            } else {
+                                echo "<p class='error_message'>Invalid Email or Password</p>";
+                            }
+                        } else {
+                            echo "Error with the SQL query: " . implode(":", $myPDO->errorInfo());
+                        }
+                    } catch (PDOException $e) {
+                        echo "PDO Error: " . $e->getMessage();
+                    }
+                }
                 ?>
+
                 <form action="login.php" method="post">
                   <input type="email" name="email" placeholder="Email Address" required>
                   <input type="password" name="password" placeholder="Password" required>

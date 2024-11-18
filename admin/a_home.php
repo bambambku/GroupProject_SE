@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if ($_SESSION["user_role"]!='Admin'){
+if ($_SESSION["user_role"]!=1){
   header("Location: ../View/logout.php");
 }
 ?>
