@@ -8,26 +8,8 @@ if (isset($_SESSION["user_role"])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>HMS :: Login</title>
+  <title>Terra Core :: Login</title>
   <?php include('../includes/header.php'); ?>
-  <style>
-    form {
-      position: relative;
-    }
-
-    .forgot-password {
-      position: absolute;
-      right: 0;
-      bottom: -25px; /* Adjust as needed */
-      font-size: 14px;
-      text-decoration: none;
-      color: #007bff;
-    }
-
-    .forgot-password:hover {
-      text-decoration: underline;
-    }
-  </style>
 </head>
 <body id="background1">
         <div class="logo-container">

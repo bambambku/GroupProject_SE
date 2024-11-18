@@ -6,7 +6,7 @@
   <script defer src="../js/script.js"></script>
   
   <?php 
-    require "../includes/config.php";
+    require "../includes/dbconnect.php";
   ?>
 
 </head>
