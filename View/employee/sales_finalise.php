@@ -3,7 +3,10 @@ include("../../Model/query.php");
 include("../../Model/dbconnect.php");
 include("sales_basket.php");
 include("../../includes/header.php");
-include("../../includes/navbar.php");
+
+if (!isset($_SESSION['basket'])) {
+    header("Location: sales_index.php");
+}
 
 
 $basket = $_SESSION['basket'];
@@ -21,7 +24,7 @@ if (!empty($basket)) {
 ?>
 
 
-<div class="sales-tables-basket">
+<!-- <div class="sales-tables-basket">
     <h2>Basket</h2>
     <table>
         <tr>
@@ -43,7 +46,7 @@ if (!empty($basket)) {
     </div>
     <a href="sales_index.php"><button type="button">Start New Sale</button></a>
     <button type="button" >Produce an invoice</button>
-</div>
+</div> -->
 
 <!-- <div id="successfulSaleModal" class="modal" style="display: none;">
     <div class="modal-content">

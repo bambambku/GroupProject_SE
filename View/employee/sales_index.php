@@ -125,7 +125,7 @@ $products = $stmt->get_result();
         <h2>Finalise Sale</h2>
         <p>Are you sure you want to finalise this sale?</p>
         
-            <a href="sales_finalise.php"><button >Confirm</button></a>
+            <a href="sales_chooseCustomer.php"><button >Confirm</button></a>
             <button type="button" onclick="closeModal('finaliseSaleModal')">Cancel</button>
         
     </div>
