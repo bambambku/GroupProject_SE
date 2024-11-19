@@ -1,6 +1,6 @@
 <!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -ADD NEW PRODUCT-->
 <?php
-include ("../Model/dbconnect.php");
+require_once "../includes/dbconnect.php";
 include ("../Model/query.php");
 
 $products = makeQuery("SELECT ID, name, description, price, weight, size, CPU, GPU, RAM, hard_drive FROM Product", $conn);
