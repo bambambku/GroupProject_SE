@@ -7,7 +7,7 @@
             <?php 
             
             $sql2 = "SELECT name FROM Role WHERE ID = :id";
-            $stmt2 = $myPDO->prepare($sql2);  // Use $sql2 here
+            $stmt2 = $myPDO->prepare($sql2);  
             $stmt2->bindParam(':id', $_SESSION['user_role'], PDO::PARAM_INT);
             $stmt2->execute();
             $user_role = $stmt2->fetch(PDO::FETCH_ASSOC);
