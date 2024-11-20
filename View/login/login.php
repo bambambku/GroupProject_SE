@@ -95,3 +95,27 @@ if (isset($_SESSION["user_role"])) {
         </div>
 </body>
 </html>
+
+
+<!-- 
+
+######## Login info - {Delete when submitting} ########
+{This is just for everyone who is testing their pages}
+
+__________________________________________________________________
+| Email                     | Password | Role          | Role ID |
+==================================================================
+| lhattersley@terracore.com |   1234   | Employee      |    1    |
+------------------------------------------------------------------
+| cstarling@terracore.com   |   1234   | Stock Manager |    2    |
+------------------------------------------------------------------
+| mobrycki@terracore.com    |   1234   | Manager       |    3    |
+------------------------------------------------------------------
+| skovacs@terracore.com     |   1234   | Director      |    4    |
+------------------------------------------------------------------
+| jfrancois@terracore.com   |   1234   | Admin         |    5    |
+------------------------------------------------------------------
+
+
+
+-->
