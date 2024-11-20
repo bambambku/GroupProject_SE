@@ -1,4 +1,4 @@
-<!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -->
+<!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -Details button -->
 <?php
 include ("../../Model/dbconnect.php");
 include ("../../Model/query.php");
@@ -114,6 +114,7 @@ if (!empty($data)) {
     <script src="../js/productActions.js"></script>
     </main>
 <?php include '../../includes/footer.php'; ?>
+>>>>>>> development
 </body>
 </html>
 
