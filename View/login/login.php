@@ -9,7 +9,7 @@ if (isset($_SESSION["user_role"])) {
 <html lang="en">
 <head>
   <title>Terra Core :: Login</title>
-  <?php include('../includes/header.php'); ?>
+  <?php include('../../includes/header.php'); ?>
 </head>
 <body id="background1">
         <div class="logo-container">
@@ -23,7 +23,7 @@ if (isset($_SESSION["user_role"])) {
                     $email_address = $_POST["email"];
                     $password = $_POST["password"];
                 
-                    require_once "../includes/dbconnect.php";
+                    require_once "../../includes/dbconnect.php";
                 
                     // Debugging: Check if connection is working
                     if (!$myPDO) {
@@ -37,11 +37,15 @@ if (isset($_SESSION["user_role"])) {
                         $stmt->bindParam(':email', $email_address, PDO::PARAM_STR);
                         $stmt->execute();
 
+
+
                         // Checking if the statement prepared properly / isn't empty
                         if ($stmt) {
                             $user = $stmt->fetch(PDO::FETCH_ASSOC);
                             if ($user) {
                                 if ($password == $user["password"]) {
+
+                                  
                                     $_SESSION['user_role'] = $user['role_id'];
                                     $_SESSION['user_firstName'] = $user['f_name'];
                                     $_SESSION['user_surname'] = $user['l_name'];
@@ -52,9 +56,9 @@ if (isset($_SESSION["user_role"])) {
                                     // role stored as the actual role title rather than a number.
                                     // You'd either have to accept it's redundant or change it.
                                     if ($user['role_id'] == 1) {
-                                        header("Location: ../admin/a_home.php");
+                                        header("Location: ../employee/Employee.php"); // change this to correct path
                                     } elseif ($user['role_id'] == 2) {
-                                        header("Location: Employee.php");
+                                        header("Location: ../employee/Employee.php");
                                     } elseif ($user['role_id'] == 'Manager') {
                                         header("Location: ../manager/m_home.php");
                                     } elseif ($user['role_id'] == 'Stock Manager') {
