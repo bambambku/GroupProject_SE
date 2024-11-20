@@ -5,106 +5,10 @@ body
     outline: 0;
     font-family: sans-serif;
  }
-/*Login Page START*/
- #background1
+ .main-container /* This Will be the default setting for all the "Main". Wont go behing NAV bar. */
  {
-    background-color: #1A4A5A;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    display: flex;
+  margin-left: 250px; 
  }
-
-.logo-container
-{
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-.logo-pic
-{
-    border-radius: 50%;
-    height: 200px;
-    width: 200px;
-}
-
-.login-container-background-out
-{
-    margin-top: 0;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 50vh;              
-    background-color: #fff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-    align-items: center;
-}
-
-.login-container-background-ins
-{
-    width: 100%;
-    height: 80%;
-    background-color: #ECD2AD;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.login-container
-{
-    padding: 50px 33%;
-    height: 100%;
-    text-align: left;
-}
-.login-container input[type="text"],
-.login-container input[type="password"] 
-{
-    width: 100%;
-    padding: 10px; 
-    margin-bottom: 15px; 
-    border: 1px solid #fff; 
-    border-radius: 4px; 
-    box-sizing: border-box; 
-}
-
-.login-container input[type="submit"] 
-{
-    width: 100%; 
-    padding: 10px; 
-    background-color: #148D8D; 
-    color: #fff; 
-    border: none; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    font-size: 16px; 
-}
-
-.login-container input[type="submit"]:hover 
-{
-    background-color: #127e7e;     
-}
-
-.frgt-passwrd
-{
-    margin-bottom: 10px;
-    color: #333333;
-    text-decoration: none;
-}
-.frgt-passwrd:hover
-{
-    color: #7B008D;
-}
-
-/*Login Page END*/
-
-/* Employee Page START */
-#background2
-{
-    background-color: #F2D683;
-    
-}
 /* NAV bar START */
 .decoration-bar
 {
@@ -194,10 +98,10 @@ body
   /* Footer START */
   footer {
     background-color: #FAF9F6; 
+    position: fixed;
     color: #333;
     text-align: center;
     padding: 10px 0;
-    position:fixed;
     width: 100%;
     bottom: 0;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
@@ -232,3 +136,51 @@ footer nav ul li a:hover {
 }
 
   /* Footer END */
+
+/* Basic Table CSS START */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 20px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; 
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Basic Table CSS END */
+
+/* General Conten Area START(Apply as needed)*/
+
+.general-content-out 
+{
+  margin: 100px 20px; 
+  max-height: fit-content;
+}
+
+.general-content-bttn-area 
+{
+  margin-bottom: 5px; 
+  padding: 30px; 
+  justify-content: flex-start;
+  display: flex; 
+  flex-direction: row; 
+}
+
+
+.general-content-in {
+  padding: 30px 5px 30px 30px;
+}
+
+
+
+/* General Conten Area END*/
+
+
+
+

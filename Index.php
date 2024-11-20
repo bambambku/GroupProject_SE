@@ -1,9 +1,16 @@
+<?php
+define("ROOT", __DIR__ ."/");
+var_dump(ROOT);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/style-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="CSS/login.css" media="screen and (min-width: 1025px)">
+
+    <link rel="icon" type="image/png" href="Pictures\TabLogo.png">
     <title>Index</title>
 </head>
 <body id="background1">
