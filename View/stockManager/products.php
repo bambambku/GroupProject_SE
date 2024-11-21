@@ -20,6 +20,7 @@ $stmt->execute();
     <link rel="stylesheet" href="../../CSS/stock-manager.css" media="screen and (min-width: 1025px)">
     <link rel="stylesheet" href="..\..\CSS\stockManager.css">
     <title>Product View</title>
+    <script defer src="tableDropSort.js"></script>
 </head>
 <body id="stock-manager-background">
 <?php include '../../includes/navbar.php'; ?>
@@ -54,9 +55,17 @@ $stmt->execute();
                 <button type="button" id="addButton">Add</button>
             </form>       
         </div>
-        <table>
+        <label for="sortDropdown">Sort by:</label>
+        <select id="sortDropdown">
+            <option selected="selected" value="none">-- SELECT --</option>
+            <option value="price">Price</option>
+            <option value="ram">RAM</option>
+            <option value="hard_drive">Hard Drive</option>
+            <option value="size">Size</option>
+            <option value="weight">Weight</option>
+        </select>
+        <table id="laptopTable">
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price (£)</th>
@@ -74,10 +83,9 @@ $stmt->execute();
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>";
-                echo "<td>" . $row['ID'] . "</td>";
                 echo "<td>" . $row['name'] . "</td>";
                 echo "<td>" . $row['description'] . "</td>";
-                echo "<td>£" . $row['price'] . "</td>";
+                echo "<td>" . $row['price'] . "</td>";
                 echo "<td>" . $row['weight'] . "</td>";
                 echo "<td>" . $row['size'] . "</td>";
                 echo "<td>" . $row['CPU'] . "</td>";
