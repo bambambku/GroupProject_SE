@@ -59,12 +59,12 @@ $stmt->execute();
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Price</th>
-                <th>Weight</th>
-                <th>Size</th>
+                <th>Price (£)</th>
+                <th>Weight (Kg)</th>
+                <th>Size (In)</th>
                 <th>CPU</th>
                 <th>GPU</th>
-                <th>RAM</th>
+                <th>RAM (GB)</th>
                 <th>Hard Drive</th>
                 <th>Actions</th>
             </tr>
@@ -77,7 +77,7 @@ $stmt->execute();
                 echo "<td>" . $row['ID'] . "</td>";
                 echo "<td>" . $row['name'] . "</td>";
                 echo "<td>" . $row['description'] . "</td>";
-                echo "<td>" . $row['price'] . "</td>";
+                echo "<td>£" . $row['price'] . "</td>";
                 echo "<td>" . $row['weight'] . "</td>";
                 echo "<td>" . $row['size'] . "</td>";
                 echo "<td>" . $row['CPU'] . "</td>";
