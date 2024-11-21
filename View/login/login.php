@@ -10,6 +10,7 @@ if (isset($_SESSION["user_role"])) {
 <head>
   <title>Terra Core :: Login</title>
   <?php include('../../includes/header.php'); ?>
+  <link rel="stylesheet" href="..\..\CSS\login.css">
 </head>
 <body id="background1">
         <div class="logo-container">
@@ -58,7 +59,7 @@ if (isset($_SESSION["user_role"])) {
                                     if ($user['role_id'] == 1) {
                                         header("Location: ../employee/Employee.php"); // change this to correct path
                                     } elseif ($user['role_id'] == 2) {
-                                        header("Location: ../employee/Employee.php");
+                                        header("Location: ../stockManager/products.php");
                                     } elseif ($user['role_id'] == 'Manager') {
                                         header("Location: ../manager/m_home.php");
                                     } elseif ($user['role_id'] == 'Stock Manager') {

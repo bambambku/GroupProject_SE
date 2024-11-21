@@ -1,31 +1,15 @@
 <!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -->
 <?php
-include ("../../Model/dbconnect.php");
-include ("../../Model/query.php");
+include ("../../includes/dbconnect.php");
+include ("../../query.php");
+session_start();
+
+$sql = "SELECT * FROM Product";
+$stmt = $myPDO->prepare($sql);
+$stmt->execute();
 
 
-$products = makeQuery("SELECT ID, name, description, price, weight, size, CPU, GPU, RAM, hard_drive FROM Product", $conn);
 
-$data = json_decode(file_get_contents("php://input"), true);
-if (!empty($data)) {
-    $name = $data['name'];
-    $description = $data['description'];
-    $price = $data['price'];
-    $weight = $data['weight'];
-    $size = $data['size'];
-    $CPU = $data['CPU'];
-    $GPU = $data['GPU'];
-    $RAM = $data['RAM'];
-    $hard_drive = $data['hard_drive'];
-    $insertQuery = "INSERT INTO Product (name, description, price, weight, size, CPU, GPU, RAM, hard_drive)
-                    VALUES ('$name', '$description', '$price', '$weight', '$size', '$CPU', '$GPU', '$RAM', '$hard_drive')";
-
-    if (makeQuery($insertQuery, $conn)) {
-        echo "success";
-    } else {
-        echo "Error: " . $conn->error;
-    }
-}
 ?>
 
 <html lang="en">
@@ -34,9 +18,10 @@ if (!empty($data)) {
     <link rel="stylesheet" href="../../CSS/style-products-desktop.css" media="screen and (min-width: 1025px)">
     <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
     <link rel="stylesheet" href="../../CSS/stock-manager.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="..\..\CSS\stockManager.css">
     <title>Product View</title>
 </head>
-<body>
+<body id="stock-manager-background">
 <?php include '../../includes/navbar.php'; ?>
 <main class="main-container">
 <h1>Products:</h1>
@@ -84,30 +69,30 @@ if (!empty($data)) {
                 <th>Actions</th>
             </tr>
             <?php
-            if (!empty($products)) {
-                foreach ($products as $row) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['ID']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['description']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['price']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['weight']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['size']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['CPU']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['GPU']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['RAM']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['hard_drive']) . "</td>";
-                    echo "<td>";
-                    echo "<button id='editButton" . htmlspecialchars($row['ID']) . htmlspecialchars($row['ID']) . "'\">Edit</button> | ";
-                    echo "<button id='details_" . htmlspecialchars($row['ID']) . "' id='details_" . htmlspecialchars($row['ID']) . "'>Details</button> | ";
-                    echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "' id='deleteButton" . htmlspecialchars($row['ID']) . "''>Delete</button>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='11'>No products found</td></tr>";
+            
+           
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr>";
+                echo "<td>" . $row['ID'] . "</td>";
+                echo "<td>" . $row['name'] . "</td>";
+                echo "<td>" . $row['description'] . "</td>";
+                echo "<td>" . $row['price'] . "</td>";
+                echo "<td>" . $row['weight'] . "</td>";
+                echo "<td>" . $row['size'] . "</td>";
+                echo "<td>" . $row['CPU'] . "</td>";
+                echo "<td>" . $row['GPU'] . "</td>";
+                echo "<td>" . $row['RAM'] . "</td>";
+                echo "<td>" . $row['hard_drive'] . "</td>";
+                echo "<td>";
+                echo "<button id='editButton" . htmlspecialchars($row['ID']) . htmlspecialchars($row['ID']) . "'\">Edit</button> | ";
+                echo "<button id='details_" . htmlspecialchars($row['ID']) . "' id='details_" . htmlspecialchars($row['ID']) . "'>Details</button> | ";
+                echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "' id='deleteButton" . htmlspecialchars($row['ID']) . "''>Delete</button>";
+                echo "</td>";
+                echo "</tr>";
             }
             ?>
+            
         </table>
     </div>            
 </div>

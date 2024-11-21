@@ -1,8 +1,6 @@
 
 
-<head>
-  <link rel="stylesheet" href="..\..\CSS\login.css">
-</head>
+
 
 <!-- Loads js for the login form after the page has loaded -->
 <script defer src="../js/script.js"></script>

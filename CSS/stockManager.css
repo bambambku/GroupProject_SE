@@ -3,9 +3,16 @@
     background-color: #B9B099;
 }
 
+td {
+    background-color: lightgray;
+}
+.special {
+    background-color: pink;
+}
+
 /* General Conten Area For S.Manager START */
 /*LEFT*/
-
+/* B9B099 */
 /*RIGHT*/
 
 /* General Conten Area For S.Manager END */
