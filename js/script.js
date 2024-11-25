@@ -9,3 +9,5 @@ var check = function() {
         document.getElementById('confirm_message').innerHTML = '';
     }
 }
+
+// 'Check' function declared to use as slight validation for login form

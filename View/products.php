@@ -1,13 +1,13 @@
-<!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -->
+<!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -ADD NEW PRODUCT-->
 <?php
-include ("../Model/dbconnect.php");
+require_once "../includes/dbconnect.php";
 include ("../Model/query.php");
-
 
 $products = makeQuery("SELECT ID, name, description, price, weight, size, CPU, GPU, RAM, hard_drive FROM Product", $conn);
 
 $data = json_decode(file_get_contents("php://input"), true);
 if (!empty($data)) {
+    // Get data values
     $name = $data['name'];
     $description = $data['description'];
     $price = $data['price'];
@@ -60,7 +60,8 @@ if (!empty($data)) {
             <input type="text" id="productHard-Drive" name="productHard-Drive"><br>
             <button type="button" id="closeButton">Close</button>
             <button type="button" id="addButton">Add</button>
-        </form>       
+        </form>
+        
     </div>
     <table>
         <tr>
@@ -93,7 +94,7 @@ if (!empty($data)) {
                 echo "<td>";
                 echo "<button id='editButton" . htmlspecialchars($row['ID']) . htmlspecialchars($row['ID']) . "'\">Edit</button> | ";
                 echo "<button id='details_" . htmlspecialchars($row['ID']) . "' id='details_" . htmlspecialchars($row['ID']) . "'>Details</button> | ";
-                echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "' id='deleteButton" . htmlspecialchars($row['ID']) . "''>Delete</button>";
+                echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "' id='deleteButton" . htmlspecialchars($row['ID']) . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</button>";
                 echo "</td>";
                 echo "</tr>";
             }

@@ -1,5 +1,5 @@
 <?php
-include("dbconnect.php");
+include("includes/dbconnect.php");
 
 function makeQuery ($sql, $conn){
     $arrayResult = [];
