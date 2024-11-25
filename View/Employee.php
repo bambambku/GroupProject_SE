@@ -40,6 +40,6 @@ if ($_SESSION["user_role"]!=2){
             </ul>
         </nav>
     </div>
-</footer>
+    </footer>
 </body>
 </html>
