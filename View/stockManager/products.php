@@ -1,9 +1,11 @@
-<!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -Details button -->
 <?php
-include ("../../includes/dbconnect.php");
-include ("../../query.php");
 session_start();
 
+include ("../../includes/dbconnect.php");
+include ("../../query.php");
+if ($_SESSION["user_role"]!=2){
+    header("Location: ../login/logout.php");
+  }
 $sql = "SELECT * FROM Product";
 $stmt = $myPDO->prepare($sql);
 $stmt->execute();
