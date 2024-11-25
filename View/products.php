@@ -103,69 +103,7 @@ if (!empty($data)) {
         }
         ?>
     </table>
-<script>
-var modal = document.getElementById("modalWindowProducts");
-var openBtn = document.getElementById("modalButtonProducts");
-// Open Modal
-openBtn.onclick = function() {
-    modal.style.display = "flex";
-}
-
-// Close Modal
-var closeBtn = document.getElementById("closeButton");
-closeBtn.onclick = function() {
-  modal.style.display = "none";
-}
-
-// Add Product
-var addBtn = document.getElementById("addButton");
-
-addBtn.onclick = async function() {
-    const productName = document.getElementById("productName").value;
-    const productDescription = document.getElementById("productDescription").value;
-    const productPrice = document.getElementById("productPrice").value;
-    const productWeight = document.getElementById("productWeight").value;
-    const productSize = document.getElementById("productSize").value;
-    const productCPU = document.getElementById("productCPU").value;
-    const productGPU = document.getElementById("productGPU").value;
-    const productRAM = document.getElementById("productRAM").value;
-    const productHardDrive = document.getElementById("productHard-Drive").value;
-    // Validation for fields, Don't allow null values etc
-
-
-    // Send AJAX request to add the product
-    const response = await fetch('products.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            name: productName,
-            description: productDescription,
-            price: productPrice,
-            weight: productWeight,
-            size: productSize,
-            CPU: productCPU,
-            GPU: productGPU,
-            RAM: productRAM,
-            hard_drive: productHardDrive
-        })
-    });
-    window.location.reload();
-};
-
-
-// Edit Product
-var editBtn = document.getElementById("editButton");
-editBtn.onclick = function() {
-    console.log("Edit Pressed");
-}
-
-// Delete Product
-var deleteBtn = document.getElementById("deleteButton");
-deleteBtn.onclick = function() {
-    console.log("Delete Pressed");
-}
-
-
-</script>
+    <script src="../js/productActions.js"></script>
 </body>
 </html>
+

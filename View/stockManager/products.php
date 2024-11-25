@@ -109,6 +109,7 @@ $stmt->execute();
     <script src="../js/productActions.js"></script>
     </main>
 <?php include '../../includes/footer.php'; ?>
+>>>>>>> development
 </body>
 </html>
 

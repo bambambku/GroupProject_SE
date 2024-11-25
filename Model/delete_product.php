@@ -6,7 +6,6 @@ $data = json_decode(file_get_contents('php://input'), true);
 if (isset($data['productID'])){
     $productId = $data['productID'];
     
-
     $sql = "DELETE FROM PRODUCT WHERE ID = $productId";
 
     if ($conn->query($sql) === TRUE){
