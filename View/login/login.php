@@ -12,7 +12,7 @@ if (isset($_SESSION["user_role"])) {
   <?php include('../../includes/header.php'); ?>
   <link rel="stylesheet" href="..\..\CSS\login.css">
 </head>
-<body id="background1">
+<body class="background1">
         <div class="logo-container">
             <img src="../../Pictures\logo.png" alt="Logo" class="logo-pic">
         </div>

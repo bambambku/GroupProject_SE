@@ -10,10 +10,45 @@ body
   margin-left: 250px; 
  }
 /* NAV bar START */
-.decoration-bar
+.decoration-barEmp
 {
     width: 250px;
     background-color: #59291E;
+    height: 20px;
+    /* margin-left: 50px; */
+}
+
+.decoration-barStock
+{
+    width: 250px;
+    background-color: #7D4B22;
+    height: 20px;
+    /* margin-left: 50px; */
+}
+
+
+.decoration-barAdm
+{
+    width: 250px;
+    background-color: #1A4A5A;
+    height: 20px;
+    /* margin-left: 50px; */
+}
+
+
+.decoration-barDire
+{
+    width: 250px;
+    background-color: #B2BF84;
+    height: 20px;
+    /* margin-left: 50px; */
+}
+
+
+.decoration-barMan
+{
+    width: 250px;
+    background-color: #000000;
     height: 20px;
     /* margin-left: 50px; */
 }
@@ -79,7 +114,7 @@ body
   }
 
   .menu li:hover {
-    background-color: #B86141;
+    opacity: 0.8;
     transition: 0.8s;
   }
 
