@@ -101,9 +101,9 @@ if (!empty($data) && isset($data['action'])) {
                             $stmt->bindValue(':RAM', $data['RAM'], SQLITE3_TEXT);
                             $stmt->bindValue(':hard_drive', $data['hard_drive'], SQLITE3_TEXT);
                             $stmt->bindValue(':productID', $data['productID'], SQLITE3_INTEGER);
-                    
+                            
                             $stmt->execute();
-                    
+                            
                             $stmt = $db->prepare("UPDATE Stock SET quantity = :quantity WHERE product = :productID");
                             $stmt->bindValue(':quantity', $data['stock'], SQLITE3_INTEGER);
                             $stmt->bindValue(':productID', $data['productID'], SQLITE3_INTEGER);
