@@ -1,3 +1,4 @@
+let currentEditingProductId = null;
 // Add Button Modal
 var modal = document.getElementById("modalWindowProducts");
 var openBtn = document.getElementById("modalButtonProducts");
@@ -15,6 +16,7 @@ closeBtn.onclick = function() {
 var addBtn = document.getElementById("addButton");
 
 addBtn.onclick = async function() {
+
     const productName = document.getElementById("productName").value;
     const productDescription = document.getElementById("productDescription").value;
     const productPrice = document.getElementById("productPrice").value;
@@ -89,12 +91,12 @@ deleteButtons.forEach(button => {
 });
 
 // Edit Button Modal
-// Opens modal and fills fields, WHERE ID = productId
-var editButtons = document.querySelectorAll("[id^='editButton']");
+const editButtons = document.querySelectorAll('.editButton');
 
 editButtons.forEach(button => {
-    button.onclick = async function(){
-        const productId = this.id.replace("editButton", "");
+    button.onclick = async function(event) {
+        const productId = event.target.getAttribute('data-id');
+        currentEditingProductId = productId;
         const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -103,35 +105,40 @@ editButtons.forEach(button => {
                 productID: productId
             })
         });
+        
         const product = await response.json();
 
-        document.getElementById("editProductId").value = product.id;
-        document.getElementById("editProductName").value = product.name;
-        document.getElementById("editProductDescription").value = product.description;
-        document.getElementById("editProductPrice").value = product.price;
-        document.getElementById("editProductWeight").value = product.weight;
-        document.getElementById("editProductSize").value = product.size;
-        document.getElementById("editProductCPU").value = product.CPU;
-        document.getElementById("editProductGPU").value = product.GPU;
-        document.getElementById("editProductRAM").value = product.RAM;
-        document.getElementById("editProductHardDrive").value = product.hard_drive;
-        document.getElementById("editProductStock").value = product.quantity;
-        
-        document.getElementById("modalWindowProductsEdit").style.display = "flex";
-    }
-})
+        if (product) {
+            document.getElementById("editProductName").value = product.name;
+            document.getElementById("editProductDescription").value = product.description;
+            document.getElementById("editProductPrice").value = product.price;
+            document.getElementById("editProductWeight").value = product.weight;
+            document.getElementById("editProductSize").value = product.size;
+            document.getElementById("editProductCPU").value = product.CPU;
+            document.getElementById("editProductGPU").value = product.GPU;
+            document.getElementById("editProductRAM").value = product.RAM;
+            document.getElementById("editProductHardDrive").value = product.hard_drive;
+            document.getElementById("editProductStock").value = product.quantity;
 
-var closeButtonEdit = document.getElementById("closeButtonEdit")
+            document.getElementById("modalWindowProductsEdit").style.display = "flex";
+        } else {
+            console.error('Product not found');
+        }
+    };
+});
+
+var closeButtonEdit = document.getElementById("closeButtonEdit");
 
 closeButtonEdit.onclick = function() {
     document.getElementById("modalWindowProductsEdit").style.display = "none";
-}
+    currentEditingProductId = null;
+};
 
 // Save button within Edit Modal
 var saveEditButton = document.getElementById("saveEditButton");
 
 saveEditButton.onclick = async function(){
-    const productId = document.getElementById("editProductId").value;
+    const productId = currentEditingProductId; // Reuse stored productId
     const productName = document.getElementById("editProductName").value;
     const productDescription = document.getElementById("editProductDescription").value;
     const productPrice = document.getElementById("editProductPrice").value;
@@ -142,69 +149,37 @@ saveEditButton.onclick = async function(){
     const productRAM = document.getElementById("editProductRAM").value;
     const productHardDrive = document.getElementById("editProductHardDrive").value;
     const productStock = document.getElementById("editProductStock").value;
-
-    const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            action: 'update',
-            productID: productId,
-            name: productName,
-            description: productDescription,
-            price: productPrice,
-            weight: productWeight,
-            size: productSize,
-            CPU: productCPU,
-            GPU: productGPU,
-            RAM: productRAM,
-            hard_drive: productHardDrive,
-            stock: productStock
-        })
-    });
-    const result = await response.json();
-    if (result.success) {
-        window.location.reload();
-        document.getElementById("modalWindowProductsEdit").style.display = "none";
-    } else {
-        console.error("Failed to update product:", result.message);
-    }
-}
-
-// Product Details
-var detailsButtons = document.querySelectorAll("[id^='detailsButton']");
-var closeButtonDetails = document.getElementById("closeButtonDetails");
-
-closeButtonDetails.onclick = function() {
-    document.getElementById("modalWindowProductDetails").style.display = "none";
-};
-
-detailsButtons.forEach(button => {
-    button.onclick = async function() {
-        const productId = this.getAttribute("data-id");
-
+    
+    try {
         const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                action: 'details',
-                productID: productId
+                action: 'update',
+                productID: productId,
+                name: productName,
+                description: productDescription,
+                price: productPrice,
+                weight: productWeight,
+                size: productSize,
+                CPU: productCPU,
+                GPU: productGPU,
+                RAM: productRAM,
+                hard_drive: productHardDrive,
+                quantity: productStock
             })
         });
 
-        const product = await response.json();
-            document.getElementById("detailsName").textContent = product.name;
-            document.getElementById("detailsDescription").textContent = product.description;
-            document.getElementById("detailsPrice").textContent = product.price;
-            document.getElementById("detailsWeight").textContent = product.weight;
-            document.getElementById("detailsSize").textContent = product.size;
-            document.getElementById("detailsCPU").textContent = product.CPU;
-            document.getElementById("detailsGPU").textContent = product.GPU;
-            document.getElementById("detailsRAM").textContent = product.RAM;
-            document.getElementById("detailsHardDrive").textContent = product.hard_drive;
+        const result = await response.json();
 
-            document.getElementById("modalWindowProductDetails").style.display = "block";
+        if (result.success) {
+            window.location.reload();
+            document.getElementById("modalWindowProductsEdit").style.display = "none";
+        } 
+    } catch (error) {
+        console.error("Failed to update product:", error);
     }
-});
+};
 
 // Sort By
 var sortButton = document.getElementById("sortButton");
@@ -223,8 +198,11 @@ sortButton.onclick = async function() {
     });
 
     const sortedProducts = await response.json();
-    // Clear table and populate
-    const tableBody = document.getElementById("productTableBody");
+    const table = document.getElementById("laptopTable");
+    const rows = table.querySelectorAll("tr");
+    rows.forEach((row, index) => {
+        if (index !== 0) row.remove();
+    });
 
     tableBody.innerHTML = '';
 
@@ -238,14 +216,12 @@ sortButton.onclick = async function() {
             <td>
                 <button id="editButton${product.ID}">Edit</button>
                 <button id="deleteButton${product.ID}">Delete</button>
-                <button data-id="${product.ID}" id="detailsButton${product.ID}">Details</button>
+                <button id="detailsButton${product.ID}">Details</button> |
             </td>
         `;
         tableBody.appendChild(row);
     });
 };
-
-
 
 // Search Button
 

@@ -1,65 +1,53 @@
 <?php
-include ("../../Model/sqliteconnect.php");
-
-$stmt = $db->query("SELECT product.ID, product.name, product.price, stock.quantity 
-                    FROM product
-                    LEFT JOIN stock ON product.ID = stock.product");
-
-$products = [];
-while ($row = $stmt->fetchArray(SQLITE3_ASSOC)) {
-    $products[] = $row;
+try {
+    $db = new PDO('sqlite:' . __DIR__ . '/../../Model/Terra_Core_DB.db');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    exit;
 }
 
 $data = json_decode(file_get_contents("php://input"), true);
 
+//Switch case for each CRUD operation + Details Window + Sort
 if (!empty($data) && isset($data['action'])) {
     $action = $data['action'];
-    //Switch case for each CRUD operation + Details Window + Sort
     try {
         switch ($action) {
-            case 'details':
-                $stmt = $db->prepare("SELECT product.ID, product.name, product.description, product.price, 
-                                     product.weight, product.size, product.CPU, product.GPU, product.RAM, product.hard_drive
-                                      FROM product WHERE product.ID = :productID");
-                $stmt->bindValue(':productID', $data['productID'], SQLITE3_INTEGER);
-                $result = $stmt->execute();
-                $product = $result->fetchArray(SQLITE3_ASSOC);
-                echo json_encode($product);
-                break;
-
                 case 'create':
                     try {
-                        $db->exec("BEGIN TRANSACTION");
-                        
+                        $db->beginTransaction();
+    
                         $stmt = $db->prepare("INSERT INTO Product (name, description, price, weight, size, CPU, GPU, RAM, hard_drive)
-                                                VALUES (:name, :description, :price, :weight, :size, :CPU, :GPU, :RAM, :hard_drive)");
-                        $stmt->bindValue(':name', $data['name'], SQLITE3_TEXT);
-                        $stmt->bindValue(':description', $data['description'], SQLITE3_TEXT);
-                        $stmt->bindValue(':price', $data['price'], SQLITE3_TEXT);
-                        $stmt->bindValue(':weight', $data['weight'], SQLITE3_TEXT);
-                        $stmt->bindValue(':size', $data['size'], SQLITE3_TEXT);
-                        $stmt->bindValue(':CPU', $data['CPU'], SQLITE3_TEXT);
-                        $stmt->bindValue(':GPU', $data['GPU'], SQLITE3_TEXT);
-                        $stmt->bindValue(':RAM', $data['RAM'], SQLITE3_TEXT);
-                        $stmt->bindValue(':hard_drive', $data['hard_drive'], SQLITE3_TEXT);
+                                              VALUES (:name, :description, :price, :weight, :size, :CPU, :GPU, :RAM, :hard_drive)");
+                        $stmt->bindValue(':name', $data['name'], PDO::PARAM_STR);
+                        $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
+                        $stmt->bindValue(':price', $data['price'], PDO::PARAM_STR);
+                        $stmt->bindValue(':weight', $data['weight'], PDO::PARAM_STR);
+                        $stmt->bindValue(':size', $data['size'], PDO::PARAM_STR);
+                        $stmt->bindValue(':CPU', $data['CPU'], PDO::PARAM_STR);
+                        $stmt->bindValue(':GPU', $data['GPU'], PDO::PARAM_STR);
+                        $stmt->bindValue(':RAM', $data['RAM'], PDO::PARAM_STR);
+                        $stmt->bindValue(':hard_drive', $data['hard_drive'], PDO::PARAM_STR);
                         $stmt->execute();
-                
-                        $productID = $db->lastInsertRowID();
-                
-                        $stmt = $db->prepare("INSERT INTO stock (product, quantity, branch) VALUES (:productID, :quantity, :branch)");
-                        $stmt->bindValue(':productID', $productID, SQLITE3_INTEGER);
-                        $stmt->bindValue(':quantity', $data['stock'], SQLITE3_INTEGER);
-                        $stmt->bindValue(':branch', $data['branch'], SQLITE3_INTEGER);
+    
+                        $productID = $db->lastInsertId();
+    
+                        $stmt = $db->prepare("INSERT INTO stock (product, quantity, branch) 
+                                              VALUES (:productID, :quantity, :branch)");
+                        $stmt->bindValue(':productID', $productID, PDO::PARAM_INT);
+                        $stmt->bindValue(':quantity', $data['stock'], PDO::PARAM_INT);
+                        $stmt->bindValue(':branch', $data['branch'], PDO::PARAM_INT);
                         $stmt->execute();
-                        $db->exec("COMMIT");
-                
+    
+                        $db->commit();
                         echo json_encode(['success' => true]);
                     } catch (Exception $e) {
-                        $db->exec("ROLLBACK");
+                        $db->rollBack();
                         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
                     }
                     break;
-                
+    
                     case 'read':
                         if (isset($data['productID'])) {
                             $stmt = $db->prepare("SELECT Product.ID, Product.name, Product.description, Product.price, 
@@ -68,101 +56,110 @@ if (!empty($data) && isset($data['action'])) {
                                                         FROM Product
                                                         LEFT JOIN stock ON Product.ID = stock.product
                                                         WHERE Product.ID = :productID");
-                            $stmt->bindValue(':productID', $data['productID'], SQLITE3_INTEGER);
-                            $result = $stmt->execute();
-                            $product = $result->fetchArray(SQLITE3_ASSOC);
+                            $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                            $stmt->execute();
+                            $product = $stmt->fetch(PDO::FETCH_ASSOC);
                             echo json_encode($product);
                         }
                         break;
-
-                    case 'update':
-                        try {
-                            $db->exec("BEGIN TRANSACTION");
-                    
-                            $stmt = $db->prepare("UPDATE Product SET 
-                                name = :name, 
-                                description = :description, 
-                                price = :price, 
-                                weight = :weight, 
-                                size = :size, 
-                                CPU = :CPU, 
-                                GPU = :GPU, 
-                                RAM = :RAM, 
-                                hard_drive = :hard_drive 
-                                WHERE ID = :productID");
-                    
-                            $stmt->bindValue(':name', $data['name'], SQLITE3_TEXT);
-                            $stmt->bindValue(':description', $data['description'], SQLITE3_TEXT);
-                            $stmt->bindValue(':price', $data['price'], SQLITE3_TEXT);
-                            $stmt->bindValue(':weight', $data['weight'], SQLITE3_TEXT);
-                            $stmt->bindValue(':size', $data['size'], SQLITE3_TEXT);
-                            $stmt->bindValue(':CPU', $data['CPU'], SQLITE3_TEXT);
-                            $stmt->bindValue(':GPU', $data['GPU'], SQLITE3_TEXT);
-                            $stmt->bindValue(':RAM', $data['RAM'], SQLITE3_TEXT);
-                            $stmt->bindValue(':hard_drive', $data['hard_drive'], SQLITE3_TEXT);
-                            $stmt->bindValue(':productID', $data['productID'], SQLITE3_INTEGER);
-                    
-                            $stmt->execute();
-                    
-                            $stmt = $db->prepare("UPDATE Stock SET quantity = :quantity WHERE product = :productID");
-                            $stmt->bindValue(':quantity', $data['stock'], SQLITE3_INTEGER);
-                            $stmt->bindValue(':productID', $data['productID'], SQLITE3_INTEGER);
-                    
-                            $stmt->execute();
-                    
-                            $db->exec("COMMIT");
-                            echo json_encode(['success' => true]);
-                        } catch (Exception $e) {
-                            $db->exec("ROLLBACK");
-                            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    
+                case 'update':
+                    try {
+                        $db->beginTransaction();
+    
+                        $stmt = $db->prepare("UPDATE Product SET 
+                            name = :name, 
+                            description = :description, 
+                            price = :price, 
+                            weight = :weight, 
+                            size = :size, 
+                            CPU = :CPU, 
+                            GPU = :GPU, 
+                            RAM = :RAM, 
+                            hard_drive = :hard_drive 
+                            WHERE ID = :productID");
+                        $stmt->bindValue(':name', $data['name'], PDO::PARAM_STR);
+                        $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
+                        $stmt->bindValue(':price', $data['price'], PDO::PARAM_STR);
+                        $stmt->bindValue(':weight', $data['weight'], PDO::PARAM_STR);
+                        $stmt->bindValue(':size', $data['size'], PDO::PARAM_STR);
+                        $stmt->bindValue(':CPU', $data['CPU'], PDO::PARAM_STR);
+                        $stmt->bindValue(':GPU', $data['GPU'], PDO::PARAM_STR);
+                        $stmt->bindValue(':RAM', $data['RAM'], PDO::PARAM_STR);
+                        $stmt->bindValue(':hard_drive', $data['hard_drive'], PDO::PARAM_STR);
+                        $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                        
+                        if (!$stmt->execute()) {
+                            $errorInfo = $stmt->errorInfo();
+                            echo json_encode(['success' => false, 'error' => $errorInfo]);
+                            exit();
                         }
-                        break;
-
-            case 'delete':
-                $stmt = $db->prepare("DELETE FROM Product WHERE ID = :productID");
-                $stmt->bindValue(':productID', $data['productID'], SQLITE3_INTEGER);
-                $stmt->execute();
-                echo json_encode(['success' => true]);
-                break;
-
-            case 'sort':
-                $sortOption = $data['sortOption'];
-                $orderBy = '';
-                switch ($sortOption) {
-                    case 'lowStock':
-                        $orderBy = 'stock.quantity ASC';
-                        break;
-                    case 'priceAsc':
-                        $orderBy = 'product.price ASC';
-                        break;
-                    case 'priceDesc':
-                        $orderBy = 'product.price DESC';
-                        break;
-                    default:
-                        $orderBy = 'product.name ASC';
-                        break;
-                }
-                $stmt = $db->prepare("SELECT product.ID, product.name, product.price, stock.quantity
-                FROM product
-                LEFT JOIN stock ON product.ID = stock.product
-                ORDER BY $orderBy");
-
-                $products = [];
-                $result = $stmt->execute();
-                while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-                $products[] = $row;
-                }
-                echo json_encode($products);
-                break;              
-
-            default:
-                echo json_encode(['success' => false, 'message' => 'Invalid action']);
-                break;
+    
+                        $stmt = $db->prepare("UPDATE stock SET quantity = :quantity WHERE product = :productID");
+                        $stmt->bindValue(':quantity', $data['quantity'], PDO::PARAM_INT);
+                        $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                        if (!$stmt->execute()) {
+                            $errorInfo = $stmt->errorInfo();
+                            echo json_encode(['success' => false, 'error' => $errorInfo]);
+                            exit();
+                        }
+                        
+                        $db->commit();
+                        echo json_encode(['success' => true]);
+                    } catch (Exception $e) {
+                        $db->rollBack();
+                        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+                    }
+                    break;
+    
+                case 'delete':
+                    $stmt = $db->prepare("DELETE FROM Product WHERE ID = :productID");
+                    $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                    $stmt->execute();
+                    echo json_encode(['success' => true]);
+                    break;
+    
+                case 'sort':
+                    $orderBy = '';
+                    switch ($data['sortOption']) {
+                        case 'lowStock':
+                            $orderBy = 'stock.quantity ASC';
+                            break;
+                        case 'priceAsc':
+                            $orderBy = 'product.price ASC';
+                            break;
+                        case 'priceDesc':
+                            $orderBy = 'product.price DESC';
+                            break;
+                        default:
+                            $orderBy = 'product.name ASC';
+                            break;
+                    }
+                    $stmt = $db->prepare("SELECT product.ID, product.name, product.price, stock.quantity
+                                          FROM product
+                                          LEFT JOIN stock ON product.ID = stock.product
+                                          ORDER BY $orderBy");
+                    $stmt->execute();
+                    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    echo json_encode($products);
+                    break;
+    
+                default:
+                    echo json_encode(['success' => false, 'message' => 'Invalid action']);
+                    break;
         }
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
 } else {
-    include("product_view.php");
+    // For initial page load, fetch the products for the HTML table
+    try {
+        $stmt = $db->query("SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product");
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        $products = [];
+    }
+    include("productsView.php");
 }
+
 ?>
