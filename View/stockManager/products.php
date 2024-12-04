@@ -14,6 +14,7 @@ if (!empty($data) && isset($data['action'])) {
     $action = $data['action'];
     try {
         switch ($action) {
+            
                 case 'create':
                     try {
                         $db->beginTransaction();
@@ -51,15 +52,39 @@ if (!empty($data) && isset($data['action'])) {
                     case 'read':
                         if (isset($data['productID'])) {
                             $stmt = $db->prepare("SELECT Product.ID, Product.name, Product.description, Product.price, 
-                                                         Product.weight, Product.size, Product.CPU, Product.GPU, 
-                                                         Product.RAM, Product.hard_drive, stock.quantity
-                                                        FROM Product
-                                                        LEFT JOIN stock ON Product.ID = stock.product
-                                                        WHERE Product.ID = :productID");
+                                                  Product.weight, Product.size, Product.CPU, Product.GPU, 
+                                                  Product.RAM, Product.hard_drive, stock.quantity
+                                                  FROM Product
+                                                  LEFT JOIN stock ON Product.ID = stock.product
+                                                  WHERE Product.ID = :productID");
                             $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
                             $stmt->execute();
                             $product = $stmt->fetch(PDO::FETCH_ASSOC);
-                            echo json_encode($product);
+                    
+                            if ($product) {
+                                $product['lowStockClass'] = ($product['quantity'] < 10) ? 'low-stock' : '';
+                                echo json_encode($product);
+                            } else {
+                                echo json_encode(['error' => 'Product not found']);
+                            }
+                        } else {
+                            $stmt = $db->prepare("SELECT Product.ID, Product.name, Product.description, Product.price, 
+                                                  Product.weight, Product.size, Product.CPU, Product.GPU, 
+                                                  Product.RAM, Product.hard_drive, stock.quantity
+                                                  FROM Product
+                                                  LEFT JOIN stock ON Product.ID = stock.product");
+                            $stmt->execute();
+                            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                            if ($products) {
+
+                                foreach ($products as &$product) {
+                                    $product['lowStockClass'] = ($product['quantity'] < 10) ? 'low-stock' : '';
+                                }
+                                echo json_encode($products);
+                            } else {
+                                echo json_encode(['error' => 'No products found']);
+                            }
                         }
                         break;
     
@@ -135,10 +160,12 @@ if (!empty($data) && isset($data['action'])) {
                             $orderBy = 'product.name ASC';
                             break;
                     }
-                    $stmt = $db->prepare("SELECT product.ID, product.name, product.price, stock.quantity
-                                          FROM product
-                                          LEFT JOIN stock ON product.ID = stock.product
-                                          ORDER BY $orderBy");
+                    $stmt = $db->prepare("SELECT product.ID, product.name, product.description, product.price, 
+                                 product.weight, product.size, product.CPU, product.GPU, 
+                                 product.RAM, product.hard_drive, stock.quantity
+                          FROM product
+                          LEFT JOIN stock ON product.ID = stock.product
+                          ORDER BY $orderBy");
                     $stmt->execute();
                     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     echo json_encode($products);
@@ -152,7 +179,6 @@ if (!empty($data) && isset($data['action'])) {
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
 } else {
-    // For initial page load, fetch the products for the HTML table
     try {
         $stmt = $db->query("SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product");
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -161,5 +187,4 @@ if (!empty($data) && isset($data['action'])) {
     }
     include("productsView.php");
 }
-
 ?>
