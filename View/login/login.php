@@ -59,13 +59,15 @@ if (isset($_SESSION["user_role"])) {
                                     if ($user['role_id'] == 1) {
                                         header("Location: ../employee/Employee.php"); // change this to correct path
                                     } elseif ($user['role_id'] == 2) {
-                                        header("Location: ../director/products.php"); // The only reason this takes you to a director's page is because we're in the process of moving things around.
-                                    } elseif ($user['role_id'] == 'Manager') {
+                                        header("Location: ../stockManager/products.php"); // The only reason this takes you to a director's page is because we're in the process of moving things around.
+                                    } elseif ($user['role_id'] == 3) {
                                         header("Location: ../manager/m_home.php");
-                                    } elseif ($user['role_id'] == 'Stock Manager') {
-                                        header("Location: ../stock_manager/sm_home.php");
+                                    } elseif ($user['role_id'] == 4) {
+                                        header("Location: ../director/director_home.php");
+                                    } elseif ($user['role_id'] == 5){
+                                        header("Location: ../admin/a_home.php");
                                     } else {
-                                        echo $user['role_id'];
+                                        echo "Error: " .$user['role_id']. " is not a valid user role.";
                                     }
                                     die();
                                 } else {
