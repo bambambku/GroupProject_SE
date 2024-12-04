@@ -18,7 +18,7 @@ if ($_SESSION["user_role"]!=1) {
     <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
 </head>
 
-<body id="employee-background">
+<body class="employee-background">
 <?php include '../../includes/navbar.php'; ?>
 <main class="main-container">
         <div class="general-content-out">
