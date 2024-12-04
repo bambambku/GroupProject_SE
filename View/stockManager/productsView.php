@@ -1,96 +1,110 @@
-<!DOCTYPE html>
+<?php
+session_start();
+
+
+include ("../../query.php");
+// if ($_SESSION["user_role"]!=2){
+//     header("Location: ../login/logout.php");
+//   }
+$sql = "SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product";
+$stmt = $myPDO->prepare($sql);
+$stmt->execute();
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../CSS/style-products-desktop.css" media="screen and (min-width: 1025px)">
     <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
     <link rel="stylesheet" href="../../CSS/stock-manager.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="..\..\CSS\stockManager.css">
     <title>Product View</title>
+    <script defer src="../../js/tableDropSort.js"></script>
+    <script defer src="../../js/productActions.js"></script>
 </head>
-<body>
+<body id="stock-manager-background">
 <?php include '../../includes/navbar.php'; ?>
 <main class="main-container">
-    <h1>Products:</h1>
-    <div class="general-content-out">
-        <div class="general-content-bttn-area">
-            <button id="modalButtonProducts">Create New</button>
-                <select id="sortSelect">
-                <option value="lowStock">Low Stock</option>
-                <option value="priceAsc">Price Ascending</option>
-                <option value="priceDesc">Price Descending</option>
-                </select>
-            <button id="sortButton">Sort By</button>
-        </div>
-        <div class="general-content-in">
-            <div id="modalWindowProducts" class="modal">
-                <form>
-                    <label for="Name">Product name:</label><br>
-                    <input type="text" id="productName" name="productName"><br>
-                    <label for="Description">Description:</label><br>
-                    <input type="text" id="productDescription" name="productDescription"><br>
-                    <label for="Price">Price:</label><br>
-                    <input type="text" id="productPrice" name="productPrice"><br>
-                    <label for="Weight">Weight:</label><br>
-                    <input type="text" id="productWeight" name="productWeight"><br>
-                    <label for="Size">Size:</label><br>
-                    <input type="text" id="productSize" name="productSize"><br>
-                    <label for="CPU">CPU:</label><br>
-                    <input type="text" id="productCPU" name="productCPU"><br>
-                    <label for="GPU">GPU:</label><br>
-                    <input type="text" id="productGPU" name="productGPU"><br>
-                    <label for="RAM">RAM:</label><br>
-                    <input type="text" id="productRAM" name="productRAM"><br>
-                    <label for="Hard-Drive">Hard-Drive:</label><br>
-                    <input type="text" id="productHard-Drive" name="productHard-Drive"><br>
-                    <label for="productStock">Quantity:</label><br>
-                    <input type="number" id="productStock" name="productStock"><br>
-                    <label for="productBranch">Branch:</label><br>
-                    <input type="number" id="productBranch" name="productBranch"><br>
-                    <button type="button" id="closeButton">Close</button>
-                    <button type="button" id="addButton">Add</button>
-                </form>       
-            </div>
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Actions</th>
-                </tr>
-                
-                <?php foreach ($products as $product): ?>
-                <tr>
-                <td><?php echo htmlspecialchars($product['name']); ?></td>
-                <td><?php echo htmlspecialchars($product['price']); ?></td>
-                <td><?php echo htmlspecialchars($product['quantity']); ?></td>
-                    <td>
-                        <button id="editButton<?php echo $product['ID']; ?>" class="edit-button" data-id="<?php echo $product['ID']; ?>">Edit</button>
-                        <button id="detailsButton<?php echo $product['ID']; ?>" class="details-button" data-id="<?php echo $product['ID']; ?>">Details</button>
-                        <button id="deleteButton<?php echo $product['ID']; ?>" class="delete-button" data-id="<?php echo $product['ID']; ?>">Delete</button>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-            <div id="modalWindowProductDetails" class="modal" style="display: none;">
-            <form>
-                <h2>Product Details</h2>
-                <p><strong>Name:</strong> <span id="detailsName"></span></p>
-                <p><strong>Description:</strong> <span id="detailsDescription"></span></p>
-                <p><strong>Price:</strong> <span id="detailsPrice"></span></p>
-                <p><strong>Weight:</strong> <span id="detailsWeight"></span></p>
-                <p><strong>Size:</strong> <span id="detailsSize"></span></p>
-                <p><strong>CPU:</strong> <span id="detailsCPU"></span></p>
-                <p><strong>GPU:</strong> <span id="detailsGPU"></span></p>
-                <p><strong>RAM:</strong> <span id="detailsRAM"></span></p>
-                <p><strong>Hard Drive:</strong> <span id="detailsHardDrive"></span></p>
-                <button id="closeButtonDetails">Close</button>
-            </form>
-        </div>
-        </div>            
+<h1>Products:</h1>
+<div class="general-content-out">
+    <div class="general-content-bttn-area">
     </div>
-    <div id="modalWindowProductsEdit" class="modal" style="display: none;">
+    <div class="general-content-in">
+        <div id="modalWindowProducts" class="modal">
+            <form>
+                <label for="Name">Product name:</label><br>
+                <input type="text" id="productName" name="productName"><br>
+                <label for="Description">Description:</label><br>
+                <input type="text" id="productDescription" name="productDescription"><br>
+                <label for="Price">Price:</label><br>
+                <input type="text" id="productPrice" name="productPrice"><br>
+                <label for="Weight">Weight:</label><br>
+                <input type="text" id="productWeight" name="productWeight"><br>
+                <label for="Size">Size:</label><br>
+                <input type="text" id="productSize" name="productSize"><br>
+                <label for="CPU">CPU:</label><br>
+                <input type="text" id="productCPU" name="productCPU"><br>
+                <label for="GPU">GPU:</label><br>
+                <input type="text" id="productGPU" name="productGPU"><br>
+                <label for="RAM">RAM:</label><br>
+                <input type="text" id="productRAM" name="productRAM"><br>
+                <label for="Hard-Drive">Hard-Drive:</label><br>
+                <input type="text" id="productHard-Drive" name="productHard-Drive"><br>
+                <label for="productStock">Quantity:</label><br>
+                <input type="number" id="productStock" name="productStock"><br>
+                <label for="productBranch">Branch:</label><br>
+                <input type="number" id="productBranch" name="productBranch"><br>
+                <button type="button" id="closeButton">Close</button>
+                <button type="button" id="addButton">Add</button>
+            </form>       
+        </div>
+        <button id="modalButtonProducts">Create New</button>
+        <select id="sortSelect">
+        <option value="lowStock">Low Stock</option>
+        <option value="priceAsc">Price Ascending</option>
+        <option value="priceDesc">Price Descending</option>
+        </select>
+        <button id="sortButton">Sort By</button>
+        <table id="laptopTable">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price (£)</th>
+                <th>Weight (Kg)</th>
+                <th>Size (In)</th>
+                <th>CPU</th>
+                <th>GPU</th>
+                <th>RAM (GB)</th>
+                <th>Hard Drive</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+            <?php
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr>";
+                echo "<td>" . $row['name'] . "</td>";
+                echo "<td>" . $row['description'] . "</td>";
+                echo "<td>" . $row['price'] . "</td>";
+                echo "<td>" . $row['weight'] . "</td>";
+                echo "<td>" . $row['size'] . "</td>";
+                echo "<td>" . $row['CPU'] . "</td>";
+                echo "<td>" . $row['GPU'] . "</td>";
+                echo "<td>" . $row['RAM'] . "</td>";
+                echo "<td>" . $row['hard_drive'] . "</td>";
+                echo "<td>" . ($row['quantity'] ? $row['quantity'] : 'N/A') . "</td>";
+                echo "<td>";
+                echo "<button class='editButton' data-id='" . htmlspecialchars($row['ID']) . "'>Edit</button> | ";
+                echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "''>Delete</button>";
+                echo "</td>";
+                echo "</tr>";
+            }
+            ?>
+            
+        </table>
+        <div id="modalWindowProductsEdit" class="modal" style="display: none;">
         <form>
-            <input type="hidden" id="editProductId">
+        <input type="hidden" id="editProductId">
             <label for="editProductName">Product name:</label><br>
             <input type="text" id="editProductName" name="editProductName"><br>
             <label for="editProductDescription">Description:</label><br>
@@ -114,10 +128,13 @@
             <button type="button" id="closeButtonEdit">Close</button>
             <button type="button" id="saveEditButton">Save</button>
         </form>
-    </div>
-    <script src="../../js/productActions.js"></script>
+        </div>
+    </div>            
+</div>
 </main>
-<?php include '../../includes/footer.php'; ?>
-
+<?php
+include '../../includes/footer.php';
+?>
 </body>
 </html>
+
