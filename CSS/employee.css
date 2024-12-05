@@ -21,3 +21,8 @@
     margin: auto;
   }
   
+  .error {
+    color: red;
+    font-style: italic;
+    font-size: small;
+  }
