@@ -5,7 +5,6 @@
         <div class="underlogo">
             <h2 class="name-txt"><?php echo $_SESSION['user_firstName'] . " " . $_SESSION['user_surname']?></h2>
             <?php 
-            
             $sql2 = "SELECT name FROM Role WHERE ID = :id";
             $stmt2 = $myPDO->prepare($sql2);  
             $stmt2->bindParam(':id', $_SESSION['user_role'], PDO::PARAM_INT);

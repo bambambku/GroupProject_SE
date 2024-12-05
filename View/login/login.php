@@ -1,5 +1,6 @@
 <?php
-session_start();
+include "../../includes/dbconnect.php";
+
 if (isset($_SESSION["user_role"])) {
     header("Location: logout.php");
 }
