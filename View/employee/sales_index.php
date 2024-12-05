@@ -94,7 +94,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Price</th>
                 <th>Actions</th>
             </tr>
-            <?php while ($product = $products->fetch_assoc()) { ?>
+            <?php foreach ($products as $product) { ?>
                 <tr>
                     <td><?php echo htmlspecialchars($product['name']); ?></td>
                     <td><?php echo htmlspecialchars($product['quantity']); ?></td>
