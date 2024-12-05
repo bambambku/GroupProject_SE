@@ -53,14 +53,12 @@ if (isset($_SESSION["user_role"])) {
                                     $_SESSION['email_address'] = $user['email'];
                                     $_SESSION['user_id'] = $user['staff_id'];
 
-                                    // In this section here: it makes more sense to have user
-                                    // role stored as the actual role title rather than a number.
-                                    // You'd either have to accept it's redundant or change it.
+                                    
                                     if ($user['role_id'] == 1) {
-                                        header("Location: ../employee/Employee.php"); // change this to correct path
+                                        header("Location: ../employee/Employee.php"); 
                                     } elseif ($user['role_id'] == 2) {
-                                        header("Location: ../stockManager/products.php");
-                                    } elseif ($user['role_id'] == 'Manager') {
+                                        header("Location: ../stockManager/sm_home.php");
+                                    } elseif ($user['role_id'] == 3) {
                                         header("Location: ../manager/m_home.php");
                                     } elseif ($user['role_id'] == 'Stock Manager') {
                                         header("Location: ../stock_manager/sm_home.php");
@@ -88,7 +86,6 @@ if (isset($_SESSION["user_role"])) {
                   <input type="password" name="password" placeholder="Password" required>
                   <input type="submit" value="Login" name="login">
 
-                  <!-- Forgot Password link -->
                   <a href="" class="forgot-password">Forgot Password?</a>
                 </form>
                 </div>

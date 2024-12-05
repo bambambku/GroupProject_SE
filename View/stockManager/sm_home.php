@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if ($_SESSION["user_role"]!='Stock Manager'){
+if ($_SESSION["user_role"]!=2){
   header("Location: ../logout.php");
 }
 ?>
@@ -9,15 +9,17 @@ if ($_SESSION["user_role"]!='Stock Manager'){
 <html lang="en-GB">
 
 <head>
-  <title>HMS :: Stock Manager</title>
+  <title>TerraCore :: Stock Manager</title>
   <?php include('../../includes/header.php'); ?>
 
 </head>
 
+<!-- Example page only, replace with joe's -->
 
 <body>
     <h1>Stock Manager Dashboard</h1>
-    <a href="../logout.php">logout</a>
+    <p> This is an example page that needs changing to fit Joe's new one.</p>
+    <a href="../login/logout.php">logout</a>
 </body>
 
 </html>
