@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -11,10 +11,10 @@ if ($conn->connect_error) {
 }
 
 
-?>
+?> -->
 
 
-<!-- <?php
+<?php
 
 // HOSTED DATABASE CONNECTION (NOT IN USE YET!)
 // https://dash.infinityfree.com/accounts/if0_37729593/databases
@@ -32,5 +32,5 @@ if ($conn->connect_error) {
 }
 
 
-?> -->
+?>
 
