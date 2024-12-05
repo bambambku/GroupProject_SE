@@ -1,8 +1,10 @@
 <?php
 include("../../Model/query.php");
-include("../../Model/dbconnect.php");
+// include("../../Model/dbconnect.php");
 include("sales_basket.php");
 include("../../includes/header.php");
+include("../../includes/dbconnect.php");
+
 ?>
 
 <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
@@ -28,22 +30,37 @@ if (isset($_POST['search'])) {
     $searchTerm = "%" . $_POST['search'] . "%";
 }
 
+// $sql = "SELECT product.ID, product.name, stock.quantity, product.price 
+//         FROM product, stock 
+//         WHERE stock.branch = ? AND stock.product = product.ID";
+
+// if ($searchTerm) {
+//     $sql .= " AND product.name LIKE ?";
+// }
+
+// $stmt = $conn->prepare($sql);
+// if ($searchTerm) {
+//     $stmt->bind_param("is", $currentBranch, $searchTerm);
+// } else {
+//     $stmt->bind_param("i", $currentBranch);
+// }
+// $stmt->execute();
+// $products = $stmt->get_result();
+
 $sql = "SELECT product.ID, product.name, stock.quantity, product.price 
         FROM product, stock 
-        WHERE stock.branch = ? AND stock.product = product.ID";
+        WHERE stock.branch = :branch AND stock.product = product.ID";
+
+$params = ['branch' => $currentBranch];
 
 if ($searchTerm) {
-    $sql .= " AND product.name LIKE ?";
+    $sql .= " AND product.name LIKE :searchTerm";
+    $params['searchTerm'] = $searchTerm;
 }
 
-$stmt = $conn->prepare($sql);
-if ($searchTerm) {
-    $stmt->bind_param("is", $currentBranch, $searchTerm);
-} else {
-    $stmt->bind_param("i", $currentBranch);
-}
-$stmt->execute();
-$products = $stmt->get_result();
+$stmt = $myPDO->prepare($sql);
+$stmt->execute($params);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!-- <!DOCTYPE html>
@@ -79,11 +96,11 @@ $products = $stmt->get_result();
             </tr>
             <?php while ($product = $products->fetch_assoc()) { ?>
                 <tr>
-                    <td><?php echo $product['name']?></td>
-                    <td><?php echo $product['quantity']?></td>
-                    <td><?php echo $product['price']?></td>
+                    <td><?php echo htmlspecialchars($product['name']); ?></td>
+                    <td><?php echo htmlspecialchars($product['quantity']); ?></td>
+                    <td><?php echo htmlspecialchars($product['price']); ?></td>
                     <td>
-                        <a href="sales_index.php?add=<?php echo $product['ID']; ?>">Add</a>
+                        <a href="sales_index.php?add=<?php echo htmlspecialchars($product['ID']); ?>">Add</a>
                     </td>
                 </tr>
 
@@ -105,16 +122,16 @@ $products = $stmt->get_result();
                 </tr>
                 <?php foreach ($basket as $product) { ?>
                     <tr>
-                        <td><?php echo $product['name']?></td>
-                        <td><?php echo $product['quantity']?></td>
-                        <td><?php echo $product['price']?></td>
+                        <td><?php echo htmlspecialchars($product['name']); ?></td>
+                        <td><?php echo htmlspecialchars($product['quantity']); ?></td>
+                        <td><?php echo htmlspecialchars($product['price']); ?></td>
                         <td>
-                            <a href="sales_index.php?remove=<?php echo $product['ID']; ?>">Remove</a>
+                            <a href="sales_index.php?remove=<?php echo htmlspecialchars($product['ID']); ?>">Remove</a>
                         </td>
                     </tr>
                 <?php } ?>
         </table>
-                <h3>Total: <?php echo array_sum(array_column($basket, 'price')) ?></h3>
+        <h3>Total: <?php echo htmlspecialchars(array_sum(array_column($basket, 'price'))); ?></h3>
             <button type="button" onclick="openModal('finaliseSaleModal')">Finalise Sale</button>
     </div>
 </div>
