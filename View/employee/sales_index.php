@@ -5,6 +5,7 @@ include("../../includes/header2.php");
 
 ?>
 
+<title>Employee</title>
 <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
 </header>
 <body id="employee-background">

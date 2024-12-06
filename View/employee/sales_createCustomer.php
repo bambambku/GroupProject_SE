@@ -127,7 +127,7 @@ include("../../includes/navbar.php");
             <input type="text" id="sort_code" name="sort_code" value="<?php echo htmlspecialchars($sort_code); ?>" required><br>
             <span class="error"><?php echo $sortcodeErr; ?></span><br>
 
-            <label for="account_number">Account Number:<span style="color: red">*</span></label><br>
+            <label for="account_number">Bank Account:<span style="color: red">*</span></label><br>
             <input type="text" id="account_number" name="account_number" value="<?php echo htmlspecialchars($account_number); ?>" required><br>
             <span class="error"><?php echo $accountErr; ?></span><br>
 
