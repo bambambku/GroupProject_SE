@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../../Model/dbconnect.php");
+include("../../includes/dbconnect.php");
 
 if (!isset($_SESSION['customer']) || !isset($_SESSION['basket'])) {
     die("No customer or basket data found.");
@@ -11,39 +11,39 @@ $basket = $_SESSION['basket'];
 
 // Fetch customer details
 $customerDetails = [
-    'Name' => $customer['f_name'] . ' ' . $customer['l_name'],
-    'Address' => $customer['address'],
-    'Post Code' => $customer['post_code'],
-    'Town' => $customer['town'],
+    'Name' => htmlspecialchars($customer['f_name'] . ' ' . $customer['l_name']),
+    'Address' => htmlspecialchars($customer['address']),
+    'Post Code' => htmlspecialchars($customer['post_code']),
+    'Town' => htmlspecialchars($customer['town']),
 ];
 
 // Calculate basket totals
 $totalPrice = 0;
 $productDetails = [];
 
-foreach ($basket as $item) {
-    $stmt = $conn->prepare("SELECT name, price FROM Product WHERE ID = ?");
-    $stmt->bind_param("i", $item['product_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $product = $result->fetch_assoc();
+try {
+    foreach ($basket as $item) {
+        $sql = "SELECT name, price FROM Product WHERE ID = :productId";
+        $stmt = $myPDO->prepare($sql);
+        $stmt->bindParam(':productId', $item['product_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($product) {
-        $subTotal = $product['price'] * $item['quantity'];
-        $totalPrice += $subTotal;
+        if ($product) {
+            $subTotal = $product['price'] * $item['quantity'];
+            $totalPrice += $subTotal;
 
-        $productDetails[] = [
-            'name' => $product['name'],
-            'price' => $product['price'],
-            'quantity' => $item['quantity'],
-            'subTotal' => $subTotal,
-        ];
+            $productDetails[] = [
+                'name' => htmlspecialchars($product['name']),
+                'price' => $product['price'],
+                'quantity' => $item['quantity'],
+                'subTotal' => $subTotal,
+            ];
+        }
     }
-
-    $stmt->close();
+} catch (PDOException $e) {
+    die("Error fetching product details: " . $e->getMessage());
 }
-
-$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,7 +106,7 @@ $conn->close();
         <tbody>
             <?php foreach ($productDetails as $product): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($product['name']); ?></td>
+                    <td><?php echo $product['name']; ?></td>
                     <td><?php echo number_format($product['price'], 2); ?></td>
                     <td><?php echo $product['quantity']; ?></td>
                     <td><?php echo number_format($product['subTotal'], 2); ?></td>

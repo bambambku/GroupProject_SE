@@ -1,18 +1,37 @@
 <?php
-include("../../Model/query.php");
-include("../../Model/dbconnect.php");
+include("../../includes/dbconnect.php");
 include("sales_basket.php");
-include("../../includes/header.php");
+include("../../includes/header2.php");
 
-if(isset($_GET['customer'])) {
-    $customer = $conn->query("SELECT * FROM Customer WHERE ID = {$_GET['customer']}")->fetch_assoc();
-    $_SESSION['customer'] = $customer;
-    var_dump($customer);
-} else {
-    unset($_SESSION['customer']);
+session_start();
+
+try {
+    // Handle customer selection
+    if (isset($_GET['customer'])) {
+        $sql = "SELECT * FROM Customer WHERE ID = :id";
+        $stmt = $myPDO->prepare($sql);
+        $stmt->bindParam(':id', $_GET['customer'], PDO::PARAM_INT);
+        $stmt->execute();
+        $customer = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($customer) {
+            $_SESSION['customer'] = $customer;
+            var_dump($customer); // Debugging: Remove or comment in production
+        }
+    } else {
+        unset($_SESSION['customer']);
+    }
+
+    // Fetch all customers
+    $sql = "SELECT ID, f_name, m_name, l_name, address, post_code, town FROM Customer";
+    $stmt = $myPDO->prepare($sql);
+    $stmt->execute();
+    $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Database error: " . $e->getMessage();
+    exit;
 }
-$query = "SELECT ID, f_name, m_name, l_name, address, post_code, town FROM Customer";
-$result = $conn->query($query);
 ?>
 
 <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
@@ -39,9 +58,9 @@ $result = $conn->query($query);
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $result->fetch_assoc()): ?>
+                <?php foreach ($customers as $row): ?>
                     <tr>
-                        <td><?php echo $row['ID']; ?></td>
+                        <td><?php echo htmlspecialchars($row['ID']); ?></td>
                         <td><?php echo htmlspecialchars($row['f_name']); ?></td>
                         <td><?php echo htmlspecialchars($row['m_name']); ?></td>
                         <td><?php echo htmlspecialchars($row['l_name']); ?></td>
@@ -49,11 +68,12 @@ $result = $conn->query($query);
                         <td><?php echo htmlspecialchars($row['post_code']); ?></td>
                         <td><?php echo htmlspecialchars($row['town']); ?></td>
                         <td>
-                            <a href="sales_chooseCustomer.php?customer=<?php echo $row['ID']; ?>">
-                            <button>Select</button></a>
+                            <a href="sales_chooseCustomer.php?customer=<?php echo htmlspecialchars($row['ID']); ?>">
+                                <button>Select</button>
+                            </a>
                         </td>
                     </tr>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
         <div>
@@ -67,14 +87,16 @@ $result = $conn->query($query);
             <p id="customerDetails"></p>
             <div class="modal-buttons">
                 <a href="invoice.php">
-                    <button>Confirm</button></a>
+                    <button>Confirm</button>
+                </a>
                 <a href="sales_chooseCustomer.php?cancel">
-                    <button>Cancel</button></a>
+                    <button>Cancel</button>
+                </a>
             </div>
         </div>
     </div>
+</main>
 
-    </main>
 <?php 
 include("modalStyleAndScript.php"); 
 include("../../includes/footer.php");
@@ -96,7 +118,7 @@ include("../../includes/footer.php");
 
     <?php if (isset($_SESSION['customer'])): ?>
         showChooseCustomerModal(
-            ,
+            <?php echo json_encode($_SESSION['customer']['ID']); ?>,
             <?php echo json_encode($_SESSION['customer']['f_name']); ?>,
             <?php echo json_encode($_SESSION['customer']['l_name']); ?>,
             <?php echo json_encode($_SESSION['customer']['address']); ?>,

@@ -2,7 +2,10 @@
 // include("../../Model/dbconnect.php");
 include("../../includes/dbconnect.php");
 global $myPDO;
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 if (!isset($_SESSION['basket'])) {
     $_SESSION['basket'] = [];
