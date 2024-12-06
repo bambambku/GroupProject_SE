@@ -1,23 +1,36 @@
 <?php
-include("../../Model/query.php");
-include("../../Model/dbconnect.php");
+include("../../includes/dbconnect.php");
 include("sales_basket.php");
-include("../../includes/header.php");
-include("../../includes/navbar.php");
+include("../../includes/header2.php");
+
+if (!isset($_SESSION['basket'])) {
+    header("Location: sales_index.php");
+}
 
 
 $basket = $_SESSION['basket'];
 $currentBranch = 1;
+try {
+    if (!empty($basket)) {
+        foreach ($basket as $item) {
+            $productId = $item['ID'];
+            $quantityPurchased = $item['quantity'];
 
-if (!empty($basket)) {
-    foreach ($basket as $item) {
-        $productId = $item['ID'];
-        $quantityPurchased = $item['quantity'];
-        $stmt = $conn->prepare("UPDATE stock SET quantity = quantity - ? WHERE product = ? AND branch = ?");
-        $stmt->bind_param("iii", $quantityPurchased, $productId, $currentBranch);
-        $stmt->execute();
-        $stmt->close();
-    }}
+            $sql = "UPDATE stock 
+            SET quantity = quantity - :quantityPurchased 
+            WHERE product = :productId AND branch = :branch";
+
+            $stmt = $myPDO->prepare($sql);
+            $stmt->bindParam(':quantityPurchased', $quantityPurchased, PDO::PARAM_INT);
+            $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+            $stmt->bindParam(':branch', $currentBranch, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    } 
+} catch (PDOException $e) {
+echo "Error updating stock: " . $e->getMessage();
+exit;
+}
 ?>
 
 
@@ -45,7 +58,7 @@ if (!empty($basket)) {
     <button type="button" >Produce an invoice</button>
 </div>
 
-<!-- <div id="successfulSaleModal" class="modal" style="display: none;">
+<div id="successfulSaleModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close" onclick="closeModal('successfulSaleModal')">&times;</span>
         <h2>Sale Successful</h2>
@@ -54,7 +67,7 @@ if (!empty($basket)) {
             <button type="button" onclick="closeModal('successfulSaleModal')">Cancel</button>
         </form>
     </div>
-</div> -->
+</div>
 
 
 <?php

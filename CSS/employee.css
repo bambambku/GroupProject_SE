@@ -15,4 +15,14 @@
   .sales-tables-stock, .sales-tables-basket {
     width: 50%;
   }
+
+  .create-customer, .choose-customer {
+    width: 60%;
+    margin: auto;
+  }
   
+  .error {
+    color: red;
+    font-style: italic;
+    font-size: small;
+  }
