@@ -1,4 +1,4 @@
-#background1
+.background1
 {
    background-color: #1A4A5A;
    align-items: center;
@@ -50,7 +50,7 @@
    height: 100%;
    text-align: left;
 }
-.login-container input[type="text"],
+.login-container input[type="email"],
 .login-container input[type="password"] 
 {
    width: 100%;
@@ -87,4 +87,8 @@
 .frgt-passwrd:hover
 {
    color: #7B008D;
+}
+
+.error_message{
+   color: red;
 }

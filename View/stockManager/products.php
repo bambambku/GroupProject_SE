@@ -1,145 +1,165 @@
-<!-- TO DO: -SEARCH FUNCTION -SORT FUNCTION -Details button -->
 <?php
-include ("../../Model/dbconnect.php");
-include ("../../Model/query.php");
-
-
-$products = makeQuery("SELECT ID, name, description, price, weight, size, CPU, GPU, RAM, hard_drive FROM Product", $conn);
+try {
+    $db = new PDO('sqlite:' . __DIR__ . '/../../Model/Terra_Core_DB.db');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    exit;
+}
 
 $data = json_decode(file_get_contents("php://input"), true);
-if (!empty($data)) {
-    $name = $data['name'];
-    $description = $data['description'];
-    $price = $data['price'];
-    $weight = $data['weight'];
-    $size = $data['size'];
-    $CPU = $data['CPU'];
-    $GPU = $data['GPU'];
-    $RAM = $data['RAM'];
-    $hard_drive = $data['hard_drive'];
-    $insertQuery = "INSERT INTO Product (name, description, price, weight, size, CPU, GPU, RAM, hard_drive)
-                    VALUES ('$name', '$description', '$price', '$weight', '$size', '$CPU', '$GPU', '$RAM', '$hard_drive')";
 
-    if (makeQuery($insertQuery, $conn)) {
-        echo "success";
-    } else {
-        echo "Error: " . $conn->error;
-    }
-}
-?>
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../CSS/style-products-desktop.css" media="screen and (min-width: 1025px)">
-    <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
-    <link rel="stylesheet" href="../../CSS/stock-manager.css" media="screen and (min-width: 1025px)">
-    <title>Product View</title>
-</head>
-<body>
-<?php include '../../includes/navbar.php'; ?>
-<main class="main-container">
-<h1>Products:</h1>
-    <button id="modalButtonProducts">Create New</button>
-    <button id="searchButton">Search</button>
-    <input type="text" id="searchInput"><br>
-    <div id="modalWindowProducts" class="modal">
-        <form>
-            <label for="Name">Product name:</label><br>
-            <input type="text" id="productName" name="productName"><br>
-            <label for="Description">Description:</label><br>
-            <input type="text" id="productDescription" name="productDescription"><br>
-            <label for="Price">Price:</label><br>
-            <input type="text" id="productPrice" name="productPrice"><br>
-            <label for="Weight">Weight:</label><br>
-            <input type="text" id="productWeight" name="productWeight"><br>
-            <label for="Size">Size:</label><br>
-            <input type="text" id="productSize" name="productSize"><br>
-            <label for="CPU">CPU:</label><br>
-            <input type="text" id="productCPU" name="productCPU"><br>
-            <label for="GPU">GPU:</label><br>
-            <input type="text" id="productGPU" name="productGPU"><br>
-            <label for="RAM">RAM:</label><br>
-            <input type="text" id="productRAM" name="productRAM"><br>
-            <label for="Hard-Drive">Hard-Drive:</label><br>
-            <input type="text" id="productHard-Drive" name="productHard-Drive"><br>
-            <button type="button" id="closeButton">Close</button>
-            <button type="button" id="addButton">Add</button>
-        </form>
-    </div>
-        <div id="modalWindowProductsEdit" class="modal">
-        <form>
-            <input type="hidden" id="editProductId">
-            <label for="Name">Product name:</label><br>
-            <input type="text" id="editProductName" name="productName"><br>
-            <label for="Description">Description:</label><br>
-            <input type="text" id="editProductDescription" name="productDescription"><br>
-            <label for="Price">Price:</label><br>
-            <input type="text" id="editProductPrice" name="productPrice"><br>
-            <label for="Weight">Weight:</label><br>
-            <input type="text" id="editProductWeight" name="productWeight"><br>
-            <label for="Size">Size:</label><br>
-            <input type="text" id="editProductSize" name="productSize"><br>
-            <label for="CPU">CPU:</label><br>
-            <input type="text" id="editProductCPU" name="productCPU"><br>
-            <label for="GPU">GPU:</label><br>
-            <input type="text" id="editProductGPU" name="productGPU"><br>
-            <label for="RAM">RAM:</label><br>
-            <input type="text" id="editProductRAM" name="productRAM"><br>
-            <label for="Hard-Drive">Hard-Drive:</label><br>
-            <input type="text" id="editProductHardDrive" name="productHard-Drive"><br>
-            <button type="button" id="closeButtonEdit">Close</button>
-            <button type="button" id="saveEditButton">Save</button>
-        </form>      
-    </div>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Weight</th>
-            <th>Size</th>
-            <th>CPU</th>
-            <th>GPU</th>
-            <th>RAM</th>
-            <th>Hard Drive</th>
-            <th>Actions</th>
-        </tr>
-        <?php
-        if (!empty($products)) {
-            foreach ($products as $row) {
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($row['ID']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['description']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['price']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['weight']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['size']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['CPU']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['GPU']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['RAM']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['hard_drive']) . "</td>";
-                echo "<td>";
-                echo "<button id='editButton" . htmlspecialchars($row['ID']) . "'>Edit</button> | ";
-                echo "<button id='detailsButton" . htmlspecialchars($row['ID']) . "'>Details</button> | ";
-                echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "''>Delete</button>";
-                echo "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='11'>No products found</td></tr>";
-        }
-        ?>
-    </table>
-<<<<<<< HEAD
-    <script src="../../js/productActions.js"></script>
-=======
-    <script src="../js/productActions.js"></script>
-    </main>
+//Switch case for each CRUD operation + Details Window + Sort
+if (!empty($data) && isset($data['action'])) {
+    $action = $data['action'];
+    try {
+        switch ($action) {
+                case 'create':
+                    try {
+                        $db->beginTransaction();
     
-<?php include '../../includes/footer.php'; ?>
->>>>>>> development
-</body>
-</html>
+                        $stmt = $db->prepare("INSERT INTO Product (name, description, price, weight, size, CPU, GPU, RAM, hard_drive)
+                                              VALUES (:name, :description, :price, :weight, :size, :CPU, :GPU, :RAM, :hard_drive)");
+                        $stmt->bindValue(':name', $data['name'], PDO::PARAM_STR);
+                        $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
+                        $stmt->bindValue(':price', $data['price'], PDO::PARAM_STR);
+                        $stmt->bindValue(':weight', $data['weight'], PDO::PARAM_STR);
+                        $stmt->bindValue(':size', $data['size'], PDO::PARAM_STR);
+                        $stmt->bindValue(':CPU', $data['CPU'], PDO::PARAM_STR);
+                        $stmt->bindValue(':GPU', $data['GPU'], PDO::PARAM_STR);
+                        $stmt->bindValue(':RAM', $data['RAM'], PDO::PARAM_STR);
+                        $stmt->bindValue(':hard_drive', $data['hard_drive'], PDO::PARAM_STR);
+                        $stmt->execute();
+    
+                        $productID = $db->lastInsertId();
+    
+                        $stmt = $db->prepare("INSERT INTO stock (product, quantity, branch) 
+                                              VALUES (:productID, :quantity, :branch)");
+                        $stmt->bindValue(':productID', $productID, PDO::PARAM_INT);
+                        $stmt->bindValue(':quantity', $data['stock'], PDO::PARAM_INT);
+                        $stmt->bindValue(':branch', $data['branch'], PDO::PARAM_INT);
+                        $stmt->execute();
+    
+                        $db->commit();
+                        echo json_encode(['success' => true]);
+                    } catch (Exception $e) {
+                        $db->rollBack();
+                        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+                    }
+                    break;
+    
+                    case 'read':
+                        if (isset($data['productID'])) {
+                            $stmt = $db->prepare("SELECT Product.ID, Product.name, Product.description, Product.price, 
+                                                         Product.weight, Product.size, Product.CPU, Product.GPU, 
+                                                         Product.RAM, Product.hard_drive, stock.quantity
+                                                        FROM Product
+                                                        LEFT JOIN stock ON Product.ID = stock.product
+                                                        WHERE Product.ID = :productID");
+                            $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                            $stmt->execute();
+                            $product = $stmt->fetch(PDO::FETCH_ASSOC);
+                            echo json_encode($product);
+                        }
+                        break;
+    
+                case 'update':
+                    try {
+                        $db->beginTransaction();
+    
+                        $stmt = $db->prepare("UPDATE Product SET 
+                            name = :name, 
+                            description = :description, 
+                            price = :price, 
+                            weight = :weight, 
+                            size = :size, 
+                            CPU = :CPU, 
+                            GPU = :GPU, 
+                            RAM = :RAM, 
+                            hard_drive = :hard_drive 
+                            WHERE ID = :productID");
+                        $stmt->bindValue(':name', $data['name'], PDO::PARAM_STR);
+                        $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
+                        $stmt->bindValue(':price', $data['price'], PDO::PARAM_STR);
+                        $stmt->bindValue(':weight', $data['weight'], PDO::PARAM_STR);
+                        $stmt->bindValue(':size', $data['size'], PDO::PARAM_STR);
+                        $stmt->bindValue(':CPU', $data['CPU'], PDO::PARAM_STR);
+                        $stmt->bindValue(':GPU', $data['GPU'], PDO::PARAM_STR);
+                        $stmt->bindValue(':RAM', $data['RAM'], PDO::PARAM_STR);
+                        $stmt->bindValue(':hard_drive', $data['hard_drive'], PDO::PARAM_STR);
+                        $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                        
+                        if (!$stmt->execute()) {
+                            $errorInfo = $stmt->errorInfo();
+                            echo json_encode(['success' => false, 'error' => $errorInfo]);
+                            exit();
+                        }
+    
+                        $stmt = $db->prepare("UPDATE stock SET quantity = :quantity WHERE product = :productID");
+                        $stmt->bindValue(':quantity', $data['quantity'], PDO::PARAM_INT);
+                        $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                        if (!$stmt->execute()) {
+                            $errorInfo = $stmt->errorInfo();
+                            echo json_encode(['success' => false, 'error' => $errorInfo]);
+                            exit();
+                        }
+                        
+                        $db->commit();
+                        echo json_encode(['success' => true]);
+                    } catch (Exception $e) {
+                        $db->rollBack();
+                        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+                    }
+                    break;
+    
+                case 'delete':
+                    $stmt = $db->prepare("DELETE FROM Product WHERE ID = :productID");
+                    $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                    $stmt->execute();
+                    echo json_encode(['success' => true]);
+                    break;
+    
+                case 'sort':
+                    $orderBy = '';
+                    switch ($data['sortOption']) {
+                        case 'lowStock':
+                            $orderBy = 'stock.quantity ASC';
+                            break;
+                        case 'priceAsc':
+                            $orderBy = 'product.price ASC';
+                            break;
+                        case 'priceDesc':
+                            $orderBy = 'product.price DESC';
+                            break;
+                        default:
+                            $orderBy = 'product.name ASC';
+                            break;
+                    }
+                    $stmt = $db->prepare("SELECT product.ID, product.name, product.price, stock.quantity
+                                          FROM product
+                                          LEFT JOIN stock ON product.ID = stock.product
+                                          ORDER BY $orderBy");
+                    $stmt->execute();
+                    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    echo json_encode($products);
+                    break;
+    
+                default:
+                    echo json_encode(['success' => false, 'message' => 'Invalid action']);
+                    break;
+        }
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    }
+} else {
+    // For initial page load, fetch the products for the HTML table
+    try {
+        $stmt = $db->query("SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product");
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        $products = [];
+    }
+    include("productsView.php");
+}
 
+?>

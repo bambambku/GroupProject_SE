@@ -1,80 +1,90 @@
-<?php 
+<?php
 session_start();
-if (isset($_SESSION["user_role"])){
-  header("Location: ../stockManager/test.php");
+if (isset($_SESSION["user_role"])) {
+    header("Location: logout.php");
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>IMS :: Login</title>
+  <title>Terra Core :: Login</title>
   <?php include('../../includes/header.php'); ?>
-  <!-- <style>
-    form {
-      position: relative;
-    }
-
-    .forgot-password {
-      position: absolute;
-      right: 0;
-      bottom: -25px; /* Adjust as needed */
-      font-size: 14px;
-      text-decoration: none;
-      color: #007bff;
-    }
-
-    .forgot-password:hover {
-      text-decoration: underline;
-    }
-  </style> -->
+  <link rel="stylesheet" href="..\..\CSS\login.css">
 </head>
-<body id="background1">
+<body class="background1">
         <div class="logo-container">
             <img src="../../Pictures\logo.png" alt="Logo" class="logo-pic">
         </div>
         <div class="login-container-background-out">
             <div class="login-container-background-ins">
                 <div class="login-container">
-                <?php 
-                  if (isset($_POST["login"])){
+                <?php
+                if (isset($_POST["login"])) {
                     $email_address = $_POST["email"];
                     $password = $_POST["password"];
-                    require_once "../../includes/config.php";
-                    $sql = "SELECT * FROM users WHERE email = '$email_address'";
-                    $email_result= mysqli_query($conn, $sql);
-                    $user = mysqli_fetch_array($email_result, MYSQLI_ASSOC);
-                    if($user){
-                      if($password == $user["password"]){
-                      session_start();
+                
+                    require_once "../../includes/dbconnect.php";
+                
+                    // Debugging: Check if connection is working
+                    if (!$myPDO) {
+                        die("Database connection failed: " . implode(":", $myPDO->errorInfo()));
+                    }
+                  
+                    // Test with a simpler query
+                    try {
+                        $sql = "SELECT * FROM Staff WHERE email = :email";  // Adjust column name if needed
+                        $stmt = $myPDO->prepare($sql);
+                        $stmt->bindParam(':email', $email_address, PDO::PARAM_STR);
+                        $stmt->execute();
 
-                      $_SESSION['user_role']=$user['role'];
-                      $_SESSION['user_firstName']= $user['fname'];
-                      $_SESSION['user_surname']=$user['sname'];
-                      $_SESSION['email_address']=$user['email'];
-                      $_SESSION['user_id']=$user['user_id'];
-            
-                      // Change this to actual pages when they are created.
-                      if ($user['role']=='Admin'){
-                        header("Location: ../admin/a_home.php");
-                      } elseif ($user['role']=='Staff'){
-                        header("Location: ../staff_member/s_home.php");
-                      } elseif ($user['role']=='Manager'){
-                        header("Location: ../manager/m_home.php");
-                      } elseif ($user['role']=='Stock Manager'){
-                        header("Location: ../stock_manager/sm_home.php");
-                      } else {
-                        echo $user['role'];
-                      }
-                      die();
-                      } else{
-                        echo "<p class='error_message'>Invalid Email or Password</p>";
-                      }
-                      } else{
-                        echo "<p class='error_message'>Invalid Email or Password</p>";
-                      }
-                  }
+
+
+                        // Checking if the statement prepared properly / isn't empty
+                        if ($stmt) {
+                            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                            if ($user) {
+                                if ($password == $user["password"]) {
+
+                                  
+                                    $_SESSION['user_role'] = $user['role_id'];
+                                    $_SESSION['user_firstName'] = $user['f_name'];
+                                    $_SESSION['user_surname'] = $user['l_name'];
+                                    $_SESSION['email_address'] = $user['email'];
+                                    $_SESSION['user_id'] = $user['staff_id'];
+
+                                    // In this section here: it makes more sense to have user
+                                    // role stored as the actual role title rather than a number.
+                                    // You'd either have to accept it's redundant or change it.
+                                    if ($user['role_id'] == 1) {
+                                        header("Location: ../employee/Employee.php"); // change this to correct path
+                                    } elseif ($user['role_id'] == 2) {
+                                        header("Location: ../stockManager/products.php"); // The only reason this takes you to a director's page is because we're in the process of moving things around.
+                                    } elseif ($user['role_id'] == 3) {
+                                        header("Location: ../manager/m_home.php");
+                                    } elseif ($user['role_id'] == 4) {
+                                        header("Location: ../director/director_home.php");
+                                    } elseif ($user['role_id'] == 5){
+                                        header("Location: ../admin/a_home.php");
+                                    } else {
+                                        echo "Error: " .$user['role_id']. " is not a valid user role.";
+                                    }
+                                    die();
+                                } else {
+                                    echo "<p class='error_message'>Invalid Email or Password</p>";
+                                }
+                            } else {
+                                echo "<p class='error_message'>Invalid Email or Password</p>";
+                            }
+                        } else {
+                            echo "Error with the SQL query: " . implode(":", $myPDO->errorInfo());
+                        }
+                    } catch (PDOException $e) {
+                        echo "PDO Error: " . $e->getMessage();
+                    }
+                }
                 ?>
+
                 <form action="login.php" method="post">
                   <input type="email" name="email" placeholder="Email Address" required>
                   <input type="password" name="password" placeholder="Password" required>
@@ -88,3 +98,27 @@ if (isset($_SESSION["user_role"])){
         </div>
 </body>
 </html>
+
+
+<!-- 
+
+######## Login info - {Delete when submitting} ########
+{This is just for everyone who is testing their pages}
+
+__________________________________________________________________
+| Email                     | Password | Role          | Role ID |
+==================================================================
+| lhattersley@terracore.com |   1234   | Employee      |    1    |
+------------------------------------------------------------------
+| cstarling@terracore.com   |   1234   | Stock Manager |    2    |
+------------------------------------------------------------------
+| mobrycki@terracore.com    |   1234   | Manager       |    3    |
+------------------------------------------------------------------
+| skovacs@terracore.com     |   1234   | Director      |    4    |
+------------------------------------------------------------------
+| jfrancois@terracore.com   |   1234   | Admin         |    5    |
+------------------------------------------------------------------
+
+Wireframe Link [ https://rp.mockplus.com/editor/4p5Fn3_WL/2SNRE91EZy ]
+
+-->
