@@ -1,3 +1,6 @@
+document.addEventListener('DOMContentLoaded', () => {
+    applyLowStockStyling();
+});
 let currentEditingProductId = null;
 // Add Button Modal
 var modal = document.getElementById("modalWindowProducts");
@@ -10,6 +13,44 @@ openBtn.onclick = function() {
 var closeBtn = document.getElementById("closeButton");
 closeBtn.onclick = function() {
   modal.style.display = "none";
+}
+
+// Update Table, avoids the need to refresh page
+async function updateTable() {
+    try {
+        const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'read' })
+        });
+        const products = await response.json();
+        const tableBody = document.querySelector("#laptopTable tbody");
+        tableBody.querySelectorAll('tr').forEach(row => row.remove());
+
+        products.forEach(product => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${product.name}</td>
+                <td>${product.description}</td>
+                <td>${product.price}</td>
+                <td>${product.weight}</td>
+                <td>${product.size}</td>
+                <td>${product.CPU}</td>
+                <td>${product.GPU}</td>
+                <td>${product.RAM}</td>
+                <td>${product.hard_drive}</td>
+                <td>${product.quantity !== null ? product.quantity : 'N/A'}</td>
+                <td>
+                    <button class="editButton" data-id="${product.ID}">Edit</button> |
+                    <button id="deleteButton${product.ID}" class="deleteButton">Delete</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+        applyLowStockStyling();
+    } catch (error) {
+        console.error("Error updating table:", error);
+    }
 }
 
 // Add Product
@@ -54,91 +95,86 @@ addBtn.onclick = async function() {
     });
     const result = await response.json();
     if (result.success) {
-        window.location.reload();
+        await updateTable();
+        modal.style.display = "none";
+    }
+    else{
+        console.error("Error adding product");
     }
 };
 
 // Delete Product
-var deleteButtons = document.querySelectorAll("[id^='deleteButton']");
+document.getElementById("laptopTable").addEventListener("click", async function (event) {
+    if (event.target.id.startsWith("deleteButton")) {
+        const productId = event.target.id.replace("deleteButton", ""); // Extract product ID
 
-deleteButtons.forEach(button => {
-    button.onclick = function(){
-        if (confirm(`Are you sure you want to delete this product?`)){
-            const productId = this.id.replace("deleteButton", "");
-
-        fetch('/GroupProject_SE/View/stockManager/products.php',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                action: 'delete',
-                productID: productId})
-        })
-        .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const row = document.querySelector(`#deleteButton${productId}`).closest("tr");
-                    row.parentNode.removeChild(row);
-                    window.location.reload();
+        if (confirm(`Are you sure you want to delete this product?`)) {
+            try {
+                const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'delete',
+                        productID: productId
+                    })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    await updateTable();
                 } else {
-                    console.error("Failed to delete product:", data.message);
+                    console.error("Failed to delete product:", result.message);
                 }
-            })
-            .catch(error => console.error('Error deleting product:', error));
+            } catch (error) {
+                console.error("Error deleting product:", error);
+            }
         }
     }
 });
 
-// Edit Button Modal
-const editButtons = document.querySelectorAll('.editButton');
-
-editButtons.forEach(button => {
-    button.onclick = async function(event) {
+// Edit Button
+document.getElementById("laptopTable").addEventListener("click", async function (event) {
+    if (event.target.classList.contains("editButton")) {
         const productId = event.target.getAttribute('data-id');
         currentEditingProductId = productId;
-        const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                action: 'read',
-                productID: productId
-            })
-        });
         
-        const product = await response.json();
+        try {
+            const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'read',
+                    productID: productId
+                })
+            });
 
-        if (product) {
-            document.getElementById("editProductName").value = product.name;
-            document.getElementById("editProductDescription").value = product.description;
-            document.getElementById("editProductPrice").value = product.price;
-            document.getElementById("editProductWeight").value = product.weight;
-            document.getElementById("editProductSize").value = product.size;
-            document.getElementById("editProductCPU").value = product.CPU;
-            document.getElementById("editProductGPU").value = product.GPU;
-            document.getElementById("editProductRAM").value = product.RAM;
-            document.getElementById("editProductHardDrive").value = product.hard_drive;
-            document.getElementById("editProductStock").value = product.quantity;
+            const product = await response.json();
 
-            document.getElementById("modalWindowProductsEdit").style.display = "flex";
-        } else {
-            console.error('Product not found');
+            if (product) {
+                document.getElementById("editProductName").value = product.name;
+                document.getElementById("editProductDescription").value = product.description;
+                document.getElementById("editProductPrice").value = product.price;
+                document.getElementById("editProductWeight").value = product.weight;
+                document.getElementById("editProductSize").value = product.size;
+                document.getElementById("editProductCPU").value = product.CPU;
+                document.getElementById("editProductGPU").value = product.GPU;
+                document.getElementById("editProductRAM").value = product.RAM;
+                document.getElementById("editProductHardDrive").value = product.hard_drive;
+                document.getElementById("editProductStock").value = product.quantity;
+
+                document.getElementById("modalWindowProductsEdit").style.display = "flex";
+            } else {
+                console.error('Product not found.');
+            }
+        } catch (error) {
+            console.error("Failed to fetch product details for editing:", error);
         }
-    };
+    }
 });
 
-var closeButtonEdit = document.getElementById("closeButtonEdit");
+// Save Edit Button
+document.getElementById("saveEditButton").onclick = async function () {
+    const productId = currentEditingProductId;
 
-closeButtonEdit.onclick = function() {
-    document.getElementById("modalWindowProductsEdit").style.display = "none";
-    currentEditingProductId = null;
-};
-
-// Save button within Edit Modal
-var saveEditButton = document.getElementById("saveEditButton");
-
-saveEditButton.onclick = async function(){
-    const productId = currentEditingProductId; // Reuse stored productId
     const productName = document.getElementById("editProductName").value;
     const productDescription = document.getElementById("editProductDescription").value;
     const productPrice = document.getElementById("editProductPrice").value;
@@ -149,7 +185,7 @@ saveEditButton.onclick = async function(){
     const productRAM = document.getElementById("editProductRAM").value;
     const productHardDrive = document.getElementById("editProductHardDrive").value;
     const productStock = document.getElementById("editProductStock").value;
-    
+
     try {
         const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
             method: 'POST',
@@ -173,12 +209,21 @@ saveEditButton.onclick = async function(){
         const result = await response.json();
 
         if (result.success) {
-            window.location.reload();
+            await updateTable();
             document.getElementById("modalWindowProductsEdit").style.display = "none";
-        } 
+            currentEditingProductId = null;
+        } else {
+            console.error("Failed to update product:", result.message);
+        }
     } catch (error) {
-        console.error("Failed to update product:", error);
+        console.error("Error saving product edits:", error);
     }
+};
+const closeButtonEdit = document.getElementById("closeButtonEdit");
+
+closeButtonEdit.onclick = function () {
+    document.getElementById("modalWindowProductsEdit").style.display = "none";
+    currentEditingProductId = null;
 };
 
 // Sort By
@@ -188,40 +233,67 @@ var sortSelect = document.getElementById("sortSelect");
 sortButton.onclick = async function() {
     const sortOption = sortSelect.value;
 
-    const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            action: 'sort',
-            sortOption: sortOption
-        })
-    });
+    try {
+        const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'sort',
+                sortOption: sortOption
+            })
+        });
 
-    const sortedProducts = await response.json();
-    const table = document.getElementById("laptopTable");
-    const rows = table.querySelectorAll("tr");
-    rows.forEach((row, index) => {
-        if (index !== 0) row.remove();
-    });
+        const sortedProducts = await response.json();
+        
+        const tableBody = document.querySelector("#laptopTable tbody");
+        tableBody.innerHTML = '';
 
-    tableBody.innerHTML = '';
+        sortedProducts.forEach(product => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${product.name}</td>
+                <td>${product.description}</td>
+                <td>${product.price}</td>
+                <td>${product.weight}</td>
+                <td>${product.size}</td>
+                <td>${product.CPU}</td>
+                <td>${product.GPU}</td>
+                <td>${product.RAM}</td>
+                <td>${product.hard_drive}</td>
+                <td>${product.quantity !== null ? product.quantity : 'N/A'}</td>
+                <td>
+                    <button class="editButton" data-id="${product.ID}">Edit</button> |
+                    <button id="deleteButton${product.ID}" class="deleteButton">Delete</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
 
-    sortedProducts.forEach(product => {
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td>${product.name}</td>
-            <td>${product.price}</td>
-            <td>${product.quantity}</td>
-            <td>
-                <button id="editButton${product.ID}">Edit</button>
-                <button id="deleteButton${product.ID}">Delete</button>
-                <button id="detailsButton${product.ID}">Details</button> |
-            </td>
-        `;
-        tableBody.appendChild(row);
-    });
+    } catch (error) {
+        console.error("Error sorting products:", error);
+    }
+    applyLowStockStyling();
 };
+
+
+function applyLowStockStyling() {
+    const rows = document.querySelectorAll('#laptopTable tbody tr');
+
+    rows.forEach(row => {
+        const quantityCell = row.querySelector('td:nth-child(10)');
+        const productNameCell = row.querySelector('td:nth-child(1)');
+
+        const quantity = parseInt(quantityCell.textContent, 10);
+
+        if (!isNaN(quantity) && quantity < 10) {
+            quantityCell.style.color = 'red';
+            productNameCell.style.color = 'red';
+        } else {
+            quantityCell.style.color = '';
+            productNameCell.style.color = '';
+        }
+    });
+}
 
 // Search Button
 
