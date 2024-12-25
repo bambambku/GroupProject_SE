@@ -11,7 +11,7 @@ include("../../includes/header2.php");
 <body id="employee-background">
 
 <?php
-include("../../includes/navbar.php");
+// include("../../includes/navbar.php");
 
 // Handle basket actions
 if (isset($_GET['add'])) {

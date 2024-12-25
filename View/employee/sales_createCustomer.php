@@ -1,7 +1,7 @@
 <?php
 include("../../includes/dbconnect.php");
 include("sales_basket.php");
-include("../../includes/header2.php");
+// include("../../includes/header2.php");
 
 $f_nameErr = $m_nameErr = $l_nameErr = $addressErr = $postcodeErr = $townErr = $bankErr = $sortcodeErr = $accountErr = "";
 $f_name = $m_name = $l_name = $address = $post_code = $town = $bank = $sort_code = $account_number = "";
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body id="employee-background">
 
 <?php
-include("../../includes/navbar.php");
+// include("../../includes/navbar.php");
 ?>
 
 <main class="main-container">

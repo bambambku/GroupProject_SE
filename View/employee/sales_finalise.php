@@ -1,7 +1,7 @@
 <?php
 include("../../includes/dbconnect.php");
 include("sales_basket.php");
-include("../../includes/header2.php");
+// include("../../includes/header2.php");
 
 if (!isset($_SESSION['basket'])) {
     header("Location: sales_index.php");
