@@ -69,11 +69,8 @@ try {
                             <a href="sales_chooseCustomer.php?customer=<?php echo htmlspecialchars($row['ID']); ?>">
                                 <button>Select</button>
                             </a>
-                            <a href="sales_chooseCustomer.php?adjust=<?php echo htmlspecialchars($row['ID']); ?>">
+                            <a href="sales_adjustCustomer.php?adjust=<?php echo htmlspecialchars($row['ID']); ?>">
                                 <button>Adjust</button>
-                            </a>
-                            <a href="sales_chooseCustomer.php?delete=<?php echo htmlspecialchars($row['ID']); ?>">
-                                <button>Delete</button>
                             </a>
                         </td>
                     </tr>
@@ -81,7 +78,8 @@ try {
             </tbody>
         </table>
         <div>
-            <p>Not on a list? <a href="sales_createCustomer.php"><button type="button">Create a new Customer</button></a></p>
+            <p>Not on a list? <a href="sales_createCustomer.php"><button type="button">Create a new Customer</button></a>
+             or <a href="invoice.php?guest=1"><button type="button">Buy as a Guest</button></a></p>
         </div>
     </div>
 

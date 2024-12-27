@@ -4,12 +4,14 @@ include("../../includes/dbconnect.php");
 include("sales_basket.php");
 include("../../includes/header2.php");
 
-if (!isset($_SESSION['basket']) || !isset($_SESSION['customer'])) {
+$isGuest = isset($_GET['guest']) && $_GET['guest'] == 1;
+
+if (!$isGuest && (!isset($_SESSION['basket']) || !isset($_SESSION['customer']))) {
     header("Location: sales_index.php");
     exit;
 }
 
-$customer = $_SESSION['customer'];
+$customer = $isGuest ? null : $_SESSION['customer'];
 $basket = $_SESSION['basket'];
 $total = 0;
 
@@ -19,6 +21,12 @@ $total = 0;
         .dont-print {
             display: none;
         }
+    }
+
+    .invoice-sender, .invoice-customer {
+    width: 45%;
+    display: inline-block;
+    vertical-align: top;
     }
 </style>
 
@@ -31,23 +39,30 @@ $total = 0;
             </div>
             <div class="invoice-sender">
                 <h2>Sender Details</h2>
-                <p>Company Name: The Company</p>
-                <p>Address: 123 Fake Street</p>
-                <p>Post Code: AB1 2CD</p>
-                <p>Town: Faketown</p>
-            <br>
-            </div>
-            <div class="invoice-customer">
-                <h2>Customer Details</h2>
                 <p>
-                    <strong>Name:</strong> <?php echo htmlspecialchars($customer['f_name'] . ' ' . $customer['l_name']); ?><br>
-                    <strong>Address:</strong> <?php echo htmlspecialchars($customer['address']); ?><br>
-                    <strong>Post Code:</strong> <?php echo htmlspecialchars($customer['post_code']); ?><br>
-                    <strong>Town:</strong> <?php echo htmlspecialchars($customer['town']); ?><br>
+                    <strong>Company Name:</strong> The Company<br>
+                    <strong>Address:</strong> 123 Fake Street<br>
+                    <strong>Post Code:</strong> AB1 2CD<br>
+                    <strong>Town:</strong> Faketown<br>
                 </p>
             <br>
             </div>
-            <div class="invoice-table">
+            <div class="invoice-customer">
+            
+                <?php if ($isGuest): ?>
+                    <h2>Buy as a Guest purchase</h2>
+                <?php else: ?>
+                    <h2>Customer Details</h2>
+                    <p>
+                        <strong>Name:</strong> <?php echo htmlspecialchars($customer['f_name'] . ' ' . $customer['l_name']); ?><br>
+                        <strong>Address:</strong> <?php echo htmlspecialchars($customer['address']); ?><br>
+                        <strong>Post Code:</strong> <?php echo htmlspecialchars($customer['post_code']); ?><br>
+                        <strong>Town:</strong> <?php echo htmlspecialchars($customer['town']); ?><br>
+                    </p>
+                <?php endif; ?>
+            <br>
+            </div>
+            <div class="invoice-table" style="width: 70%;">
                 <table>
                     <thead>
                         <tr>
@@ -71,7 +86,7 @@ $total = 0;
                         <?php } ?>
                     </tbody>
                 </table>
-                <div>
+                <div class="invoice-total" style="text-align: right; position: relative; right: 19.8%;">
                     <h3>Total: <?php echo number_format($total, 2); ?></h3>
                 </div>
             </div>

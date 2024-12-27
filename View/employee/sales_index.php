@@ -32,8 +32,9 @@ if (isset($_POST['search'])) {
 
 // Prepare the query
 $sql = "SELECT product.ID, product.name, stock.quantity, product.price 
-        FROM product, stock 
-        WHERE stock.branch = :branch AND stock.product = product.ID";
+        FROM stock
+        INNER JOIN product ON stock.product = product.ID
+        AND stock.branch = :branch";
 
 $params = ['branch' => $currentBranch];
 
@@ -46,6 +47,7 @@ if ($searchTerm) {
 $stmt = $myPDO->prepare($sql);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($products);
 
 ?>
 <<<<<<< HEAD
