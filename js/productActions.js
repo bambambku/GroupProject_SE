@@ -2,9 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     applyLowStockStyling();
 });
 let currentEditingProductId = null;
+
+
 // Add Button Modal
 var modal = document.getElementById("modalWindowProducts");
-var openBtn = document.getElementById("modalButtonProducts");
+var openBtn = document.getElementById("addNewProductBtn");
 
 openBtn.onclick = function() {
     modal.style.display = "flex";
