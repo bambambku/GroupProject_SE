@@ -1,7 +1,7 @@
 <?php
 include("../../includes/dbconnect.php");
 include("sales_basket.php");
-include("../../includes/header2.php");
+// include("../../includes/header2.php");
 
 $f_nameErr = $m_nameErr = $l_nameErr = $addressErr = $postcodeErr = $townErr = $bankErr = $sortcodeErr = $accountErr = "";
 $f_name = $m_name = $l_name = $address = $post_code = $town = $bank = $sort_code = $account_number = "";
@@ -26,19 +26,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "message" => "Invalid post code format. Please make sure you use a space between the two parts of the postcode."
         ],
         "town" => ["err" => &$townErr, "required" => true, "message" => "Town is required."],
-        "bank" => ["err" => &$bankErr, "required" => true, "message" => "Bank name is required."],
-        "sort_code" => [
-            "err" => &$sortcodeErr,
-            "required" => true,
-            "regex" => "/^\d{6}$/",
-            "message" => "Sort code must be 6 digits with no dashes or spaces."
-        ],
-        "account_number" => [
-            "err" => &$accountErr,
-            "required" => true,
-            "regex" => "/^\d{8}$/",
-            "message" => "Account number must be 8 digits."
-        ]
+        // "bank" => ["err" => &$bankErr, "required" => true, "message" => "Bank name is required."],
+        // "sort_code" => [
+        //     "err" => &$sortcodeErr,
+        //     "required" => true,
+        //     "regex" => "/^\d{6}$/",
+        //     "message" => "Sort code must be 6 digits with no dashes or spaces."
+        // ],
+        // "account_number" => [
+        //     "err" => &$accountErr,
+        //     "required" => true,
+        //     "regex" => "/^\d{8}$/",
+        //     "message" => "Account number must be 8 digits."
+        // ]
     ];
 
     foreach ($fields as $field => $rules) {
@@ -57,8 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Insert into the database if valid
     if ($isValid) {
         try {
-            $sql = "INSERT INTO Customer (f_name, m_name, l_name, address, post_code, town, bank, sort_code, account_number)
-                    VALUES (:f_name, :m_name, :l_name, :address, :post_code, :town, :bank, :sort_code, :account_number)";
+            $sql = "INSERT INTO Customer (f_name, m_name, l_name, address, post_code, town)
+            --  bank, sort_code, account_number)
+                    VALUES (:f_name, :m_name, :l_name, :address, :post_code, :town)";
+                    // -- , :bank, :sort_code, :account_number)";
             $stmt = $myPDO->prepare($sql);
 
             $stmt->execute([
@@ -68,9 +70,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ':address' => $address,
                 ':post_code' => $post_code,
                 ':town' => $town,
-                ':bank' => $bank,
-                ':sort_code' => $sort_code,
-                ':account_number' => $account_number
+                // ':bank' => $bank,
+                // ':sort_code' => $sort_code,
+                // ':account_number' => $account_number
             ]);
 
             header("Location: sales_chooseCustomer.php?success=1");
@@ -88,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body id="employee-background">
 
 <?php
-include("../../includes/navbar.php");
+// include("../../includes/navbar.php");
 ?>
 
 <main class="main-container">
@@ -119,7 +121,7 @@ include("../../includes/navbar.php");
             <input type="text" id="town" name="town" value="<?php echo htmlspecialchars($town); ?>" required><br>
             <span class="error"><?php echo $townErr; ?></span><br>
 
-            <label for="bank">Bank:<span style="color: red">*</span></label><br>
+            <!-- <label for="bank">Bank:<span style="color: red">*</span></label><br>
             <input type="text" id="bank" name="bank" value="<?php echo htmlspecialchars($bank); ?>" required><br>
             <span class="error"><?php echo $bankErr; ?></span><br>
 
@@ -129,7 +131,7 @@ include("../../includes/navbar.php");
 
             <label for="account_number">Bank Account:<span style="color: red">*</span></label><br>
             <input type="text" id="account_number" name="account_number" value="<?php echo htmlspecialchars($account_number); ?>" required><br>
-            <span class="error"><?php echo $accountErr; ?></span><br>
+            <span class="error"><?php echo $accountErr; ?></span><br> -->
 
             <button type="submit">Add Customer</button>
         </form>

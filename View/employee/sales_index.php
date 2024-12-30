@@ -11,7 +11,7 @@ include("../../includes/header2.php");
 <body id="employee-background">
 
 <?php
-include("../../includes/navbar.php");
+// include("../../includes/navbar.php");
 
 // Handle basket actions
 if (isset($_GET['add'])) {
@@ -32,8 +32,9 @@ if (isset($_POST['search'])) {
 
 // Prepare the query
 $sql = "SELECT product.ID, product.name, stock.quantity, product.price 
-        FROM product, stock 
-        WHERE stock.branch = :branch AND stock.product = product.ID";
+        FROM stock
+        INNER JOIN product ON stock.product = product.ID
+        AND stock.branch = :branch";
 
 $params = ['branch' => $currentBranch];
 
@@ -46,20 +47,9 @@ if ($searchTerm) {
 $stmt = $myPDO->prepare($sql);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($products);
 
 ?>
-<<<<<<< HEAD
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
-    <title>Employee</title>
-</head>
-<body>
->>>>>>> development
 <main class="main-container">
 <div class="sales-tables">
     <div class="sales-tables-stock">

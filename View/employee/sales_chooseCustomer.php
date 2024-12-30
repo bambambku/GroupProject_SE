@@ -1,12 +1,11 @@
 <?php
 include("../../includes/dbconnect.php");
 include("sales_basket.php");
-include("../../includes/header2.php");
+// include("../../includes/header2.php");
 
-session_start();
+// session_start();
 
 try {
-    // Handle customer selection
     if (isset($_GET['customer'])) {
         $sql = "SELECT * FROM Customer WHERE ID = :id";
         $stmt = $myPDO->prepare($sql);
@@ -16,7 +15,6 @@ try {
 
         if ($customer) {
             $_SESSION['customer'] = $customer;
-            var_dump($customer); // Debugging: Remove or comment in production
         }
     } else {
         unset($_SESSION['customer']);
@@ -39,7 +37,7 @@ try {
 
 <body id="employee-background">
 
-<?php include("../../includes/navbar.php"); ?>
+<!-- <?php include("../../includes/navbar.php"); ?> -->
 
 <main class="main-container">
     <div class="choose-customer">
@@ -71,13 +69,17 @@ try {
                             <a href="sales_chooseCustomer.php?customer=<?php echo htmlspecialchars($row['ID']); ?>">
                                 <button>Select</button>
                             </a>
+                            <a href="sales_adjustCustomer.php?adjust=<?php echo htmlspecialchars($row['ID']); ?>">
+                                <button>Adjust</button>
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
         <div>
-            <p>Not on a list? <a href="sales_createCustomer.php"><button type="button">Create a new Customer</button></a></p>
+            <p>Not on a list? <a href="sales_createCustomer.php"><button type="button">Create a new Customer</button></a>
+             or <a href="invoice.php?guest=1"><button type="button">Buy as a Guest</button></a></p>
         </div>
     </div>
 
