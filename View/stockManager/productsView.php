@@ -3,9 +3,9 @@ session_start();
 
 
 include ("../../query.php");
-// if ($_SESSION["user_role"]!=2){
-//     header("Location: ../login/logout.php");
-//   }
+if ($_SESSION["user_role"]!=2){
+    header("Location: ../login/logout.php");
+  }
 $sql = "SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product";
 $stmt = $myPDO->prepare($sql);
 $stmt->execute();
@@ -14,9 +14,7 @@ $stmt->execute();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../CSS/style-products-desktop.css" media="screen and (min-width: 1025px)">
     <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
-    <link rel="stylesheet" href="../../CSS/stock-manager.css" media="screen and (min-width: 1025px)">
     <link rel="stylesheet" href="..\..\CSS\stockManager.css">
     <title>Product View</title>
     <script defer src="../../js/tableDropSort.js"></script>
@@ -66,21 +64,23 @@ $stmt->execute();
         </select>
         <button id="sortButton">Sort By</button>
         <table id="laptopTable">
-            <tr>
+            <thead>
+                <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price (£)</th>
-                <th>Weight (Kg)</th>
-                <th>Size (In)</th>
+                <th>Weight</th>
+                <th>Size</th>
                 <th>CPU</th>
                 <th>GPU</th>
-                <th>RAM (GB)</th>
+                <th>RAM</th>
                 <th>Hard Drive</th>
-                <th>Quantity</th>
+                <th>Stock</th>
                 <th>Actions</th>
             </tr>
+        </thead>
+            <tbody>
             <?php
-
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>";
                 echo "<td>" . $row['name'] . "</td>";
@@ -100,7 +100,7 @@ $stmt->execute();
                 echo "</tr>";
             }
             ?>
-            
+            </tbody>
         </table>
         <div id="modalWindowProductsEdit" class="modal" style="display: none;">
         <form>
