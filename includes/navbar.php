@@ -21,7 +21,7 @@
             switch($_SESSION['user_role']['name']){
                 case("Employee"):
                     echo "<li><a href='../employee/sales_index.php'>New Sale</a></li>";
-                    echo "<li><a href=''>Stock</a></li>";
+                    echo '<li><a href="../employee/productsEmployee.php" id="stockBtn">Stock</a></li>';
                     break;
                 case("Admin"):
                     echo "<li><a href=''>Access Users</a></li>";
@@ -30,7 +30,7 @@
                     break;
                 case("Stock Manager"):
                     echo "<li><a href=''>Stock View</a></li>";
-                    echo "<li><a href=''>Add New Product</a></li>";
+                    echo '<li><a href="#" id="addNewProductBtn">Add New Product</a></li>';
                     echo "<li><a href=''>Orders</a></li>";
                     break;
                 case("Manager"):

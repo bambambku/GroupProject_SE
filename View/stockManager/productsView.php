@@ -1,11 +1,12 @@
 <?php
 session_start();
 
-
 include ("../../query.php");
-if ($_SESSION["user_role"]!=2){
+
+if ($_SESSION["user_role"] != 2){
     header("Location: ../login/logout.php");
-  }
+}
+
 $sql = "SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product";
 $stmt = $myPDO->prepare($sql);
 $stmt->execute();
@@ -56,7 +57,6 @@ $stmt->execute();
                 <button type="button" id="addButton">Add</button>
             </form>       
         </div>
-        <button id="modalButtonProducts">Create New</button>
         <select id="sortSelect">
         <option value="lowStock">Low Stock</option>
         <option value="priceAsc">Price Ascending</option>
