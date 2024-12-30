@@ -1,20 +1,5 @@
 <?php
-session_start();
-
-// Redirect if not logged in or if not a director (user role 'Director')
-if (!isset($_SESSION["user_role"]) || $_SESSION["user_role"] !== 'Director') {
-    header("Location: ../../login.php");
-    exit();
-}
-
-include ("../../Model/sqliteconnect.php");
-
-// Fetch branches
-$branches = [];
-$stmt = $db->query("SELECT * FROM Branch");
-while ($row = $stmt->fetchArray(SQLITE3_ASSOC)) {
-    $branches[] = $row;
-}
+include ("../../includes/dbconnect.php");
 
 // Fetch report data based on selected branch and time frame
 $report = [];

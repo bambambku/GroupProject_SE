@@ -1,6 +1,6 @@
 <?php 
-include('director_home_logic.php'); 
-include ("../../includes/dbconnect.php");
+ include('director_home_logic.php'); 
+ include ('../../includes/header.php');
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +18,8 @@ include ("../../includes/dbconnect.php");
         <p>Use the navigation below to access different sections of the dashboard.</p>
         <ul class="dashboard-nav">
             <li><a href="director_report.php">Generate Report</a></li>
+            <li><a href="report.php">Report Page</a></li>
+            
         </ul>
     </main>
     <?php include '../../includes/footer.php'; ?>
