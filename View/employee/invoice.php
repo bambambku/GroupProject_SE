@@ -4,6 +4,11 @@ include("../../includes/dbconnect.php");
 include("sales_basket.php");
 include("../../includes/header2.php");
 
+// for time being, assume user is logged in
+$_SESSION['user_id'] = 1;
+// for time being assume branch is 1
+$currentBranch = 1;
+
 $isGuest = isset($_GET['guest']) && $_GET['guest'] == 1;
 
 if (!$isGuest && (!isset($_SESSION['basket']) || !isset($_SESSION['customer']))) {
@@ -14,8 +19,67 @@ if (!$isGuest && (!isset($_SESSION['basket']) || !isset($_SESSION['customer'])))
 $customer = $isGuest ? null : $_SESSION['customer'];
 $basket = $_SESSION['basket'];
 $total = 0;
+$userId = $_SESSION['user_id'];
+$newSaleId = 1;
 
+try {
+    // Retrieve the highest Sale ID
+    $stmt = $myPDO->query("SELECT MAX(ID) AS max_id FROM Sale");
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $newSaleId = $row ? $row['max_id'] + 1 : 1;
+    $saleCustomer = $isGuest ? 0 : $customer['ID'];
+
+    // Insert each item in the basket into the Sale table
+    foreach ($basket as $productId => $productDetails) {
+        $quantity = $productDetails['quantity'];
+
+        $stmt = $myPDO->prepare("
+            INSERT INTO Sale (ID, product, customer, user, time_date, quantity)
+            VALUES (:id, :product, :customer, :user, :time_date, :quantity)
+        ");
+        $stmt->execute([
+            ':id' => $newSaleId,
+            ':product' => $productId,
+            ':customer' => $saleCustomer,
+            ':user' => $userId,
+            ':time_date' => date('Y-m-d H:i:s'),
+            ':quantity' => $quantity
+        ]);
+
+        // Adjust stock for the product
+        $stmt = $myPDO->prepare("SELECT quantity FROM Stock WHERE product = :product AND branch = :branch");
+        $stmt->execute([':product' => $productId, ':branch' => $currentBranch]);
+        $stock = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($stock) {
+            $currentStock = $stock['quantity'];
+
+            if ($currentStock >= $quantity) {
+                $stmt = $myPDO->prepare("
+                    UPDATE Stock
+                    SET quantity = quantity - :quantity
+                    WHERE product = :product
+                    AND branch = :branch
+                ");
+                $stmt->execute([
+                    ':quantity' => $quantity,
+                    ':product' => $productId,
+                    ':branch' => $currentBranch
+                ]);
+            } else {
+                echo "<p>Insufficient stock for product ID $productId. Skipping this item.</p>";
+            }
+        } else {
+            echo "<p>Product ID $productId not found in stock.</p>";
+        }
+    }
+
+    echo "<p class='dont-print'>Sale recorded and stock adjusted successfully!</p>";
+} catch (Exception $e) {
+    echo "<p class='dont-print'>Something went wrong while recording the sale: " . $e->getMessage() . "</p>";
+}
 ?>
+
 <style>
     @media print {
         .dont-print {
@@ -36,6 +100,7 @@ $total = 0;
         <div class="invoice">
             <div class="invoice-header">
                 <h1>Invoice</h1><br>
+                <p><strong>Sale ID:</strong> <i>#<?php echo $newSaleId; ?></i></p>
             </div>
             <div class="invoice-sender">
                 <h2>Sender Details</h2>
