@@ -22,6 +22,7 @@
                     echo "<li><a href=''>Stock</a></li>";
                     break;
                 case("Admin"):
+                    echo "<link rel='stylesheet' href='../../CSS/admin.css' media='screen and (min-width: 1025px)'>";
                     echo "<li><a href=''>Access Users</a></li>";
                     echo "<li><a href=''>Create New User</a></li>";
                     echo "<li><a href=''>Branches</a></li>";
