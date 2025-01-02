@@ -15,30 +15,19 @@ if (!empty($data) && isset($data['action'])) {
     try {
         switch ($action) {
             
+                // Manager doesn't need to create a staff account I think that's more the IT Admin's Job.
                 case 'create':
                     try {
                         $db->beginTransaction();
     
-                        $stmt = $db->prepare("INSERT INTO Product (name, description, price, weight, size, CPU, GPU, RAM, hard_drive)
-                                              VALUES (:name, :description, :price, :weight, :size, :CPU, :GPU, :RAM, :hard_drive)");
-                        $stmt->bindValue(':name', $data['name'], PDO::PARAM_STR);
-                        $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
-                        $stmt->bindValue(':price', $data['price'], PDO::PARAM_STR);
-                        $stmt->bindValue(':weight', $data['weight'], PDO::PARAM_STR);
-                        $stmt->bindValue(':size', $data['size'], PDO::PARAM_STR);
-                        $stmt->bindValue(':CPU', $data['CPU'], PDO::PARAM_STR);
-                        $stmt->bindValue(':GPU', $data['GPU'], PDO::PARAM_STR);
-                        $stmt->bindValue(':RAM', $data['RAM'], PDO::PARAM_STR);
-                        $stmt->bindValue(':hard_drive', $data['hard_drive'], PDO::PARAM_STR);
-                        $stmt->execute();
-    
-                        $productID = $db->lastInsertId();
-    
-                        $stmt = $db->prepare("INSERT INTO stock (product, quantity, branch) 
-                                              VALUES (:productID, :quantity, :branch)");
-                        $stmt->bindValue(':productID', $productID, PDO::PARAM_INT);
-                        $stmt->bindValue(':quantity', $data['stock'], PDO::PARAM_INT);
-                        $stmt->bindValue(':branch', $data['branch'], PDO::PARAM_INT);
+                        $stmt = $db->prepare("INSERT INTO Staff (f_name, l_name, password, branch_id, role_id, email)
+                                              VALUES (:f_name, :l_name, :password, :branch_id, :role_id, :email)");
+                        $stmt->bindValue(':f_name', $data['f_name'], PDO::PARAM_STR);
+                        $stmt->bindValue(':l_name', $data['l_name'], PDO::PARAM_STR);
+                        $stmt->bindValue(':password', $data['password'], PDO::PARAM_STR);
+                        $stmt->bindValue(':branch_id', $data['branch_id'], PDO::PARAM_STR);
+                        $stmt->bindValue(':role_id', $data['role_id'], PDO::PARAM_STR);
+                        $stmt->bindValue(':email', $data['email'], PDO::PARAM_STR);
                         $stmt->execute();
     
                         $db->commit();
@@ -49,97 +38,97 @@ if (!empty($data) && isset($data['action'])) {
                     }
                     break;
     
-                    case 'read':
-                        if (isset($data['productID'])) {
-                            $stmt = $db->prepare("SELECT Product.ID, Product.name, Product.description, Product.price, 
-                                                  Product.weight, Product.size, Product.CPU, Product.GPU, 
-                                                  Product.RAM, Product.hard_drive, stock.quantity
-                                                  FROM Product
-                                                  LEFT JOIN stock ON Product.ID = stock.product
-                                                  WHERE Product.ID = :productID");
-                            $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
-                            $stmt->execute();
-                            $product = $stmt->fetch(PDO::FETCH_ASSOC);
+                    // case 'read':
+                    //     if (isset($data['productID'])) {
+                    //         $stmt = $db->prepare("SELECT Product.ID, Product.name, Product.description, Product.price, 
+                    //                               Product.weight, Product.size, Product.CPU, Product.GPU, 
+                    //                               Product.RAM, Product.hard_drive, stock.quantity
+                    //                               FROM Product
+                    //                               LEFT JOIN stock ON Product.ID = stock.product
+                    //                               WHERE Product.ID = :productID");
+                    //         $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                    //         $stmt->execute();
+                    //         $product = $stmt->fetch(PDO::FETCH_ASSOC);
                     
-                            if ($product) {
-                                $product['lowStockClass'] = ($product['quantity'] < 10) ? 'low-stock' : '';
-                                echo json_encode($product);
-                            } else {
-                                echo json_encode(['error' => 'Product not found']);
-                            }
-                        } else {
-                            $stmt = $db->prepare("SELECT Product.ID, Product.name, Product.description, Product.price, 
-                                                  Product.weight, Product.size, Product.CPU, Product.GPU, 
-                                                  Product.RAM, Product.hard_drive, stock.quantity
-                                                  FROM Product
-                                                  LEFT JOIN stock ON Product.ID = stock.product");
-                            $stmt->execute();
-                            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    //         if ($product) {
+                    //             $product['lowStockClass'] = ($product['quantity'] < 10) ? 'low-stock' : '';
+                    //             echo json_encode($product);
+                    //         } else {
+                    //             echo json_encode(['error' => 'Product not found']);
+                    //         }
+                    //     } else {
+                    //         $stmt = $db->prepare("SELECT Product.ID, Product.name, Product.description, Product.price, 
+                    //                               Product.weight, Product.size, Product.CPU, Product.GPU, 
+                    //                               Product.RAM, Product.hard_drive, stock.quantity
+                    //                               FROM Product
+                    //                               LEFT JOIN stock ON Product.ID = stock.product");
+                    //         $stmt->execute();
+                    //         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     
-                            if ($products) {
+                    //         if ($products) {
 
-                                foreach ($products as &$product) {
-                                    $product['lowStockClass'] = ($product['quantity'] < 10) ? 'low-stock' : '';
-                                }
-                                echo json_encode($products);
-                            } else {
-                                echo json_encode(['error' => 'No products found']);
-                            }
-                        }
-                        break;
+                    //             foreach ($products as &$product) {
+                    //                 $product['lowStockClass'] = ($product['quantity'] < 10) ? 'low-stock' : '';
+                    //             }
+                    //             echo json_encode($products);
+                    //         } else {
+                    //             echo json_encode(['error' => 'No products found']);
+                    //         }
+                    //     }
+                    //     break;
     
-                case 'update':
-                    try {
-                        $db->beginTransaction();
+                // case 'update':
+                //     try {
+                //         $db->beginTransaction();
     
-                        $stmt = $db->prepare("UPDATE Product SET 
-                            name = :name, 
-                            description = :description, 
-                            price = :price, 
-                            weight = :weight, 
-                            size = :size, 
-                            CPU = :CPU, 
-                            GPU = :GPU, 
-                            RAM = :RAM, 
-                            hard_drive = :hard_drive 
-                            WHERE ID = :productID");
-                        $stmt->bindValue(':name', $data['name'], PDO::PARAM_STR);
-                        $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
-                        $stmt->bindValue(':price', $data['price'], PDO::PARAM_STR);
-                        $stmt->bindValue(':weight', $data['weight'], PDO::PARAM_STR);
-                        $stmt->bindValue(':size', $data['size'], PDO::PARAM_STR);
-                        $stmt->bindValue(':CPU', $data['CPU'], PDO::PARAM_STR);
-                        $stmt->bindValue(':GPU', $data['GPU'], PDO::PARAM_STR);
-                        $stmt->bindValue(':RAM', $data['RAM'], PDO::PARAM_STR);
-                        $stmt->bindValue(':hard_drive', $data['hard_drive'], PDO::PARAM_STR);
-                        $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                //         $stmt = $db->prepare("UPDATE Product SET 
+                //             name = :name, 
+                //             description = :description, 
+                //             price = :price, 
+                //             weight = :weight, 
+                //             size = :size, 
+                //             CPU = :CPU, 
+                //             GPU = :GPU, 
+                //             RAM = :RAM, 
+                //             hard_drive = :hard_drive 
+                //             WHERE ID = :productID");
+                //         $stmt->bindValue(':name', $data['name'], PDO::PARAM_STR);
+                //         $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
+                //         $stmt->bindValue(':price', $data['price'], PDO::PARAM_STR);
+                //         $stmt->bindValue(':weight', $data['weight'], PDO::PARAM_STR);
+                //         $stmt->bindValue(':size', $data['size'], PDO::PARAM_STR);
+                //         $stmt->bindValue(':CPU', $data['CPU'], PDO::PARAM_STR);
+                //         $stmt->bindValue(':GPU', $data['GPU'], PDO::PARAM_STR);
+                //         $stmt->bindValue(':RAM', $data['RAM'], PDO::PARAM_STR);
+                //         $stmt->bindValue(':hard_drive', $data['hard_drive'], PDO::PARAM_STR);
+                //         $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
                         
-                        if (!$stmt->execute()) {
-                            $errorInfo = $stmt->errorInfo();
-                            echo json_encode(['success' => false, 'error' => $errorInfo]);
-                            exit();
-                        }
+                //         if (!$stmt->execute()) {
+                //             $errorInfo = $stmt->errorInfo();
+                //             echo json_encode(['success' => false, 'error' => $errorInfo]);
+                //             exit();
+                //         }
     
-                        $stmt = $db->prepare("UPDATE stock SET quantity = :quantity WHERE product = :productID");
-                        $stmt->bindValue(':quantity', $data['quantity'], PDO::PARAM_INT);
-                        $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
-                        if (!$stmt->execute()) {
-                            $errorInfo = $stmt->errorInfo();
-                            echo json_encode(['success' => false, 'error' => $errorInfo]);
-                            exit();
-                        }
+                //         $stmt = $db->prepare("UPDATE stock SET quantity = :quantity WHERE product = :productID");
+                //         $stmt->bindValue(':quantity', $data['quantity'], PDO::PARAM_INT);
+                //         $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                //         if (!$stmt->execute()) {
+                //             $errorInfo = $stmt->errorInfo();
+                //             echo json_encode(['success' => false, 'error' => $errorInfo]);
+                //             exit();
+                //         }
                         
-                        $db->commit();
-                        echo json_encode(['success' => true]);
-                    } catch (Exception $e) {
-                        $db->rollBack();
-                        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-                    }
-                    break;
+                //         $db->commit();
+                //         echo json_encode(['success' => true]);
+                //     } catch (Exception $e) {
+                //         $db->rollBack();
+                //         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+                //     }
+                //     break;
     
                 case 'delete':
-                    $stmt = $db->prepare("DELETE FROM Product WHERE ID = :productID");
-                    $stmt->bindValue(':productID', $data['productID'], PDO::PARAM_INT);
+                    $stmt = $db->prepare("DELETE FROM Staff WHERE ID = :staff_id");
+                    $stmt->bindValue(':staff_id', $data['staff_id'], PDO::PARAM_INT);
                     $stmt->execute();
                     echo json_encode(['success' => true]);
                     break;
