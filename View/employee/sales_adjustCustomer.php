@@ -1,4 +1,10 @@
 <?php
+
+// logout and redirect to login if user is not logged in or not an employee 
+if ((!isset($_SESSION["user_role"]) || $_SESSION["user_role"] != 1)) {
+    header("Location: logout.php");
+}
+
 include("../../includes/dbconnect.php");
 
 $f_nameErr = $m_nameErr = $l_nameErr = $addressErr = $postcodeErr = $townErr = "";
