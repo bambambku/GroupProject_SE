@@ -62,10 +62,11 @@ $stmt->execute();
             </form>       
         </div>
 
+        <!-- Save for later seems that I would have to change around Joe's Javascript to get this to work, I need to ask him later. -->
         <select id="sortSelect">
             <option value="staffID">Staff ID</option>
             <option value="forename">Forename</option>
-            <option value="surname">Surname</option>
+            <option value="price">Surname</option>
             <option value="branchID">Branch</option>
             <option value="roleID">Role</option>
         </select>
@@ -96,8 +97,8 @@ $stmt->execute();
                     echo "<td>" . $row['role_id'] . "</td>";
                     echo "<td>" . $row['email'] . "</td>";
                     echo "<td>";
-                    echo "<button class='editButton' data-id='" . htmlspecialchars($row['ID']) . "'>Edit</button> | ";
-                    echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "''>Delete</button>";
+                    echo "<button class='editButton' data-id='" . htmlspecialchars($row['staff_id']) . "'>Edit</button> | ";
+                    echo "<button id='deleteButton" . htmlspecialchars($row['staff_id']) . "''>Delete</button>";
                     echo "</td>";
                     echo "</tr>";
                 }
@@ -106,7 +107,7 @@ $stmt->execute();
         </table>
         <div id="modalWindowProductsEdit" class="modal" style="display: none;">
         <form>
-            <input type="hidden" id="editProductId">
+            <input type="hidden" id="editStaffID">
 
             <label for="editStaffForename">Product name:</label><br>
             <input type="text" id="editStaffForename" name="editStaffForename"><br>
