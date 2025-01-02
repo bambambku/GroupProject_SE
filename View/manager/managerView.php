@@ -1,0 +1,142 @@
+<?php
+session_start();
+
+include ("../../query.php");
+
+if ($_SESSION["user_role"] != 3){
+    header("Location: ../login/logout.php");
+}
+
+// $sql = "SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product";
+
+$sql = "SELECT * FROM Staff"; // Will probably add a where clause later to try and branch the currently logged in manager's branch with the staff members. 
+$stmt = $myPDO->prepare($sql);
+$stmt->execute();
+?>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Given that this is based off of Joe's Product Page I'm just gonna leave all CSS References to match his page so that the pages have a consistent feel. -->
+    <!-- Will need to update CSS references later because I think in our wireframes it has different colours for the user roles. -->
+    <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="..\..\CSS\stockManager.css">
+    <title>Product View</title>
+    <script defer src="../../js/tableDropSort.js"></script>
+    <script defer src="../../js/productActions.js"></script>
+</head>
+<body id="stock-manager-background">
+<?php include '../../includes/navbar.php'; ?>
+<main class="main-container">
+<h1>Products:</h1>
+<div class="general-content-out">
+    <div class="general-content-bttn-area">
+    </div>
+    <div class="general-content-in">
+        <div id="modalWindowProducts" class="modal">
+            <form>
+                <label for="Name">Product name:</label><br>
+                <input type="text" id="productName" name="productName"><br>
+                <label for="Description">Description:</label><br>
+                <input type="text" id="productDescription" name="productDescription"><br>
+                <label for="Price">Price:</label><br>
+                <input type="text" id="productPrice" name="productPrice"><br>
+                <label for="Weight">Weight:</label><br>
+                <input type="text" id="productWeight" name="productWeight"><br>
+                <label for="Size">Size:</label><br>
+                <input type="text" id="productSize" name="productSize"><br>
+                <label for="CPU">CPU:</label><br>
+                <input type="text" id="productCPU" name="productCPU"><br>
+                <label for="GPU">GPU:</label><br>
+                <input type="text" id="productGPU" name="productGPU"><br>
+                <label for="RAM">RAM:</label><br>
+                <input type="text" id="productRAM" name="productRAM"><br>
+                <label for="Hard-Drive">Hard-Drive:</label><br>
+                <input type="text" id="productHard-Drive" name="productHard-Drive"><br>
+                <label for="productStock">Quantity:</label><br>
+                <input type="number" id="productStock" name="productStock"><br>
+                <label for="productBranch">Branch:</label><br>
+                <input type="number" id="productBranch" name="productBranch"><br>
+                <button type="button" id="closeButton">Close</button>
+                <button type="button" id="addButton">Add</button>
+            </form>       
+        </div>
+
+        <select id="sortSelect">
+            <option value="staffID">Staff ID</option>
+            <option value="forename">Forename</option>
+            <option value="surname">Surname</option>
+            <option value="branchID">Branch</option>
+            <option value="roleID">Role</option>
+        </select>
+        <button id="sortButton">Sort By</button>
+
+        <table id="laptopTable">
+            <thead>
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Forname</th>
+                    <th>Surname</th>
+                    <th>Password (DELETE LATER - ONLY FOR TESTING)</th>
+                    <th>Branch ID</th>
+                    <th>Role ID</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<tr>";
+                    echo "<td>" . $row['staff_id'] . "</td>";
+                    echo "<td>" . $row['f_name'] . "</td>";
+                    echo "<td>" . $row['l_name'] . "</td>";
+                    echo "<td>" . $row['password'] . "</td>";
+                    echo "<td>" . $row['branch_id'] . "</td>";
+                    echo "<td>" . $row['role_id'] . "</td>";
+                    echo "<td>" . $row['email'] . "</td>";
+                    echo "<td>";
+                    echo "<button class='editButton' data-id='" . htmlspecialchars($row['ID']) . "'>Edit</button> | ";
+                    echo "<button id='deleteButton" . htmlspecialchars($row['ID']) . "''>Delete</button>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+        <div id="modalWindowProductsEdit" class="modal" style="display: none;">
+        <form>
+            <input type="hidden" id="editProductId">
+
+            <label for="editStaffForename">Product name:</label><br>
+            <input type="text" id="editStaffForename" name="editStaffForename"><br>
+
+            <label for="editStaffSurname">Description:</label><br>
+            <input type="text" id="editStaffSurname" name="editStaffSurname"><br>
+
+            <!-- Maybe not allow manager to change password? Remove later if it becomes security risk -->
+            <label for="editPassword">Price:</label><br>
+            <input type="text" id="editPassword" name="editPassword"><br> 
+
+            <label for="editBranchID">Weight:</label><br>
+            <input type="text" id="editBranchID" name="editBranchID"><br>
+
+            <label for="editRoleID">Size:</label><br>
+            <input type="text" id="editRoleID" name="editRoleID"><br>
+
+            <label for="editEmail">CPU:</label><br>
+            <input type="text" id="editEmail" name="editEmail"><br>
+
+            <button type="button" id="closeButtonEdit">Close</button>
+            <button type="button" id="saveEditButton">Save</button>
+        </form>
+        </div>
+    </div>            
+</div>
+</main>
+<?php
+include '../../includes/footer.php';
+?>
+</body>
+</html>
+
