@@ -212,6 +212,10 @@ th {
   padding: 30px 5px 30px 30px;
 }
 
-
+@media screen and (max-width: 800px) {
+  .menu {
+    width: 100%;
+  }}
+  
 
 /* General Conten Area END*/

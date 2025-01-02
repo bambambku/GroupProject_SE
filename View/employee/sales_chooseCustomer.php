@@ -1,9 +1,25 @@
 <?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// logout and redirect to login if user is not logged in or not an employee 
+if ($_SESSION["user_role"] != 1) {
+    if ($_SESSION["user_role"]["name"] != 'Employee') {
+    header("Location: ../login/login.php");
+}}
+
 include("../../includes/dbconnect.php");
 include("sales_basket.php");
-// include("../../includes/header2.php");
+include("../../includes/header2.php");
 
 // session_start();
+
+if ($_SESSION['basket'] = []) {
+    header("Location: sales_index.php");
+    exit;
+}   
 
 try {
     if (isset($_GET['customer'])) {

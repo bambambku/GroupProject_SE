@@ -1,11 +1,29 @@
 <?php
-session_start();
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// logout and redirect to login if user is not logged in or not an employee 
+if ($_SESSION["user_role"] != 1) {
+    if ($_SESSION["user_role"]["name"] != 'Employee') {
+    header("Location: ../login/login.php");
+}}
 
 include ("../../query.php");
+if(!isset($_SESSION['branch_id'])) {
+    $_SESSION['branch_id'] = 1;
+}
+$currentBranch = $_SESSION['branch_id'];
 
-$sql = "SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product";
+$sql = "SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product WHERE stock.branch = :branch";
+$params = ['branch' => $currentBranch];
+
+// Execute the query using PDO
 $stmt = $myPDO->prepare($sql);
-$stmt->execute();
+$stmt->execute($params);
+
+include("../../includes/header2.php");
 ?>
 
 <html lang="en">
@@ -20,12 +38,12 @@ $stmt->execute();
 <body id="stock-manager-background">
 <?php include '../../includes/navbar.php'; ?>
 <main class="main-container">
-<h1>Products:</h1>
 <div class="general-content-out">
-    <div class="general-content-bttn-area">
+    <!-- <div class="general-content-bttn-area">
     </div>
     <div class="general-content-in">     
-        </div>
+        </div> -->
+        <h1>Products:</h1>
         <table id="laptopTable">
             <thead>
                 <tr>
@@ -54,8 +72,7 @@ $stmt->execute();
                 echo "<td>" . $row['GPU'] . "</td>";
                 echo "<td>" . $row['RAM'] . "</td>";
                 echo "<td>" . $row['hard_drive'] . "</td>";
-                echo "<td>" . ($row['quantity'] ? $row['quantity'] : 'N/A') . "</td>";
-                echo "<td>";
+                echo "<td>" . ($row['quantity'] ? $row['quantity'] : '0') . "</td>";
             }
             ?>
             </tbody>
