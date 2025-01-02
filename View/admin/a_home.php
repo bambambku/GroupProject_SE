@@ -1,7 +1,7 @@
 <?php 
 session_start();
-if ($_SESSION["user_role"]!='Admin'){
-  header("Location: ../View/login/logout.php");
+if ($_SESSION["user_role"]!=5){
+  header("Location: ../login/logout.php");
 }
 ?>
 
@@ -17,7 +17,7 @@ if ($_SESSION["user_role"]!='Admin'){
 
 <body>
     <h1>Admin Dashboard</h1>
-    <a href="../logout.php">logout</a>
+    <a href="../login/logout.php">logout</a>
 </body>
 
 </html>

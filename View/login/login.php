@@ -61,9 +61,12 @@ if (isset($_SESSION["user_role"])) {
                                         header("Location: ../stockManager/sm_home.php");
                                     } elseif ($user['role_id'] == 3) {
                                         header("Location: ../manager/m_home.php");
-                                    } elseif ($user['role_id'] == 'Stock Manager') {
+                                    } elseif ($user['role_id'] == 4) {
                                         header("Location: ../stock_manager/sm_home.php");
-                                    } else {
+                                    } elseif ($user['role_id'] == 5) {
+                                        header("Location: ../admin/a_home.php");
+                                    }
+                                    else {
                                         echo $user['role_id'];
                                     }
                                     die();
