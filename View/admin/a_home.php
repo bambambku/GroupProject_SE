@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if ($_SESSION["user_role"]!='Admin'){
-  header("Location: ../logout.php");
+  header("Location: ../View/login/logout.php");
 }
 ?>
 
