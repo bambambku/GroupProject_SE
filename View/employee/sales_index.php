@@ -1,4 +1,16 @@
 <?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// logout and redirect to login if user is not logged in or not an employee 
+if ($_SESSION["user_role"] != 1) {
+    if ($_SESSION["user_role"]["name"] != 'Employee') {
+    header("Location: ../login/login.php");
+}}
+
+
 include("../../includes/dbconnect.php");
 include("sales_basket.php");
 include("../../includes/header2.php");
@@ -11,7 +23,7 @@ include("../../includes/header2.php");
 <body id="employee-background">
 
 <?php
-// include("../../includes/navbar.php");
+include("../../includes/navbar.php");
 
 // Handle basket actions
 if (isset($_GET['add'])) {
@@ -22,8 +34,13 @@ if (isset($_GET['add'])) {
     $_SESSION['basket'] = [];
 }
 
+if(!isset($_SESSION['basket'])) {
+    $_SESSION['basket'] = [];
+}
+
 $basket = $_SESSION['basket'];
-$currentBranch = 1; // Assume branch ID is fixed for now
+$_SESSION['branch_id'] = 1; // wait for Charlie to fix it in login
+$currentBranch = $_SESSION['branch_id']; // wait for Charlie to fixc it in login
 
 $searchTerm = "";
 if (isset($_POST['search'])) {
@@ -108,7 +125,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php } ?>
         </table>
         <h3>Total: <?php echo htmlspecialchars(array_sum(array_column($basket, 'price'))); ?></h3>
-        <button type="button" onclick="openModal('finaliseSaleModal')">Finalise Sale</button>
+        <button type="button" onclick="openModal('finaliseSaleModal')" <?php if($_SESSION['basket'] == []) echo 'disabled'?>>Finalise Sale</button>
     </div>
 </div>
 

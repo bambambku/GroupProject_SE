@@ -41,8 +41,8 @@
                     echo "<li><a href=''>Previous Reports</a></li>";
                     break;
                 case("Director"):
-                    echo "<li><a href='../director/director_home.php'>Dashboard</a></li>";
-                    echo "<li><a href='../director/report.php'>Reports</a></li>";
+                    echo "<li><a href='director_home.php'>Dashboard</a></li>";
+                    echo "<li><a href='report.php'>Reports</a></li>";
                     break;
                 default:
                     break;

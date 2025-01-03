@@ -1,7 +1,18 @@
 <?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// logout and redirect to login if user is not logged in or not an employee 
+if ($_SESSION["user_role"] != 1) {
+    if ($_SESSION["user_role"]["name"] != 'Employee') {
+    header("Location: ../login/login.php");
+}}
+
 include("../../includes/dbconnect.php");
 include("sales_basket.php");
-// include("../../includes/header2.php");
+include("../../includes/header2.php");
 
 $f_nameErr = $m_nameErr = $l_nameErr = $addressErr = $postcodeErr = $townErr = $bankErr = $sortcodeErr = $accountErr = "";
 $f_name = $m_name = $l_name = $address = $post_code = $town = $bank = $sort_code = $account_number = "";

@@ -38,26 +38,25 @@ if (isset($_SESSION["user_role"])) {
                         $stmt->bindParam(':email', $email_address, PDO::PARAM_STR);
                         $stmt->execute();
 
-
-
                         // Checking if the statement prepared properly / isn't empty
                         if ($stmt) {
                             $user = $stmt->fetch(PDO::FETCH_ASSOC);
                             if ($user) {
                                 if ($password == $user["password"]) {
 
-                                  
                                     $_SESSION['user_role'] = $user['role_id'];
                                     $_SESSION['user_firstName'] = $user['f_name'];
                                     $_SESSION['user_surname'] = $user['l_name'];
                                     $_SESSION['email_address'] = $user['email'];
                                     $_SESSION['user_id'] = $user['staff_id'];
+                                    $_SESSION['branch_id'] = $user['branch_id'];
+                                    
 
                                     // In this section here: it makes more sense to have user
                                     // role stored as the actual role title rather than a number.
                                     // You'd either have to accept it's redundant or change it.
                                     if ($user['role_id'] == 1) {
-                                        header("Location: ../employee/Employee.php"); // change this to correct path
+                                        header("Location: ../employee/sales_index.php"); // Employee
                                     } elseif ($user['role_id'] == 2) {
                                         header("Location: ../stockManager/products.php"); // The only reason this takes you to a director's page is because we're in the process of moving things around.
                                     } elseif ($user['role_id'] == 3) {

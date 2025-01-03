@@ -1,13 +1,18 @@
 <?php
-session_start();
+
+// logout and redirect to login if user is not logged in or not an employee 
+if ((!isset($_SESSION["user_role"]) || $_SESSION["user_role"] != 1)) {
+    header("Location: logout.php");
+}
+
 include("../../includes/dbconnect.php");
 include("sales_basket.php");
 include("../../includes/header2.php");
 
 // for time being, assume user is logged in
-$_SESSION['user_id'] = 1;
+// $_SESSION['user_id'] = 1;
 // for time being assume branch is 1
-$currentBranch = 1;
+$currentBranch = $_SESSION['branch_id'];
 
 $isGuest = isset($_GET['guest']) && $_GET['guest'] == 1;
 
@@ -75,6 +80,7 @@ try {
     }
 
     echo "<p class='dont-print'>Sale recorded and stock adjusted successfully!</p>";
+    $_SESSION['basket'] = [];
 } catch (Exception $e) {
     echo "<p class='dont-print'>Something went wrong while recording the sale: " . $e->getMessage() . "</p>";
 }
@@ -100,7 +106,11 @@ try {
         <div class="invoice">
             <div class="invoice-header">
                 <h1>Invoice</h1><br>
-                <p><strong>Sale ID:</strong> <i>#<?php echo $newSaleId; ?></i></p>
+                <p>
+                    <strong>Sale ID:</strong> <i>#<?php echo $newSaleId; ?></i><br>
+                    <strong>Date:</strong> <i><?php echo date('d-m-Y H:i'); ?></i><br>
+                    <strong>Branch:</strong> <i><?php echo $currentBranch; ?></i>
+                </p>
             </div>
             <div class="invoice-sender">
                 <h2>Sender Details</h2>
