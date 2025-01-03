@@ -251,6 +251,9 @@ background-color: #224F59;
 }
 
 .section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   right: 5%; 
   left: 25%;               
@@ -260,3 +263,8 @@ background-color: #224F59;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
 }
 
+.section table{
+  flex-grow: 1;
+  width: 100%;
+  border-collapse: collapse;
+}
