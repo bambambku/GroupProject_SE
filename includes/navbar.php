@@ -14,7 +14,7 @@
             ?>
             <p class="job-title-txt"><?php echo  $_SESSION['user_role']['name']?></p>
         </div>
-        <ul class="menu">
+        <ul class="nav-menu">
             <?php 
             switch($_SESSION['user_role']['name']){
                 case("Employee"):

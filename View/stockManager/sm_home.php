@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if ($_SESSION["user_role"]!=4){
+if ($_SESSION["user_role"]!=2){
   header("Location: ../login/logout.php");
 }
 ?>
@@ -14,16 +14,14 @@ if ($_SESSION["user_role"]!=4){
   <?php include ('../../includes/navbar.php'); ?>
   <script src="../../js/cssConverter.js"></script>
   <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
-  <script>updateCss("Director");</script>
+  <script>updateCss("Stock Manager");</script>
 
 </head>
 
 <!-- Example page only, replace with joe's -->
 
 <body>
-    <h1>Stock Manager Dashboard</h1>
-    <p> This is an example page that needs changing to fit Joe's new one.</p>
-    <a href="../login/logout.php">logout</a>
+    
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if ($_SESSION["user_role"]!=3){
+if ($_SESSION["user_role"]!=4){
   header("Location: ../login/logout.php");
 }
 ?>
@@ -9,12 +9,12 @@ if ($_SESSION["user_role"]!=3){
 <html lang="en-GB">
 
 <head>
-  <title>TerraCore :: Manager</title>
+  <title>TerraCore :: Director</title>
   <?php include('../../includes/header.php'); ?>
   <?php include ('../../includes/navbar.php'); ?>
   <script src="../../js/cssConverter.js"></script>
   <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
-  <script>updateCss("Manager");</script>
+  <script>updateCss("Director");</script>
 
 </head>
 

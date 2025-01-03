@@ -48,7 +48,6 @@ body
     color: #333333;
     display: flex;
     flex-direction: column;
-    padding-top: 10px;
     /* padding-left: 20px; */
   }
   .name-txt
@@ -76,14 +75,14 @@ body
     margin-block-end: 0; /* Got rid of the default style here */
  }
 
-  .menu {
+ /* Menu css START */
+  .nav-menu {
     list-style: none;
     width: 80%;
     padding-inline: 0;
   }
 
-
-  .menu li {
+  .nav-menu li {
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 20px;
@@ -91,22 +90,62 @@ body
     cursor: pointer;
     text-align: Left;
     background-color: #e3c0b4;
-    
     margin-block-start: 0.5em;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
-
   }
 
-  .menu li:hover {
+  .nav-menu li:hover {
     background-color: #B86141;
     transition: 0.8s;
   }
 
-  .menu a {
+  /* admin */
+  .nav-menu.admin-menu li{
+    background-color: #148D8D77;
+  }
+
+  .nav-menu.admin-menu li:hover{
+    background-color: #148D8D;
+    transition: 0.8s;
+  }
+
+  /* director */
+  .nav-menu.dir-menu li{
+    background-color: #B2BF8477;
+  }
+
+  .nav-menu.dir-menu li:hover{
+    background-color: #B2BF84;
+    transition: 0.8s;
+  }
+
+  /* Stock Manager (sm) */
+  .nav-menu.sm-menu li{
+    background-color: #893C1877;
+  }
+
+  .nav-menu.sm-menu li:hover{
+    background-color: #893C18;
+    transition: 0.8s;
+  }
+
+  /* Manager */
+  .nav-menu.manager-menu li{
+    background-color: #606B7377;
+  }
+
+  .nav-menu.manager-menu li:hover{
+    background-color: #606B73;
+    transition: 0.8s;
+  }
+
+  .nav-menu a {
     color: #333;
     text-decoration: none;
     display: block;
   }
+
+  /* Menu Css End */
 
   .underlogo {
     margin: 20px;
