@@ -25,20 +25,16 @@ body
   background-color: #1A4A5A;
 }
 
-.decoration-bar .employee-accent{
-  background-color: #1A4A5A;
+.decoration-bar.sm-accent{
+  background-color: #7D4B22;
 }
 
-.decoration-bar .sm-accent{
-  background-color: #1A4A5A;
+.decoration-bar.manager-accent{
+  background-color: #000000;
 }
 
-.decoration-bar .manager-accent{
-  background-color: #1A4A5A;
-}
-
-.decoration-bar .dir-accent{
-  background-color: #1A4A5A;
+.decoration-bar.dir-accent{
+  background-color: #B2BF84;
 }
 
 .sidebar-padding{
