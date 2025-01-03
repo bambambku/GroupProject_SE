@@ -9,13 +9,36 @@ body
  {
   margin-left: 250px; 
  }
+
+
+
+
 /* NAV bar START */
 .decoration-bar
 {
-    width: 250px;
-    background-color: #59291E;
-    height: 20px;
-    /* margin-left: 50px; */
+  background-color: #59291E;
+  width: 250px;
+  height: 20px;
+}
+
+.decoration-bar.admin-accent{
+  background-color: #1A4A5A;
+}
+
+.decoration-bar .employee-accent{
+  background-color: #1A4A5A;
+}
+
+.decoration-bar .sm-accent{
+  background-color: #1A4A5A;
+}
+
+.decoration-bar .manager-accent{
+  background-color: #1A4A5A;
+}
+
+.decoration-bar .dir-accent{
+  background-color: #1A4A5A;
 }
 
 .sidebar-padding{
@@ -94,6 +117,10 @@ body
   }
 
   /*NAV bar END */
+
+
+
+
 
   /* Footer START */
   footer {
@@ -182,5 +209,19 @@ th {
 /* General Conten Area END*/
 
 
+/* Admin Css */
+.admin-background
+{
+background-color: #224F59;
+}
 
+.section {
+  position: absolute;
+  right: 5%; 
+  left: 25%;               
+  top: 5%;                 
+  bottom: 5%;               
+  background-color: white; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+}
 

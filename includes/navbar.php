@@ -1,4 +1,4 @@
-<div class="decoration-bar"></div>
+<div id="navbar-accent" class="decoration-bar"></div>
 <div class="sidebar">
     <div class="menu-picture-container">
         <img src="../../Pictures/logo.png" alt="logo" class="menu-picture">
