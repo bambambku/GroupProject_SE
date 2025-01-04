@@ -64,7 +64,7 @@ if (isset($_SESSION["user_role"])) {
                                     } elseif ($user['role_id'] == 4) {
                                         header("Location: ../director/d_home.php");
                                     } elseif ($user['role_id'] == 5) {
-                                        header("Location: ../admin/a_home.php");
+                                        header("Location: ../admin/access_users.php");
                                     }
                                     else {
                                         echo $user['role_id'];
