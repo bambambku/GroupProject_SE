@@ -20,7 +20,7 @@ include("../../includes/header2.php");
 <title>Employee</title>
 <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
 </header>
-<body id="employee-background">
+<body class="employee-background">
 
 <?php
 include("../../includes/navbar.php");
@@ -51,7 +51,8 @@ if (isset($_POST['search'])) {
 $sql = "SELECT product.ID, product.name, stock.quantity, product.price 
         FROM stock
         INNER JOIN product ON stock.product = product.ID
-        AND stock.branch = :branch";
+        AND stock.branch = :branch
+        WHERE stock.quantity > 0";
 
 $params = ['branch' => $currentBranch];
 
@@ -74,7 +75,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h2>Stock</h2>
             <div class="form">
                 <form action="" method="post">
-                    <label for="search">Search</label><br>
+                    <!-- <label for="search">Search</label><br> -->
                     <input type="text" id="search" name="search" value="<?php echo htmlspecialchars(isset($_POST['search']) ? $_POST['search'] : ''); ?>">
                     <input type="submit" value="Search" name="salesSearch">
                     <a href="sales_index.php">Clear</a>

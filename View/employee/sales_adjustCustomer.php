@@ -1,11 +1,17 @@
 <?php
 
-// logout and redirect to login if user is not logged in or not an employee 
-if ((!isset($_SESSION["user_role"]) || $_SESSION["user_role"] != 1)) {
-    header("Location: logout.php");
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
+// logout and redirect to login if user is not logged in or not an employee 
+if ($_SESSION["user_role"] != 1) {
+    if ($_SESSION["user_role"]["name"] != 'Employee') {
+    header("Location: ../login/login.php");
+}}
+
 include("../../includes/dbconnect.php");
+include("../../includes/header2.php");
 
 $f_nameErr = $m_nameErr = $l_nameErr = $addressErr = $postcodeErr = $townErr = "";
 $f_name = $m_name = $l_name = $address = $post_code = $town = "";
@@ -91,8 +97,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<title>Adjust Customer</title>
 <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
-<body id="employee-background">
+<body class="employee-background">
+
+<?php include("../../includes/navbar.php"); ?>
 
 <main class="main-container">
     <div class="create-customer">
