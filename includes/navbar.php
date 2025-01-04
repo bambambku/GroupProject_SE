@@ -1,9 +1,8 @@
 <!-- <?php session_start(); ?> -->
 
-<div class="decoration-barEmp"></div>
-
 <div class="sidebar">
-    <div class="menu-picture-container">
+<div class="decoration-barEmp"></div>
+    <!-- <div class="menu-picture-container"> -->
         <img src="../../Pictures/logo.png" alt="logo" class="menu-picture">
         <div class="underlogo">
             <h2 class="name-txt"><?php echo $_SESSION['user_firstName'] . " " . $_SESSION['user_surname']?></h2>
@@ -50,7 +49,7 @@
             ?>
             <li class="bttn-logout"><a href="../login/logout.php">Logout</a></li>
         </ul>
-    </div>
+    <!-- </div> -->
 </div>   
 
 <!-- 
