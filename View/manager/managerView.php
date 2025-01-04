@@ -17,7 +17,7 @@ $stmt->execute();
     <meta charset="UTF-8">
     <!-- Given that this is based off of Joe's Product Page I'm just gonna leave all CSS References to match his page so that the pages have a consistent feel. -->
     <!-- Will need to update CSS references later because I think in our wireframes it has different colours for the user roles. -->
-    <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../../CSS/style-desktop.css">
     <link rel="stylesheet" href="..\..\CSS\stockManager.css">
     <title>Product View</title>
     <script defer src="../../js/tableDropSort.js"></script>
