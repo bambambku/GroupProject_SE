@@ -51,7 +51,7 @@ try {
 <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
 </header>
 
-<body id="employee-background">
+<body class="employee-background">
 
 <!-- <?php include("../../includes/navbar.php"); ?> -->
 

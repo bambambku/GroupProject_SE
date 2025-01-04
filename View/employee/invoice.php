@@ -1,5 +1,7 @@
 <?php
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // logout and redirect to login if user is not logged in or not an employee 
 if ((!isset($_SESSION["user_role"]) || $_SESSION["user_role"] != 1)) {
     header("Location: logout.php");

@@ -1,10 +1,14 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include("../../includes/dbconnect.php");
 
-if (!isset($_SESSION['customer']) || !isset($_SESSION['basket'])) {
-    die("No customer or basket data found.");
-}
+// logout and redirect to login if user is not logged in or not an employee 
+if ($_SESSION["user_role"] != 1) {
+    if ($_SESSION["user_role"]["name"] != 'Employee') {
+    header("Location: ../login/login.php");
+}}
 
 $customer = $_SESSION['customer'];
 $basket = $_SESSION['basket'];
