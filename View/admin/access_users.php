@@ -4,9 +4,6 @@ if ($_SESSION["user_role"]!=5){
   header("Location: ../login/logout.php");
 }
 ?>
-<!-- bg colour #224F59-->
-
-
 
 <!DOCTYPE html>
 <html lang="en-GB">
@@ -85,4 +82,3 @@ if ($_SESSION["user_role"]!=5){
 </html>
 
 
-?<!-- NEED TO MAKE THE TABLE FIT THE SECTION AND BE SCROLLABLE IF over X AMOUNT OF ROWS -->

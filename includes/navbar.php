@@ -16,29 +16,36 @@
         </div>
         <ul class="nav-menu">
             <?php 
-            switch($_SESSION['user_role']['name']){
-                case("Employee"):
-                    echo "<li><a href='../employee/sales_index.php'>New Sale</a></li>";
-                    echo "<li><a href=''>Stock</a></li>";
+            include ("link_classes.php");
+
+            switch ($_SESSION['user_role']['name']) {
+                case "Employee":
+                // Employee-specific navigation
+                    echo "<li class='" . getRoleActiveClass('sales_index.php', 'active_emp') . "'><a href='../employee/sales_index.php'>New Sale</a></li>";
+                    echo "<li class='" . getRoleActiveClass('stock.php', 'active_emp') . "'><a href=''>Stock</a></li>";
                     break;
-                case("Admin"):
-                    echo "<li><a href=''>Access Users</a></li>";
-                    echo "<li><a href=''>Create New User</a></li>";
-                    echo "<li><a href=''>Branches</a></li>";
+                case "Admin":
+                // Admin-specific navigation
+                    echo "<li class='" . getRoleActiveClass('access_users.php', 'active_admin') . "'><a href='../admin/access_users.php'>Access Users</a></li>";
+                    echo "<li class='" . getRoleActiveClass('create_user.php', 'active_admin') . "'><a href=''>Create New User</a></li>";
+                    echo "<li class='" . getRoleActiveClass('branches.php', 'active_admin') . "'><a href=''>Branches</a></li>";
                     break;
-                case("Stock Manager"):
-                    echo "<li><a href=''>Stock View</a></li>";
-                    echo "<li><a href=''>Add New Product</a></li>";
-                    echo "<li><a href=''>Orders</a></li>";
+                case "Stock Manager":
+                    // Stock Manager-specific navigation
+                    echo "<li class='" . getRoleActiveClass('stock_view.php', 'active_sm') . "'><a href=''>Stock View</a></li>";
+                    echo "<li class='" . getRoleActiveClass('add_product.php', 'active_sm') . "'><a href=''>Add New Product</a></li>";
+                    echo "<li class='" . getRoleActiveClass('orders.php', 'active_sm') . "'><a href=''>Orders</a></li>";
                     break;
-                case("Manager"):
-                    echo "<li><a href=''>Employee Details</a></li>";
-                    echo "<li><a href=''>Branch Report</a></li>";
-                    echo "<li><a href=''>Previous Reports</a></li>";
+                case "Manager":
+                    // Manager-specific navigation
+                    echo "<li class='" . getRoleActiveClass('employee_details.php', 'active_manager') . "'><a href=''>Employee Details</a></li>";
+                    echo "<li class='" . getRoleActiveClass('branch_report.php', 'active_manager') . "'><a href=''>Branch Report</a></li>";
+                    echo "<li class='" . getRoleActiveClass('previous_reports.php', 'active_manager') . "'><a href=''>Previous Reports</a></li>";
                     break;
-                case("Director"):
-                    echo "<li><a href=''>Dashboard</a></li>";
-                    echo "<li><a href=''>Reports</a></li>";
+                case "Director":
+                    // Director-specific navigation
+                    echo "<li class='" . getRoleActiveClass('dashboard.php', 'active_dir') . "'><a href=''>Dashboard</a></li>";
+                    echo "<li class='" . getRoleActiveClass('reports.php', 'active_dir') . "'><a href=''>Reports</a></li>";
                     break;
                 default:
                     break;

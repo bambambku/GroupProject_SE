@@ -34,3 +34,4 @@ function delRecord(staff_id) {
         console.log("Deleted record with ID: " + staff_id);
     }
 }
+

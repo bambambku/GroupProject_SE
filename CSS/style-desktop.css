@@ -99,14 +99,24 @@ body
     transition: 0.8s;
   }
 
+
   /* admin */
   .nav-menu.admin-menu li{
     background-color: #148D8D77;
   }
 
+  .nav-menu li.active_admin{
+    background-color: #148D8D;
+  }
+
   .nav-menu.admin-menu li:hover{
     background-color: #148D8D;
     transition: 0.8s;
+  }
+
+  /* employee */
+  .nav-menu li.active_emp{
+    background-color: #B86141;
   }
 
   /* director */
@@ -119,6 +129,10 @@ body
     transition: 0.8s;
   }
 
+  .nav-menu li.active_dir{
+    background-color: #B2BF84;
+  }
+
   /* Stock Manager (sm) */
   .nav-menu.sm-menu li{
     background-color: #893C1877;
@@ -129,6 +143,10 @@ body
     transition: 0.8s;
   }
 
+  .nav-menu li.active_dir{
+    background-color: #893C18;
+  }
+
   /* Manager */
   .nav-menu.manager-menu li{
     background-color: #606B7377;
@@ -137,6 +155,10 @@ body
   .nav-menu.manager-menu li:hover{
     background-color: #606B73;
     transition: 0.8s;
+  }
+
+  .nav-menu li.active_manager{
+    background-color: #606B73;
   }
 
   .nav-menu a {
