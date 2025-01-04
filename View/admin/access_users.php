@@ -19,11 +19,21 @@ if ($_SESSION["user_role"]!=5){
 
 </head>
 
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">Are you sure you want to delete this user?</h2>
+        <div id="modalButtons">
+            <button onclick="cancelDelete()">Cancel</button>
+            <button onclick="deleteUser()">Delete</button>
+        </div>
+    </div>
+</div>
 
 <body class="admin-background">
   <div class="section">
     <h1>User Details</h1>
-    <?php include ("../../includes/dbconnect.php");
+    <?php 
       if (!$myPDO) {
         die("Database connection failed: " . implode(":", $myPDO->errorInfo()));
       }
@@ -65,7 +75,7 @@ if ($_SESSION["user_role"]!=5){
                     echo "<td>" . htmlspecialchars($staff['role_name']) . "</td>";
                     echo "<td>" . 
                       "<button onclick ='viewRecord(". htmlspecialchars($staff['staff_id']) .")'>View</button>" .
-                      "<button onclick ='delRecord(" . htmlspecialchars($staff['staff_id']) .")'>Delete</button>". 
+                      "<button onclick='showDeleteModal(" . htmlspecialchars($staff['staff_id']) . ")'>Delete</button>" .  
                       "</td>";
                     echo "</tr>";
                 }

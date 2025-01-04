@@ -35,3 +35,46 @@ function delRecord(staff_id) {
     }
 }
 
+/////////////////////////// TESTING FOR POPUPS //////////////////////////////
+
+function showDeleteModal(staffId) {
+    // Store the user ID for later use in the delete function
+    window.selectedUserId = staffId;
+    document.getElementById('deleteModal').style.display = "block";
+}
+
+// Close the modal
+function closeModal() {
+    document.getElementById('deleteModal').style.display = "none";
+}
+
+// If Cancel is clicked, close the modal
+function cancelDelete() {
+    closeModal();
+}
+
+// If Delete is clicked, make the AJAX request to delete the user
+function deleteUser() {
+    // Send an AJAX request to the PHP script to delete the user
+    var userId = window.selectedUserId;
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "../../includes/delete_user.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    // Send the user ID to the server
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            // Update the modal content based on the response from PHP
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                document.getElementById('modalTitle').textContent = "Successfully deleted the user!";
+                document.getElementById('modalButtons').innerHTML = "<button onclick='closeModal()'>OK</button>";
+            } else {
+                document.getElementById('modalTitle').textContent = "Error: " + response.message;
+                document.getElementById('modalButtons').innerHTML = "<button onclick='closeModal()'>OK</button>";
+            }
+        }
+    };
+
+    xhr.send("user_id=" + userId); // Send the user ID
+}
