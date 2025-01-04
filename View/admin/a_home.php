@@ -47,7 +47,7 @@ if ($_SESSION["user_role"]!=5){
       $stmt->execute();
       $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered" id="user-table">
         <thead>
             <tr>
                 <th>Staff ID</th>
@@ -66,7 +66,10 @@ if ($_SESSION["user_role"]!=5){
                     echo "<td>" . htmlspecialchars($staff['branch_name']) . "</td>";
                     echo "<td>" . htmlspecialchars($staff['full_name']) . "</td>";
                     echo "<td>" . htmlspecialchars($staff['role_name']) . "</td>";
-                    echo "<td>" . "View / Delete" . "</td>";
+                    echo "<td>" . 
+                      "<button onclick ='viewRecord(". htmlspecialchars($staff['staff_id']) .")'>View</button>" .
+                      "<button onclick ='delRecord(" . htmlspecialchars($staff['staff_id']) .")'>Delete</button>". 
+                      "</td>";
                     echo "</tr>";
                 }
             } else {

@@ -25,3 +25,12 @@ function updateCss(role) {
     }
 }
 
+function viewRecord(staff_id) {
+    alert("View record with ID: " + staff_id);
+}
+
+function delRecord(staff_id) {
+    if (confirm("Are you sure you want to delete this record?")) {
+        console.log("Deleted record with ID: " + staff_id);
+    }
+}
