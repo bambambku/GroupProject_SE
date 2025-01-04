@@ -23,7 +23,7 @@ $branch_name = $branch['name'];
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="..\..\CSS\director.css">
-    <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../../CSS/style-desktop.css">
     <title>Director :: Home</title>
 </head>
 <body class="director-background">

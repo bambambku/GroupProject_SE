@@ -212,3 +212,14 @@ label, select, input[type="date"], input[type="submit"] {
         display: none;
     }
 }
+
+@media screen and (max-width : 1025px ) {
+    .director-content-in{
+        margin-top: auto;
+    }
+
+    .director-content-out{
+        margin-top: 30px;
+    }
+    
+}
