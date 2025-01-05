@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <div id="navbar-accent" class="decoration-bar"></div>
 <div class="sidebar">
     <div class="menu-picture-container">

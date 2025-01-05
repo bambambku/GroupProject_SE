@@ -1,11 +1,5 @@
 <?php 
-if (session_status() === PHP_SESSION_NONE){
-  session_start();
-}
-
-if ($_SESSION["user_role"]!=5){
-  header("Location: ../login/logout.php");
-}
+include('admin_home_logic.php');
 ?>
 
 <!DOCTYPE html>

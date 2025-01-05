@@ -1,6 +1,6 @@
 <?php
 include "../../includes/dbconnect.php";
-
+session_start();
 if (isset($_SESSION["user_role"])) {
     header("Location: logout.php");
 }
