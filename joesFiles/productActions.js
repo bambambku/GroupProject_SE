@@ -1,6 +1,6 @@
-
-
-
+document.addEventListener('DOMContentLoaded', () => {
+    applyLowStockStyling();
+});
 let currentEditingProductId = null;
 
 
@@ -18,36 +18,42 @@ closeBtn.onclick = function() {
 }
 
 // Update Table, avoids the need to refresh page
-async function updateTable() {
-    try {
-        const response = await fetch('/GroupProject_SE/View/admin/staff.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'read' })
-        });
-        const staff_members = await response.json();
-        const tableBody = document.querySelector("#user-table tbody");
-        tableBody.querySelectorAll('tr').forEach(row => row.remove());
+// async function updateTable() {
+//     try {
+//         const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ action: 'read' })
+//         });
+//         const products = await response.json();
+//         const tableBody = document.querySelector("#laptopTable tbody");
+//         tableBody.querySelectorAll('tr').forEach(row => row.remove());
 
-        staff_members.forEach(staff => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${staff.staff_id}</td>
-                <td>${staff.branch_name}</td>
-                <td>${staff.full_name}</td>
-                <td>${staff.role_name}</td>
-                <td>
-                    <button class="editButton" data-id="${staff.staff_id}">Edit</button> |
-                    <button id="deleteButton${staff.staff_id}" class="deleteButton">Delete</button>
-                </td>
-            `;
-            tableBody.appendChild(row);
-        });
-        
-    } catch (error) {
-        console.error("Error updating table:", error);
-    }
-}
+//         products.forEach(product => {
+//             const row = document.createElement("tr");
+//             row.innerHTML = `
+//                 <td>${product.name}</td>
+//                 <td>${product.description}</td>
+//                 <td>${product.price}</td>
+//                 <td>${product.weight}</td>
+//                 <td>${product.size}</td>
+//                 <td>${product.CPU}</td>
+//                 <td>${product.GPU}</td>
+//                 <td>${product.RAM}</td>
+//                 <td>${product.hard_drive}</td>
+//                 <td>${product.quantity !== null ? product.quantity : 'N/A'}</td>
+//                 <td>
+//                     <button class="editButton" data-id="${product.ID}">Edit</button> |
+//                     <button id="deleteButton${product.ID}" class="deleteButton">Delete</button>
+//                 </td>
+//             `;
+//             tableBody.appendChild(row);
+//         });
+//         applyLowStockStyling();
+//     } catch (error) {
+//         console.error("Error updating table:", error);
+//     }
+// }
 
 // Add Product
 // var addBtn = document.getElementById("addButton");
@@ -102,8 +108,8 @@ async function updateTable() {
 // Delete Product
 document.getElementById("user-table").addEventListener("click", async function (event) {
     if (event.target.id.startsWith("deleteButton")) {
-        const staffId = event.target.id.replace("deleteButton", ""); // Extract product ID
-        console.log(staffId);
+        const productId = event.target.id.replace("deleteButton", ""); // Extract product ID
+
         if (confirm(`Are you sure you want to delete this account?`)) {
             try {
                 const response = await fetch('/GroupProject_SE/View/admin/staff.php', {
@@ -302,4 +308,6 @@ document.getElementById("user-table").addEventListener("click", async function (
 
 //     }
 // }
+
+
 

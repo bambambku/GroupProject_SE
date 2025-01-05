@@ -1,10 +1,7 @@
 <?php
-session_start();
 include ('../../includes/dbconnect.php');
 
-if ($_SESSION["user_role"] != 5){
-    header("Location: ../login/logout.php");
-}
+
 
 $sql = "
       SELECT 
