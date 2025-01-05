@@ -1,9 +1,14 @@
 <?php
+$token = bin2hex(random_bytes(32));
+setcookie('auth_token', $token, time() + 3600, "/", "", true, true);
+
 include "../../includes/dbconnect.php";
 session_start();
 if (isset($_SESSION["user_role"])) {
     header("Location: logout.php");
+    exit();
 }
+print_r($_COOKIE);
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +52,16 @@ if (isset($_SESSION["user_role"])) {
                             if ($user) {
                                 if ($password == $user["password"]) {
 
-                                  
+                                    
+
+                                    // Insert the token into the database
+                                    $stmt = $myPDO->prepare("INSERT INTO staff_tokens (staff_id, role_name, token) VALUES (?, ?, ?)");
+                                    
+
+                                    // Set the token as a secure cookie
+                                    
+                                    
+
                                     $_SESSION['user_role'] = $user['role_id'];
                                     $_SESSION['user_firstName'] = $user['f_name'];
                                     $_SESSION['user_surname'] = $user['l_name'];
@@ -56,18 +70,20 @@ if (isset($_SESSION["user_role"])) {
 
                                     
                                     if ($user['role_id'] == 1) {
+                                        $stmt->execute([$user['staff_id'], 'employee', $token]);
                                         header("Location: ../employee/Employee.php"); 
                                     } elseif ($user['role_id'] == 2) {
+                                        $stmt->execute([$user['staff_id'], 'stockManager', $token]);
                                         header("Location: ../stockManager/sm_home.php");
                                     } elseif ($user['role_id'] == 3) {
+                                        $stmt->execute([$user['staff_id'], 'manager', $token]);
                                         header("Location: ../manager/m_home.php");
                                     } elseif ($user['role_id'] == 4) {
+                                        $stmt->execute([$user['staff_id'], 'director', $token]);
                                         header("Location: ../director/d_home.php");
                                     } elseif ($user['role_id'] == 5) {
+                                        $stmt->execute([$user['staff_id'], 'admin', $token]);
                                         header("Location: ../admin/access_users.php");
-                                    }
-                                    else {
-                                        echo $user['role_id'];
                                     }
                                     die();
                                 } else {

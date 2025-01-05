@@ -5,21 +5,41 @@
         <img src="../../Pictures/logo.png" alt="logo" class="menu-picture">
         <div class="underlogo">
             <h2 class="name-txt"><?php echo $_SESSION['user_firstName'] . " " . $_SESSION['user_surname']?></h2>
-            <?php 
-            $sql2 = "SELECT name FROM Role WHERE ID = :id";
-            $stmt2 = $myPDO->prepare($sql2);  
-            $stmt2->bindParam(':id', $_SESSION['user_role'], PDO::PARAM_INT);
-            $stmt2->execute();
-            $user_role = $stmt2->fetch(PDO::FETCH_ASSOC);
-            $_SESSION['user_role']=$user_role;
+            <?php
+            $token = $_COOKIE['auth_token'];
+
+            // Query the database to verify the token
+            $stmt = $myPDO->prepare("SELECT s.staff_id, ut.role_name FROM staff_tokens ut
+                                   JOIN staff s ON ut.staff_id = s.staff_id
+                                   WHERE ut.token = ?");
+            $stmt->execute([$token]);
+            $user = $stmt->fetch();
+            $user_role = '';
+            switch($user['role_name']){
+                case 'admin':
+                    $user_role = 'Admin';
+                    break;
+                case 'employee':
+                    $user_role = 'Employee';
+                    break;
+                case 'stockManager':
+                    $user_role ='Stock Manager';
+                    break;
+                case 'manager':
+                    $user_role = 'Manager';
+                    break;
+                case 'director':
+                    $user_role = 'Director';
+                    break;
+            }
             ?>
-            <p class="job-title-txt"><?php echo  $_SESSION['user_role']['name']?></p>
+            <p class="job-title-txt"><?php echo  $user_role?></p>
         </div>
         <ul class="nav-menu">
             <?php 
             include ("link_classes.php");
 
-            switch ($_SESSION['user_role']['name']) {
+            switch ($user_role) {
                 case "Employee":
                 // Employee-specific navigation
                     echo "<li class='" . getRoleActiveClass('sales_index.php', 'active_emp') . "'><a href='../employee/sales_index.php'>New Sale</a></li>";

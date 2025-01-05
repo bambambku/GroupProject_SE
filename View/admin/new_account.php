@@ -1,6 +1,6 @@
 <?php
 include ('../../includes/dbconnect.php');
-
+include('../../includes/verify_user.php');
 
 
 $sql = "
