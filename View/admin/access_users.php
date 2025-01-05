@@ -13,16 +13,18 @@ if ($_SESSION["user_role"]!=5){
   <?php include('../../includes/header.php'); ?>
   <?php include ('../../includes/navbar.php'); ?>
   <script src="../../js/cssConverter.js"></script>
+  <script defer src="../../js/staffActions.js"></script>
+
   <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
   <script>updateCss("Admin");</script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
-<div id="deleteModal" class="modal">
+<div id="modalWindowStaff" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h2 id="modalTitle">Are you sure you want to delete this user?</h2>
+        <h2 id="modalTitle">Are you sure you want to delete this staff member?</h2>
         <div id="modalButtons">
             <button onclick="cancelDelete()">Cancel</button>
             <button onclick="deleteUser()">Delete</button>
@@ -54,37 +56,38 @@ if ($_SESSION["user_role"]!=5){
       $stmt->execute();
       $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
-    <table class="table table-striped table-bordered" id="user-table">
-        <thead>
-            <tr>
-                <th>Staff ID</th>
-                <th>Branch</th>
-                <th>Staff Member</th>
-                <th>Role</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if ($staff_members) {
-                foreach ($staff_members as $staff) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($staff['staff_id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($staff['branch_name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($staff['full_name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($staff['role_name']) . "</td>";
-                    echo "<td>" . 
-                      "<button onclick ='viewRecord(". htmlspecialchars($staff['staff_id']) .")'>View</button>" .
-                      "<button onclick='showDeleteModal(" . htmlspecialchars($staff['staff_id']) . ")'>Delete</button>" .  
-                      "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='4' class='text-center'>No staff members found</td></tr>";
+<table class="table table-striped table-bordered" id="user-table">
+    <thead>
+        <tr>
+            <th>Staff ID</th>
+            <th>Branch</th>
+            <th>Staff Member</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if ($staff_members) {
+            foreach ($staff_members as $staff) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($staff['staff_id']) . "</td>";
+                echo "<td>" . htmlspecialchars($staff['branch_name']) . "</td>";
+                echo "<td>" . htmlspecialchars($staff['full_name']) . "</td>";
+                echo "<td>" . htmlspecialchars($staff['role_name']) . "</td>";
+                echo "<td>" . 
+                  "<button onclick ='viewRecord(". htmlspecialchars($staff['staff_id']) .")'>View</button>" .
+                  "<button id='deleteButton" . htmlspecialchars($staff['staff_id']) . "' class='delete-button'>Delete</button>" .  
+                  "</td>";
+                echo "</tr>";
             }
-            ?>
-        </tbody>
-    </table>
+        } else {
+            echo "<tr><td colspan='4' class='text-center'>No staff members found</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
     
   </div>
 </body>
