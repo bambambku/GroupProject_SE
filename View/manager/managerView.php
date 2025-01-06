@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include ("../../query.php");
+// include ("../../query.php");
 
 // var_dump($_SESSION);
 
