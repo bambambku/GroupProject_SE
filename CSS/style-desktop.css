@@ -5,12 +5,13 @@ body
     outline: 0;
     font-family: sans-serif;
     display: flex;
-
  }
  .main-container /* This Will be the default setting for all the "Main". Wont go behing NAV bar. */
  {
   margin-left: 250px;
   justify-content: center;
+  margin-bottom: 10%;
+  width: 100%;
  }
 /* NAV bar START */
 .decoration-barEmp

@@ -57,7 +57,6 @@
 
         </div>
     </main>
-    <?php include '../../includes/footer.php'; ?>
 
     <!-- Simple greeting based on the time of the day -->
     <script> function getGreeting() 
@@ -79,5 +78,6 @@
         document.getElementById('greetingdirector').innerText = getGreeting(); 
     </script>
 </body>
+<?php include '../../includes/footer.php'; ?>
 </html>
 

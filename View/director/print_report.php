@@ -23,20 +23,16 @@ $branch_name = $branch['name'];
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="..\..\CSS\director.css">
-    <link rel="stylesheet" href="../../CSS/style-desktop.css">
-    <title>Director :: Home</title>
-</head>
-<body class="director-background">
-    <div class="dont-print">
-            <?php include '../../includes/navbar.php'; ?>
-    </div>
 
+    <title class="dont-print">Print Report</title>
+</head>
+<body>
     <main class="main-container">
         <div class="director-content-out">
-            <div class="director-report-wrapper">
+            <div class="director-report-wrapper-print">
+                <!-- Using script here to call the print function of the page, hiding buttons and anything that is unrelateable to the page -->
+            <button class="dont-print directorbttn-print " type="button" onclick="window.print();">Print</button>
                 <h2>Report</h2>
-                <!-- Button calling the print script, has its own styling -->
-                <button class="directorbttn-print" type="button" onclick="openPrintReport()">Print Report</button>
                 <p><strong>Branch:</strong> <?php echo htmlspecialchars($branch_name); ?></p>
                 <p><strong>Date:</strong> <?php echo htmlspecialchars($start_date . " - " . $end_date); ?></p>
                 <table class="director-report-tb">
@@ -66,15 +62,5 @@ $branch_name = $branch['name'];
             </div>
         </div>
     </main>
-    <!-- Script to take user to the printing page and tab, instead of taking them into just a new page -->
-    <script>
-        function openPrintReport() 
-        {
-            const urlParams = new URLSearchParams(window.location.search);
-            window.open(`print_report.php?${urlParams.toString()}`, '_blank');
-        }
-    </script>
-            <?php include '../../includes/footer.php'; ?>
 </body>
 </html>
-
