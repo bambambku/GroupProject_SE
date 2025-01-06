@@ -1,7 +1,12 @@
 <?php
+$token = bin2hex(random_bytes(32));
+setcookie('auth_token', $token, time() + 3600, "/", "", true, true);
+
+include "../../includes/dbconnect.php";
 session_start();
 if (isset($_SESSION["user_role"])) {
     header("Location: logout.php");
+    exit();
 }
 ?>
 
@@ -44,6 +49,14 @@ if (isset($_SESSION["user_role"])) {
                             if ($user) {
                                 if ($password == $user["password"]) {
 
+                                    // Insert the token into the database
+                                    $stmt = $myPDO->prepare("INSERT INTO staff_tokens (staff_id, role_name, token) VALUES (?, ?, ?)");
+                                    
+
+                                    // Set the token as a secure cookie
+                                    
+                                    
+
                                     $_SESSION['user_role'] = $user['role_id'];
                                     $_SESSION['user_firstName'] = $user['f_name'];
                                     $_SESSION['user_surname'] = $user['l_name'];
@@ -52,21 +65,22 @@ if (isset($_SESSION["user_role"])) {
                                     $_SESSION['branch_id'] = $user['branch_id'];
                                     
 
-                                    // In this section here: it makes more sense to have user
-                                    // role stored as the actual role title rather than a number.
-                                    // You'd either have to accept it's redundant or change it.
+                                    
                                     if ($user['role_id'] == 1) {
-                                        header("Location: ../employee/sales_index.php"); // Employee
+                                        $stmt->execute([$user['staff_id'], 'employee', $token]);
+                                        header("Location: ../employee/Employee.php"); 
                                     } elseif ($user['role_id'] == 2) {
-                                        header("Location: ../stockManager/products.php"); // The only reason this takes you to a director's page is because we're in the process of moving things around.
+                                        $stmt->execute([$user['staff_id'], 'stockManager', $token]);
+                                        header("Location: ../stockManager/sm_home.php");
                                     } elseif ($user['role_id'] == 3) {
+                                        $stmt->execute([$user['staff_id'], 'manager', $token]);
                                         header("Location: ../manager/m_home.php");
                                     } elseif ($user['role_id'] == 4) {
-                                        header("Location: ../director/director_home.php");
-                                    } elseif ($user['role_id'] == 5){
-                                        header("Location: ../admin/a_home.php");
-                                    } else {
-                                        echo "Error: " .$user['role_id']. " is not a valid user role.";
+                                        $stmt->execute([$user['staff_id'], 'director', $token]);
+                                        header("Location: ../director/d_home.php");
+                                    } elseif ($user['role_id'] == 5) {
+                                        $stmt->execute([$user['staff_id'], 'admin', $token]);
+                                        header("Location: ../admin/access_users.php");
                                     }
                                     die();
                                 } else {
@@ -89,8 +103,7 @@ if (isset($_SESSION["user_role"])) {
                   <input type="password" name="password" placeholder="Password" required>
                   <input type="submit" value="Login" name="login">
 
-                  <!-- Forgot Password link -->
-                  <a href="" class="forgot-password">Forgot Password?</a>
+                  <a href="" class="forgot-password">Forgot Password?</a> <!-- Contact admin for now-->
                 </form>
                 </div>
             </div>

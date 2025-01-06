@@ -1,0 +1,96 @@
+.section {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 5%;
+    left: 25%;
+    top: 5%;
+    bottom: 5%;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    width: calc(100% - 30%); /* 100% width minus the left and right positioning */
+    margin: 0 0;
+    justify-content: center; /* Center vertically */
+    align-items: center;     /* Center horizontally */
+}
+
+/* Centering the h1 */
+.section h1 {
+    margin-bottom: 80px; /* Space between the heading and the form */
+}
+
+/* Form container styles */
+.form-container {
+    display: flex;
+    justify-content: center;  /* Center columns horizontally */
+    margin-left:160px;
+    gap: 5%;  /* Space between the left and right columns */
+    width: 50%;  /* Set the width to 50% of the parent .section */
+}
+
+/* Style for each column */
+.column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;  /* Make each column take up equal width */
+}
+
+/* Flex for label/input pairs */
+.form-group {
+    display: flex;
+    align-items: center;  /* Vertically align items */
+    margin-bottom: 15px;
+}
+
+/* Label styling */
+label {
+    width: 150px;  /* Set fixed width for the labels */
+    margin-right: 10px;  /* Space between label and input field */
+    font-weight: bold;
+    text-align: right;  /* Align text to the right of the label */
+}
+
+/* Input field styling */
+input {
+    padding: 8px;
+    flex-grow: 1;  /* Make input fields take up the remaining space */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Submit button style */
+.submit-btn {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px auto 0; /* Center the button horizontally */
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+
+select {
+    padding: 8px;  /* Same padding as input fields */
+    width: 100%;    /* Ensure the select field takes up the full width of its container */
+    border: 1px solid #ccc; /* Same border as input fields */
+    border-radius: 4px; /* Same border-radius as input fields */
+    font-size: 16px;  /* Ensure the font size matches */
+}
+
+input.valid {
+    border: 2px solid green;
+}
+
+/* Red border for non-matching fields */
+input.invalid {
+    border: 2px solid red;
+}
