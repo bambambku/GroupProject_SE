@@ -79,9 +79,10 @@ label, select, input[type="date"], input[type="submit"] {
     gap: 50px;
     height: 250px;
     margin-top: 50px;
-    margin-left: 10%; 
+    margin-left: 20%; 
     background: linear-gradient(to bottom, #B1BE83 1px, transparent 1px) 0 0 / 100% 50px;
     position: relative;
+    margin-right: 50px;
 }
 
 /* Percentage Labels */
@@ -101,7 +102,8 @@ label, select, input[type="date"], input[type="submit"] {
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    width: 80px; }
+    width: 80px; 
+}
 
 .graph-bar {
     width: 100%;
@@ -205,14 +207,6 @@ label, select, input[type="date"], input[type="submit"] {
 .other-st { background-color: #D93D3D; }
 
 /* END Pie Chart */
- 
-/* Dont show aything is here below on print */
-@media print {
-    .dont-print {
-        display: none;
-    }
-}
-
 @media screen and (max-width : 1025px ) {
     .director-content-in{
         margin-top: auto;
@@ -221,5 +215,104 @@ label, select, input[type="date"], input[type="submit"] {
     .director-content-out{
         margin-top: 30px;
     }
-    
 }
+
+@media print
+{    
+    .dont-print
+    {
+        display: none;
+    }
+}
+/* START Report Section */
+/*Some font sizes has been changed for overall look on the report itself */
+/* Changed colors to basic and simple look for the report */
+
+
+.director-report-wrapper{
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 10px; 
+    margin: 20px 0;
+}
+
+.director-report-wrapper h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    align-items: center;
+    font-size: 1.8em;
+    color: #333;
+}
+
+.director-report-wrapper p {
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: #666;
+}
+
+.director-report-tb {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.director-report-tb th, .director-report-tb td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.director-report-tb th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #555;
+}
+
+.director-report-tb tr {
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.director-report-tb tr:nth-child(even) { /* Selects all even numbered rows, (had some styling problems with them rows) */
+    background-color: #f9f9f9;
+}
+
+.director-report-tb tr:hover {
+    background-color: #f1f1f1;
+}
+
+.director-report-wrapper h3 {
+    margin-top: 20px;
+    font-size: 1.3em; /*Some font sizes has been changed for overall look on the report itself */
+    color: #333;
+}
+
+.director-report-wrapper p strong {
+    color: #333;
+}
+
+.director-report-overall-container p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.director-report-wrapper-print {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.directorbttn-print{
+    background-color: #B1BE83;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+
+}
+.directorbttn-print:hover{
+    background-color: #909e5c;
+}
+/* END Report Section */
+
