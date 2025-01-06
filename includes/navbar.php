@@ -16,6 +16,7 @@
             $user = $stmt->fetch();
             $user_role = '';
             switch($user['role_name']){
+                
                 case 'admin':
                     $user_role = 'Admin';
                     break;
@@ -66,8 +67,8 @@
                     break;
                 case "Director":
                     // Director-specific navigation
-                    echo "<li class='" . getRoleActiveClass('dashboard.php', 'active_dir') . "'><a href=''>Dashboard</a></li>";
-                    echo "<li class='" . getRoleActiveClass('reports.php', 'active_dir') . "'><a href=''>Reports</a></li>";
+                    echo "<li class='" . getRoleActiveClass('director_home.php', 'active_dir') . "'><a href='../director/director_home.php'>Dashboard</a></li>";
+                    echo "<li class='" . getRoleActiveClass('report.php', 'active_dir') . "'><a href='../director/report.php'>Reports</a></li>";
                     break;
                 default:
                     break;

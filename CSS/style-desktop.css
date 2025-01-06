@@ -159,15 +159,16 @@ body
     background-color: #B2BF8477;
   }
 
-  .nav-menu.dir-menu li:hover{
-    background-color: #B2BF84;
-    transition: 0.8s;
-  }
+  
 
   .nav-menu li.active_dir{
     background-color: #B2BF84;
   }
 
+  .nav-menu.dir-menu li:hover{
+    background-color: #B2BF84;
+    transition: 0.8s;
+  }
   /* Stock Manager (sm) */
   .nav-menu.sm-menu li{
     background-color: #893C1877;
@@ -178,7 +179,7 @@ body
     transition: 0.8s;
   }
 
-  .nav-menu li.active_dir{
+  .nav-menu li.active_sm{
     background-color: #893C18;
   }
 

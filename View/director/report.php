@@ -1,6 +1,8 @@
 <?php
  include ('../../includes/header.php');
-include ("../../includes/dbconnect.php");
+ include ('../../includes/dbconnect.php');
+ include '../../includes/navbar.php'; 
+ include('../../includes/verify_user.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,10 +10,11 @@ include ("../../includes/dbconnect.php");
     <meta charset="UTF-8">
     <link rel="stylesheet" href="..\..\CSS\director.css">
     <link rel="stylesheet" href="../../CSS/style-desktop.css">
+    <script src="../../js/cssConverter.js"></script>
+    <script>updateCss("Director");</script>
     <title>Director :: Home</title>
 </head>
 <body class="director-background">
-    <?php include '../../includes/navbar.php'; ?>
     <main class="main-container">
         <div class="director-content-out">
             <div class="director-content-in">

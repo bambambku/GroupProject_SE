@@ -1,6 +1,7 @@
 <?php 
- include('director_home_logic.php'); 
  include ('../../includes/header.php');
+ include '../../includes/navbar.php'; 
+
 ?>
 
 <!DOCTYPE html>
@@ -9,10 +10,11 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="..\..\CSS\director.css">
     <link rel="stylesheet" href="../../CSS/style-desktop.css">
+    <script src="../../js/cssConverter.js"></script>
+    <script>updateCss("Director");</script>
     <title>Director :: Home</title>
 </head>
 <body class="director-background">
-    <?php include '../../includes/navbar.php'; ?>
     <main class="main-container">
         
     <div class="director-content-out">

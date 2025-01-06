@@ -1,5 +1,7 @@
 <?php
-include ("../../includes/dbconnect.php");
+include ('../../includes/dbconnect.php');
+
+include('../../includes/verify_user.php');
 
 $data = $_GET;
 $branch_id = $data['branch_id'];
@@ -24,6 +26,8 @@ $branch_name = $branch['name'];
     <meta charset="UTF-8">
     <link rel="stylesheet" href="..\..\CSS\director.css">
     <link rel="stylesheet" href="../../CSS/style-desktop.css">
+    <script src="../../js/cssConverter.js"></script>
+    <script>updateCss("Director");</script>
     <title>Director :: Home</title>
 </head>
 <body class="director-background">

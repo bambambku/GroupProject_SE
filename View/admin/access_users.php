@@ -12,10 +12,12 @@ include('../../includes/verify_user.php');
   <title>TerraCore :: Admin</title>
   <?php include('../../includes/header.php'); ?>
   <?php include ('../../includes/navbar.php'); ?>
+  
   <script src="../../js/cssConverter.js"></script>
+  <script>updateCss("Admin");</script>
 
   <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
-  <script>updateCss("Admin");</script>
+  
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script defer src="../../js/staffActions.js"></script>
   <script defer src="../../js/updateStaff.js"></script>
