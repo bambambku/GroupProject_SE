@@ -10,6 +10,11 @@ body
  {
   margin-left: 250px;
   justify-content: center;
+  
+  /* From michael2 */
+  padding-bottom: 150px;
+
+  /* From DEV */
   margin-bottom: 10%;
   width: 100%;
  }
@@ -308,6 +313,32 @@ th {
 /* General Conten Area END*/
 
 /* Mobile CSS */
+@media screen and (max-width: 1025px) 
+{
+  .sidebar{
+    width: 100%;
+    height: auto;
+    margin-bottom: 0;
+    position: relative;
+  }
+  body{
+    flex-direction: column;
+  }
+  .menu{
+    width: 100%;
+  }
+  .menu li{
+    width: 100%;
+  }
+  .menu-picture-container{
+    width: 100%;
+  }
+  .main-container{
+    margin-left: 0;
+    flex-direction: column;
+  }
+}
+
 
 /* Admin Css */
 .admin-background

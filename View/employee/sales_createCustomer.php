@@ -96,7 +96,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
+<link rel="stylesheet" href="../../CSS/employee.css">
+<title>Create Customer</title>
+<meta name="description" content="Terra Corre - Create Customer">
 </header>
 <body class="employee-background">
 
@@ -145,6 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <span class="error"><?php echo $accountErr; ?></span><br> -->
 
             <button type="submit">Add Customer</button>
+            <button><a href="sales_chooseCustomer.php">Cancel</a></button>
         </form>
     </div>
 </main>

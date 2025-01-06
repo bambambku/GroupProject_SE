@@ -68,7 +68,7 @@ if (isset($_SESSION["user_role"])) {
                                     
                                     if ($user['role_id'] == 1) {
                                         $stmt->execute([$user['staff_id'], 'employee', $token]);
-                                        header("Location: ../employee/Employee.php"); 
+                                        header("Location: ../employee/sales_index.php"); 
                                     } elseif ($user['role_id'] == 2) {
                                         $stmt->execute([$user['staff_id'], 'stockManager', $token]);
                                         header("Location: ../stockManager/sm_home.php");

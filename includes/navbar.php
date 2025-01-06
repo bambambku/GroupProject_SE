@@ -1,4 +1,7 @@
-<?php session_start() ?>
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} ?>
 <div class="sidebar">
 <div id="navbar-accent" class="decoration-bar"></div>
     <!-- <div class="menu-picture-container"> -->
@@ -44,7 +47,7 @@
                 case "Employee":
                 // Employee-specific navigation
                     echo "<li class='" . getRoleActiveClass('sales_index.php', 'active_emp') . "'><a href='../employee/sales_index.php'>New Sale</a></li>";
-                    echo "<li class='" . getRoleActiveClass('stock.php', 'active_emp') . "'><a href=''>Stock</a></li>";
+                    echo "<li class='" . getRoleActiveClass('productsEmployee.php', 'active_emp') . "'><a href='../employee/productsEmployee.php'>Stock</a></li>";
                     break;
                 case "Admin":
                 // Admin-specific navigation

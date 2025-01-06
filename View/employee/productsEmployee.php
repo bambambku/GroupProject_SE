@@ -1,14 +1,29 @@
 <?php
+include ('../../includes/dbconnect.php');
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+include('../../includes/verify_user.php');
+include '../../includes/navbar.php'; 
 
-// logout and redirect to login if user is not logged as an employee 
-if ($_SESSION["user_role"] != 1) {
-    if ($_SESSION["user_role"]["name"] != 'Employee') {
-    header("Location: ../login/login.php");
-}}
+// $sql = "SELECT * FROM Staff WHERE email = :email";  // Adjust column name if needed
+// $stmt = $myPDO->prepare($sql);
+// $stmt->bindParam(':email', $email_address, PDO::PARAM_STR);
+// $stmt->execute();
+// $_SESSION['user_role'] = $user['role_id'];
+// $_SESSION['user_firstName'] = $user['f_name'];
+// $_SESSION['user_surname'] = $user['l_name'];
+// $_SESSION['email_address'] = $user['email'];
+// $_SESSION['user_id'] = $user['staff_id'];
+// $_SESSION['branch_id'] = $user['branch_id'];
+                        
+// if (session_status() === PHP_SESSION_NONE) {
+//     session_start();
+// }
+
+// // logout and redirect to login if user is not logged as an employee 
+// if ($_SESSION["user_role"] != 1) {
+//     if ($_SESSION["user_role"]["name"] != 'Employee') {
+//     header("Location: ../login/login.php");
+// }}
 
 include ("../../query.php");
 if(!isset($_SESSION['branch_id'])) {
@@ -36,12 +51,11 @@ $stmt->execute($params);
 include("../../includes/header2.php");
 ?>
     <title>Branch Stock</title>
-    <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../../CSS/employee.css">
 </head>
 <body class="employee-background">
-<?php include '../../includes/navbar.php'; ?>
 <main class="main-container">
-<div class="general-content-out">
+<div class="general-content-out laptop-table">
     <!-- <div class="general-content-bttn-area">
     </div>
     <div class="general-content-in">     
@@ -87,6 +101,10 @@ include("../../includes/header2.php");
         ?>
     </tbody>
 </table>
+<?php var_dump($_SESSION['branch_id']);
+var_dump($_SESSION['user_id']);
+?>
+
 </div>
     <!-- </div>            
 </div> -->

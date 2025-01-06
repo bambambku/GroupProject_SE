@@ -24,12 +24,14 @@
     font-size: 20px;
     font-weight: bold;
 }
+
+
 </style>
 
 <script>
 
 function openModal(modalId) {
-    document.getElementById(modalId).style.display = "block";
+    document.getElementById(modalId).style.display = "flex";
 }
 
 function closeModal(modalId) {
