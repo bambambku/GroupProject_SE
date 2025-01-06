@@ -29,18 +29,30 @@ body
 
 .decoration-bar.admin-accent{
   background-color: #1A4A5A;
+  width: 100%;
+  height: 20px;
+
 }
 
 .decoration-bar.sm-accent{
   background-color: #7D4B22;
+  width: 100%;
+  height: 20px;
+
 }
 
 .decoration-bar.manager-accent{
   background-color: #000000;
+  width: 100%;
+  height: 20px;
+
 }
 
 .decoration-bar.dir-accent{
   background-color: #B2BF84;
+  width: 100%;
+  height: 20px;
+
 }
 
 .decoration-barStock
@@ -215,10 +227,6 @@ body
   }
 
   /*NAV bar END */
-
-
-
-
 
   /* Footer START */
   footer {
@@ -511,7 +519,7 @@ input {
 }
 
 /* Submit button style */
-.submit-btn {
+.submit-btn {  
   display: block;
   width: 100%;
   padding: 10px;
@@ -625,3 +633,30 @@ input {
       margin-top: 10px;
   }
 }
+
+/* Mobile CSS */
+@media screen and (max-width: 1025px) 
+{
+  .sidebar{
+    width: 100%;
+    height: auto;
+    margin-bottom: 0;
+    position: relative;
+  }
+  body{
+    flex-direction: column;
+  }
+  .nav-menu{
+    width: 100%;
+  }
+  .nav-menu li{
+    width: 100%;
+  }
+   .menu-picture-container{
+    width: 100%;
+  }
+  .main-container{
+    margin-left: 0;
+    flex-direction: column;
+  }
+} 
