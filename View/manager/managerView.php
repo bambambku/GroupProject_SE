@@ -23,8 +23,8 @@ $stmt->execute();
     <link rel="stylesheet" href="../../CSS/style-desktop.css">
     <link rel="stylesheet" href="..\..\CSS\manager.css">
     <title>Product View</title>
-    <script defer src="../../js/tableDropSort.js"></script>
-    <!-- <script defer src="../../js/staffActions.js"></script> -->
+    <!-- <script defer src="../../js/tableDropSort.js"></script> -->
+    <script defer src="../../js/staffActions.js"></script>
 </head>
 
 <body class="manager-background">

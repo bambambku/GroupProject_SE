@@ -289,8 +289,8 @@ searchButton.onclick = async function(){
 
 // Table Drop Sort
 
-const sortDropdown = document.getElementById('sortDropdown');
-const table = document.getElementById('laptopTable');
+const sortDropdown = document.getElementById('sortSelect');
+const table = document.getElementById('staffTable');
 const tbody = table.querySelector('tbody')
 // Function to sort table rows
 function sortTable(columnIndex, isNumeric = true) {
@@ -309,11 +309,10 @@ function sortTable(columnIndex, isNumeric = true) {
 // Event listener for dropdown change
 sortDropdown.addEventListener('change', () => {
     switch (sortDropdown.value) {
-        case 'name': sortTable(0); break;
-        case 'price': sortTable(2); break;
-        case 'ram': sortTable(7); break;
-        case 'hard_drive': sortTable(8); break;
-        case 'size': sortTable(4); break;
-        case 'weight': sortTable(3); break;
+        case 'staffID': sortTable(0); break;
+        case 'forename': sortTable(1); break;
+        case 'surname': sortTable(2); break;
+        case 'branchID': sortTable(4); break;
+        case 'roleID': sortTable(5); break;
     }
 })
