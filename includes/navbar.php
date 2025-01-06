@@ -1,7 +1,6 @@
 <?php session_start() ?>
-<div id="navbar-accent" class="decoration-bar"></div>
 <div class="sidebar">
-<div class="decoration-barEmp"></div>
+<div id="navbar-accent" class="decoration-bar"></div>
     <!-- <div class="menu-picture-container"> -->
         <img src="../../Pictures/logo.png" alt="logo" class="menu-picture">
         <div class="underlogo">
