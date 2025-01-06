@@ -138,7 +138,7 @@ body
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 20px;
-    width: 250px;
+    /* width: 250px; */
     cursor: pointer;
     text-align: Left;
     background-color: #e3c0b4;
