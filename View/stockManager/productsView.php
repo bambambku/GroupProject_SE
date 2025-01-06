@@ -1,11 +1,12 @@
 <?php
-session_start();
+include ('../../includes/dbconnect.php');
+include '../../includes/navbar.php'; 
+
+include('../../includes/verify_user.php');
+
 
 include ("../../query.php");
 
-if ($_SESSION["user_role"] != 2){
-    header("Location: ../login/logout.php");
-}
 
 $sql = "SELECT * FROM Product LEFT JOIN stock ON Product.ID = stock.product";
 $stmt = $myPDO->prepare($sql);
@@ -15,14 +16,15 @@ $stmt->execute();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
-    <link rel="stylesheet" href="..\..\CSS\stockManager.css">
+    <link rel="stylesheet" href="../../CSS/style-desktop.css">
+    <link rel="stylesheet" href="../../CSS/stockManager.css">
     <title>Product View</title>
     <script defer src="../../js/tableDropSort.js"></script>
     <script defer src="../../js/productActions.js"></script>
+    <script src="../../js/cssConverter.js"></script>
+    <script>updateCss("Stock Manager");</script>
 </head>
 <body id="stock-manager-background">
-<?php include '../../includes/navbar.php'; ?>
 <main class="main-container">
 <h1>Products:</h1>
 <div class="general-content-out">
