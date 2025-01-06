@@ -1,11 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
-    applyLowStockStyling();
-});
-let currentEditingProductId = null;
+
+
 
 
 // Add Button Modal
-var modal = document.getElementById("modalWindowStaff");
+var modal = document.getElementById("modalWindowBranches");
 //var openBtn = document.getElementById("addNewProductBtn");
 
 // openBtn.onclick = function() {
@@ -18,42 +16,46 @@ closeBtn.onclick = function() {
 }
 
 // Update Table, avoids the need to refresh page
-// async function updateTable() {
-//     try {
-//         const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({ action: 'read' })
-//         });
-//         const products = await response.json();
-//         const tableBody = document.querySelector("#laptopTable tbody");
-//         tableBody.querySelectorAll('tr').forEach(row => row.remove());
+async function updateTable() {
+    try {
+        const response = await fetch('/GroupProject_SE/View/admin/branches.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'read' })
+        });
+        
+        const branches = await response.json();
+        const tableBody = document.querySelector("#branches-table tbody");
+        
+        // Remove all existing rows from the table
+        tableBody.querySelectorAll('tr').forEach(row => row.remove());
 
-//         products.forEach(product => {
-//             const row = document.createElement("tr");
-//             row.innerHTML = `
-//                 <td>${product.name}</td>
-//                 <td>${product.description}</td>
-//                 <td>${product.price}</td>
-//                 <td>${product.weight}</td>
-//                 <td>${product.size}</td>
-//                 <td>${product.CPU}</td>
-//                 <td>${product.GPU}</td>
-//                 <td>${product.RAM}</td>
-//                 <td>${product.hard_drive}</td>
-//                 <td>${product.quantity !== null ? product.quantity : 'N/A'}</td>
-//                 <td>
-//                     <button class="editButton" data-id="${product.ID}">Edit</button> |
-//                     <button id="deleteButton${product.ID}" class="deleteButton">Delete</button>
-//                 </td>
-//             `;
-//             tableBody.appendChild(row);
-//         });
-//         applyLowStockStyling();
-//     } catch (error) {
-//         console.error("Error updating table:", error);
-//     }
-// }
+        // Loop through each branch in the response
+        branches.forEach(branch => {
+            const row = document.createElement("tr");
+            
+            // Fill in the row with branch data and staff count
+            row.innerHTML = `
+                <td>${branch.branch_id}</td>
+                <td>${branch.branch_name}</td>
+                <td>${branch.town}</td>
+                <td>${branch.postal_code}</td>
+                <td>${branch.num_staff}</td> <!-- Number of staff per branch -->
+                <td>
+                    <button class="editButton" data-id="${branch.branch_id}">Edit</button> |
+                    <button id="deleteButton${branch.branch_id}" class="deleteButton">Delete</button>
+                </td>
+            `;
+            
+            // Append the row to the table
+            tableBody.appendChild(row);
+        });
+        
+    } catch (error) {
+        console.error("Error updating table:", error);
+    }
+}
+
 
 // Add Product
 // var addBtn = document.getElementById("addButton");
@@ -106,28 +108,28 @@ closeBtn.onclick = function() {
 // };
 
 // Delete Product
-document.getElementById("user-table").addEventListener("click", async function (event) {
+document.getElementById("branches-table").addEventListener("click", async function (event) {
     if (event.target.id.startsWith("deleteButton")) {
-        const productId = event.target.id.replace("deleteButton", ""); // Extract product ID
-
-        if (confirm(`Are you sure you want to delete this account?`)) {
+        const branchId = event.target.id.replace("deleteButton", ""); // Extract branch ID
+        console.log(branchId);
+        if (confirm(`Are you sure you want to delete this branch? All accounts associated will be removed.`)) {
             try {
-                const response = await fetch('/GroupProject_SE/View/admin/staff.php', {
+                const response = await fetch('/GroupProject_SE/View/admin/branches.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         action: 'delete',
-                        staffID: staffId
+                        branchID: branchId
                     })
                 });
                 const result = await response.json();
                 if (result.success) {
                     await updateTable();
                 } else {
-                    console.error("Failed to delete account:", result.message);
+                    console.error("Failed to delete branch:", result.message);
                 }
             } catch (error) {
-                console.error("Error deleting account:", error);
+                console.error("Error deleting branch:", error);
             }
         }
     }
@@ -308,6 +310,4 @@ document.getElementById("user-table").addEventListener("click", async function (
 
 //     }
 // }
-
-
 

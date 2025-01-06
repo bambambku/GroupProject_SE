@@ -32,7 +32,6 @@ $stmt->execute();
   <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
   <script>updateCss("Admin");</script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <script defer src="../../js/staffActions.js"></script>
 
 </head>
 
@@ -50,33 +49,6 @@ $stmt->execute();
 <body class="admin-background">
   <div class="section">
     <h1>User Details</h1>
-<table class="table table-striped table-bordered" id="user-table">
-    <thead>
-        <tr>
-            <th>Staff ID</th>
-            <th>Branch</th>
-            <th>Staff Member</th>
-            <th>Role</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-          echo "<tr>";
-          echo "<td>" . $row['staff_id'] . "</td>";
-          echo "<td>" . $row['branch_name'] . "</td>";
-          echo "<td>" . $row['full_name'] . "</td>";
-          echo "<td>" . $row['role_name'] . "</td>";
-          echo "<td>" . 
-            "<button onclick ='viewRecord(". htmlspecialchars($row['staff_id']) .")'>View</button>" .
-            "<button id='deleteButton" . $row['staff_id'] . "' class='delete-button'>Delete</button>" .  
-            "</td>";
-          echo "</tr>";
-        }
-        ?>
-    </tbody>
-</table>
 
 </div>
 </body>

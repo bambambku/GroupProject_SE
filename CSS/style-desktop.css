@@ -308,6 +308,23 @@ background-color: #224F59;
   text-align: center;
 }
 
+#branches-table tbody {
+  display: block;
+  max-height: 700px; 
+  overflow-y: auto;
+  width: 100%;
+}
+
+#branches-table thead, #branches-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#branches-table td{
+  text-align: center;
+}
+
 
 
 

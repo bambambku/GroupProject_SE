@@ -1,24 +1,8 @@
 <?php
-session_start();
 include ('../../includes/dbconnect.php');
 
 include('../../includes/verify_user.php');
 
-$sql = "
-      SELECT 
-      staff.staff_id, 
-      staff.f_name || ' ' || staff.l_name AS full_name, 
-      branch.name AS branch_name, 
-      role.name AS role_name
-      FROM 
-      staff
-      JOIN 
-      branch ON staff.branch_id = branch.ID
-      JOIN 
-      role ON staff.role_id = role.ID;
-      ";
-$stmt = $myPDO->prepare($sql);
-$stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +47,22 @@ $stmt->execute();
     </thead>
     <tbody>
         <?php
+        
+$sql = "
+SELECT 
+staff.staff_id, 
+staff.f_name || ' ' || staff.l_name AS full_name, 
+branch.name AS branch_name, 
+role.name AS role_name
+FROM 
+staff
+JOIN 
+branch ON staff.branch_id = branch.ID
+JOIN 
+role ON staff.role_id = role.ID;
+";
+$stmt = $myPDO->prepare($sql);
+$stmt->execute();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
           echo "<tr>";
           echo "<td>" . $row['staff_id'] . "</td>";

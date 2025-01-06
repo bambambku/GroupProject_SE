@@ -8,7 +8,6 @@ if (isset($_SESSION["user_role"])) {
     header("Location: logout.php");
     exit();
 }
-print_r($_COOKIE);
 ?>
 
 <!DOCTYPE html>
@@ -51,8 +50,6 @@ print_r($_COOKIE);
                             $user = $stmt->fetch(PDO::FETCH_ASSOC);
                             if ($user) {
                                 if ($password == $user["password"]) {
-
-                                    
 
                                     // Insert the token into the database
                                     $stmt = $myPDO->prepare("INSERT INTO staff_tokens (staff_id, role_name, token) VALUES (?, ?, ?)");

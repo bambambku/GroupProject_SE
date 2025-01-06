@@ -30,6 +30,7 @@ if (isset($_COOKIE['auth_token'])) {
 } else{
     header("Location: ../login/logout.php");
 }
+
 //     } else {
 //         header("Location: ../login/logout.php");
 //         exit;

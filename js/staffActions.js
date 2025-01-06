@@ -1,7 +1,6 @@
 
 
 
-let currentEditingProductId = null;
 
 
 // Add Button Modal
