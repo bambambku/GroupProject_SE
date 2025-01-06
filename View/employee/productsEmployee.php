@@ -36,12 +36,12 @@ $stmt->execute($params);
 include("../../includes/header2.php");
 ?>
     <title>Branch Stock</title>
-    <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="../../CSS/employee.css">
 </head>
 <body class="employee-background">
 <?php include '../../includes/navbar.php'; ?>
 <main class="main-container">
-<div class="general-content-out">
+<div class="general-content-out laptop-table">
     <!-- <div class="general-content-bttn-area">
     </div>
     <div class="general-content-in">     
