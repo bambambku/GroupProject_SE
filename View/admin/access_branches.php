@@ -76,7 +76,6 @@ include('../../includes/verify_user.php');
             echo "<td>" . $row['post_code'] . "</td>";
             echo "<td>" . $row['num_staff'] . "</td>"; // Display the number of staff
             echo "<td>" . 
-            "<button onclick ='viewRecord(". htmlspecialchars($row['ID']) .")'>View</button>" .
             "<button id='deleteButton" . $row['ID'] . "' class='delete-button'>Delete</button>" .  
             "</td>";
             echo "</tr>";
