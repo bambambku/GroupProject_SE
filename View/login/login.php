@@ -103,7 +103,7 @@ if (isset($_SESSION["user_role"])) {
                   <input type="password" name="password" placeholder="Password" required>
                   <input type="submit" value="Login" name="login">
 
-                  <a href="" class="forgot-password">Forgot Password?</a>
+                  <a href="" class="forgot-password">Forgot Password?</a> <!-- Contact admin for now-->
                 </form>
                 </div>
             </div>

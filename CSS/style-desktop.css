@@ -281,9 +281,16 @@ background-color: #224F59;
   background-color: white; 
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: auto; 
+  
+}
+
+.section h1{
+  margin-top:35px;
+
 }
 
 .section table {
+  margin-top:-15px;
   flex-grow: 1;
   width: 100%;
   border-collapse: collapse;
@@ -291,6 +298,86 @@ background-color: #224F59;
 }
 
 /* Admin table css */
+#new-account.section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 5%;
+  left: 25%;
+  top: 5%;
+  bottom: 5%;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  width: calc(100% - 30%); /* 100% width minus the left and right positioning */
+  margin: 0 0;
+  justify-content: center; /* Center vertically */
+  align-items: center;     /* Center horizontally */
+}
+
+/* Centering the h1 */
+.section h1 {
+  margin-bottom: 80px; /* Space between the heading and the form */
+}
+
+/* Form container styles */
+.form-container {
+  display: flex;
+  justify-content: center;  /* Center columns horizontally */
+  margin-left:160px;
+  gap: 5%;  /* Space between the left and right columns */
+  width: 50%;  /* Set the width to 50% of the parent .section */
+}
+
+/* Style for each column */
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;  /* Make each column take up equal width */
+}
+
+/* Flex for label/input pairs */
+.form-group {
+  display: flex;
+  align-items: center;  /* Vertically align items */
+  margin-bottom: 15px;
+}
+
+/* Label styling */
+label {
+  width: 150px;  /* Set fixed width for the labels */
+  margin-right: 10px;  /* Space between label and input field */
+  font-weight: bold;
+  text-align: right;  /* Align text to the right of the label */
+}
+
+/* Input field styling */
+input {
+  padding: 8px;
+  flex-grow: 1;  /* Make input fields take up the remaining space */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Submit button style */
+.submit-btn {
+  display: block;
+  width: 250px;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px auto 0; /* Center the button horizontally */
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
 #user-table tbody {
   display: block;
   max-height: 700px; 
@@ -325,7 +412,51 @@ background-color: #224F59;
   text-align: center;
 }
 
+/* ADMIN CREATE NEW ACCOUNT FORM CSS */
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;  /* Space between the left and right columns */
+  width: 50%;  /* Set the width to 50% of the parent .section */
+  margin: 0 auto; /* Center form horizontally */
+}
 
+/* Style for each column */
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;  /* Make each column take up equal width */
+}
+
+/* Style each label and input field */
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Submit button style */
+.submit-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
 
 
 /* ================= TESTING FOR POPUPS ============== ======================== */
