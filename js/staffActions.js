@@ -26,7 +26,7 @@ async function updateTable() {
                 <td>${staff.full_name}</td>
                 <td>${staff.role_name}</td>
                 <td>
-                    <button class="editButton" data-id="${staff.staff_id}">Edit</button> |
+                    <button id="editButton"${staff.staff_id}">View</button> |
                     <button id="deleteButton${staff.staff_id}" class="deleteButton">Delete</button>
                 </td>
             `;
