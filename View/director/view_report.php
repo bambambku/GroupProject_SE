@@ -2,6 +2,8 @@
 include ('../../includes/dbconnect.php');
 
 include('../../includes/verify_user.php');
+include '../../includes/navbar.php'; 
+
 
 $data = $_GET;
 $branch_id = $data['branch_id'];
@@ -32,7 +34,6 @@ $branch_name = $branch['name'];
 </head>
 <body class="director-background">
     <div class="dont-print">
-            <?php include '../../includes/navbar.php'; ?>
     </div>
 
     <main class="main-container">
