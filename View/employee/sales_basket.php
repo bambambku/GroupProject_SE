@@ -1,7 +1,14 @@
 <?php
-include("../../Model/dbconnect.php");
+// include("../../Model/dbconnect.php");
+include("../../includes/dbconnect.php");
+global $myPDO;
+// if (session_status() === PHP_SESSION_NONE) {
+//     session_start();
+// }
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (!isset($_SESSION['basket'])) {
     $_SESSION['basket'] = [];
@@ -10,15 +17,25 @@ if (!isset($_SESSION['basket'])) {
 $basket = $_SESSION['basket'];
 
 function addToBasket($productID) {
-    global $basket;
+    global $basket, $myPDO;
     
-    global $conn;
+    // global $conn;
     $currentBranch = 1;
-    $sql = "SELECT product.ID, product.name, stock.quantity, product.price FROM product, stock WHERE stock.branch= ? AND stock.product=product.ID AND product.ID=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $currentBranch, $productID);
-    $stmt->execute();
-    $product = $stmt->get_result()->fetch_assoc();
+    $sql = "SELECT product.ID, product.name, stock.quantity, product.price 
+            FROM product, stock 
+            WHERE stock.branch = :branch AND stock.product = product.ID AND product.ID = :productID";
+    
+    $stmt = $myPDO->prepare($sql);
+    $stmt->execute([
+        'branch' => $currentBranch,
+        'productID' => $productID
+    ]);
+
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$product) {
+        return;
+    }
     $maxQty = $product['quantity'];
     if(isset($basket[$productID])) {
         if($basket[$productID]['quantity'] >= $maxQty) {

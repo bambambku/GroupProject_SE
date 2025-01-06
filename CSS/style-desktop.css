@@ -4,14 +4,17 @@ body
     padding: 0;
     outline: 0;
     font-family: sans-serif;
+    display: flex;
+
  }
  .main-container /* This Will be the default setting for all the "Main". Wont go behing NAV bar. */
  {
-  margin-left: 250px; 
+  margin-left: 250px;
+  justify-content: center;
  }
 
 /* NAV bar START */
-.decoration-bar
+.decoration-barEmp
 {
   background-color: #59291E;
   width: 250px;
@@ -32,6 +35,41 @@ body
 
 .decoration-bar.dir-accent{
   background-color: #B2BF84;
+}
+
+.decoration-barStock
+{
+    width: 100%;
+    background-color: #7D4B22;
+    height: 20px;
+    /* margin-left: 50px; */
+}
+
+
+.decoration-barAdm
+{
+    width: 100%;
+    background-color: #1A4A5A;
+    height: 20px;
+    /* margin-left: 50px; */
+}
+
+
+.decoration-barDire
+{
+    width: 100%;
+    background-color: #B2BF84;
+    height: 20px;
+    /* margin-left: 50px; */
+}
+
+
+.decoration-barMan
+{
+    width: 100%;
+    background-color: #000000;
+    height: 20px;
+    /* margin-left: 50px; */
 }
 
 .sidebar-padding{
@@ -61,10 +99,9 @@ body
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
 
   }
- .menu-picture-container
+ /* .menu-picture-container
  {
-    margin-bottom: 50%;
- }
+ } */
 
  .job-title-txt
  {
@@ -91,8 +128,8 @@ body
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
   }
 
-  .nav-menu li:hover {
-    background-color: #B86141;
+  .menu li:hover {
+    opacity: 0.8;
     transition: 0.8s;
   }
 
@@ -256,12 +293,11 @@ th {
 
 .general-content-in {
   padding: 30px 5px 30px 30px;
-}
-
-
+}  
 
 /* General Conten Area END*/
 
+/* Mobile CSS */
 
 /* Admin Css */
 .admin-background

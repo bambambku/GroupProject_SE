@@ -1,4 +1,225 @@
-#director-background
+
+/* START General director css */
+.director-background
 {
     background-color: #F2EDE4;
+}
+
+.director-content-in {
+    padding: 30px 5px 30px 30px;
+    text-align: center;
+  }
+
+  .director-content-out 
+{
+  margin: 100px 20px; 
+  max-height: fit-content;
+}
+
+/* END General director css */
+
+
+/* START Report Page */
+label
+{
+    padding-top: 2px;
+    width: 300px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label, select, input[type="date"], input[type="submit"] {
+    margin: 2px 0; 
+    width: 300px;
+    height: 30px;
+    border-radius: 3px;
+    border-style: none;
+}
+
+.directorbttn, select, input{
+    border-color: #000000;
+    outline: 1.7px solid #000000; 
+}
+
+.directorbttn{
+    background-color: #B1BE83;
+}
+
+/* END Report Page */
+
+/*Error Message*/
+.error {
+    color: red;
+    font-style: italic;
+    font-size: small;
+  }
+
+  /* START Wrappers for graphs */
+
+  .director-home-wrapper { 
+    display: flex;
+    justify-content: space-between; 
+ }
+.piechart-wrap { 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        width: 60%;
+    }
+    /* END Wrappers for graphs */
+
+
+/* START Graph */
+.graph-container {
+    display: flex;
+    gap: 50px;
+    height: 250px;
+    margin-top: 50px;
+    margin-left: 10%; 
+    background: linear-gradient(to bottom, #B1BE83 1px, transparent 1px) 0 0 / 100% 50px;
+    position: relative;
+}
+
+/* Percentage Labels */
+.graph-labels {
+    position: absolute;
+    left: -80px; 
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Graph Wrapper */
+.graph-bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 80px; }
+
+.graph-bar {
+    width: 100%;
+    text-align: center;
+    line-height: 50px;
+    transform-origin: bottom;   /* Had to change origin. some reason started from top*/
+}
+
+/* Bar Styles for individual ones  */
+.graph-bar1 {
+    background-color: #B1BE83;
+    height: 0;
+    animation: grow 2s forwards;
+}
+
+.graph-bar2 {
+    background-color: #B1BE83;
+    height: 0;
+    animation: grow2 2s forwards;
+}
+
+.graph-bar3 {
+    background-color: #B1BE83;
+    height: 0;
+    animation: grow3 3s forwards;
+}
+
+.graph-bar4 {
+    background-color: #B1BE83;
+    height: 0;
+    animation: grow4 3s forwards;
+}
+
+
+/* Animation for graphs */ 
+/*Not neccessary for mobile version */
+@keyframes grow {
+    from { height: 0; }
+    to { height: 89%; }
+}
+
+@keyframes grow2 {
+    from { height: 0; }
+    to { height: 33%; }
+}
+
+@keyframes grow3    {
+    from { height: 0; }
+    to { height: 50%; }
+}
+
+@keyframes grow4    {
+    from { height: 0; }
+    to { height: 69%; }
+}
+
+
+.graph-label-bottom {
+    margin-top: 5px; 
+}   
+/* END Graph */
+
+/* START Pie Chart */
+.pie {
+    width: 200px;
+    height: 200px;
+    background: conic-gradient(
+        #B1BE83 0% 40%, 
+        #148D8D 40% 70%, 
+        #F2D683 70% 90%, 
+        #D93D3D 90% 100% 
+    );
+    border-color: #000000;
+    border-radius: 50%;
+    position: relative;
+}
+
+.ul-piename {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.ul-piename li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.ul-piename .color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+/* Text boxes under pie */
+.intel-st { background-color: #B1BE83; }
+.amd-st { background-color: #148D8D; }
+.mac-st { background-color: #F2D683; }
+.other-st { background-color: #D93D3D; }
+
+/* END Pie Chart */
+ 
+/* Dont show aything is here below on print */
+@media print {
+    .dont-print {
+        display: none;
+    }
+}
+
+@media screen and (max-width : 1025px ) {
+    .director-content-in{
+        margin-top: auto;
+    }
+
+    .director-content-out{
+        margin-top: 30px;
+    }
+    
 }

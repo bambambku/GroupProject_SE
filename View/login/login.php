@@ -17,7 +17,7 @@ if (isset($_SESSION["user_role"])) {
   <?php include('../../includes/header.php'); ?>
   <link rel="stylesheet" href="..\..\CSS\login.css">
 </head>
-<body id="background1">
+<body class="background1">
         <div class="logo-container">
             <img src="../../Pictures\logo.png" alt="Logo" class="logo-pic">
         </div>
@@ -43,8 +43,6 @@ if (isset($_SESSION["user_role"])) {
                         $stmt->bindParam(':email', $email_address, PDO::PARAM_STR);
                         $stmt->execute();
 
-
-
                         // Checking if the statement prepared properly / isn't empty
                         if ($stmt) {
                             $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -64,6 +62,8 @@ if (isset($_SESSION["user_role"])) {
                                     $_SESSION['user_surname'] = $user['l_name'];
                                     $_SESSION['email_address'] = $user['email'];
                                     $_SESSION['user_id'] = $user['staff_id'];
+                                    $_SESSION['branch_id'] = $user['branch_id'];
+                                    
 
                                     
                                     if ($user['role_id'] == 1) {
@@ -131,6 +131,6 @@ __________________________________________________________________
 | jfrancois@terracore.com   |   1234   | Admin         |    5    |
 ------------------------------------------------------------------
 
-
+Wireframe Link [ https://rp.mockplus.com/editor/4p5Fn3_WL/2SNRE91EZy ]
 
 -->

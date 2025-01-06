@@ -1,17 +1,31 @@
 <?php
-include("../../Model/query.php");
-include("../../Model/dbconnect.php");
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// logout and redirect to login if user is not logged in or not an employee 
+if ($_SESSION["user_role"] != 1) {
+    if ($_SESSION["user_role"]["name"] != 'Employee') {
+    header("Location: ../login/login.php");
+}}
+
+
+include("../../includes/dbconnect.php");
 include("sales_basket.php");
-include("../../includes/header.php");
+include("../../includes/header2.php");
+
 ?>
 
+<title>Employee</title>
 <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
 </header>
-<body id="employee-background">
+<body class="employee-background">
 
 <?php
 include("../../includes/navbar.php");
 
+// Handle basket actions
 if (isset($_GET['add'])) {
     addToBasket($_GET['add']);
 } elseif (isset($_GET['remove'])) {
@@ -20,53 +34,51 @@ if (isset($_GET['add'])) {
     $_SESSION['basket'] = [];
 }
 
+if(!isset($_SESSION['basket'])) {
+    $_SESSION['basket'] = [];
+}
+
 $basket = $_SESSION['basket'];
-$currentBranch = 1;
+$_SESSION['branch_id'] = 1; // wait for Charlie to fix it in login
+$currentBranch = $_SESSION['branch_id']; // wait for Charlie to fixc it in login
 
 $searchTerm = "";
 if (isset($_POST['search'])) {
     $searchTerm = "%" . $_POST['search'] . "%";
 }
 
+// Prepare the query
 $sql = "SELECT product.ID, product.name, stock.quantity, product.price 
-        FROM product, stock 
-        WHERE stock.branch = ? AND stock.product = product.ID";
+        FROM stock
+        INNER JOIN product ON stock.product = product.ID
+        AND stock.branch = :branch
+        WHERE stock.quantity > 0";
+
+$params = ['branch' => $currentBranch];
 
 if ($searchTerm) {
-    $sql .= " AND product.name LIKE ?";
+    $sql .= " AND product.name LIKE :searchTerm";
+    $params['searchTerm'] = $searchTerm;
 }
 
-$stmt = $conn->prepare($sql);
-if ($searchTerm) {
-    $stmt->bind_param("is", $currentBranch, $searchTerm);
-} else {
-    $stmt->bind_param("i", $currentBranch);
-}
-$stmt->execute();
-$products = $stmt->get_result();
+// Execute the query using PDO
+$stmt = $myPDO->prepare($sql);
+$stmt->execute($params);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($products);
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
-    <title>Employee</title>
-</head>
-<body>
 <main class="main-container">
 <div class="sales-tables">
     <div class="sales-tables-stock">
         <div class="sales-title">
             <h2>Stock</h2>
-            <h2>Stock</h2>
             <div class="form">
                 <form action="" method="post">
-                    <label for="search">Search</label><br>
-                    <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($searchTerm ? $_POST['search'] : ''); ?>">
+                    <!-- <label for="search">Search</label><br> -->
+                    <input type="text" id="search" name="search" value="<?php echo htmlspecialchars(isset($_POST['search']) ? $_POST['search'] : ''); ?>">
                     <input type="submit" value="Search" name="salesSearch">
-                    <a href="sales_index.php">Clear</a>         
+                    <a href="sales_index.php">Clear</a>
                 </form>
             </div>
         </div>
@@ -77,17 +89,16 @@ $products = $stmt->get_result();
                 <th>Price</th>
                 <th>Actions</th>
             </tr>
-            <?php while ($product = $products->fetch_assoc()) { ?>
+            <?php foreach ($products as $product) { ?>
                 <tr>
-                    <td><?php echo $product['name']?></td>
-                    <td><?php echo $product['quantity']?></td>
-                    <td><?php echo $product['price']?></td>
+                    <td><?php echo htmlspecialchars($product['name']); ?></td>
+                    <td><?php echo htmlspecialchars($product['quantity']); ?></td>
+                    <td><?php echo htmlspecialchars($product['price']); ?></td>
                     <td>
-                        <a href="sales_index.php?add=<?php echo $product['ID']; ?>">Add</a>
+                        <a href="sales_index.php?add=<?php echo htmlspecialchars($product['ID']); ?>">Add</a>
                     </td>
                 </tr>
-
-                <?php }?>
+            <?php } ?>
         </table>
     </div>
 
@@ -97,25 +108,25 @@ $products = $stmt->get_result();
             <a href="sales_index.php?clear"><button type="button">Clear</button></a>
         </div>
         <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            <?php foreach ($basket as $product) { ?>
                 <tr>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Actions</th>
+                    <td><?php echo htmlspecialchars($product['name']); ?></td>
+                    <td><?php echo htmlspecialchars($product['quantity']); ?></td>
+                    <td><?php echo htmlspecialchars($product['price']); ?></td>
+                    <td>
+                        <a href="sales_index.php?remove=<?php echo htmlspecialchars($product['ID']); ?>">Remove</a>
+                    </td>
                 </tr>
-                <?php foreach ($basket as $product) { ?>
-                    <tr>
-                        <td><?php echo $product['name']?></td>
-                        <td><?php echo $product['quantity']?></td>
-                        <td><?php echo $product['price']?></td>
-                        <td>
-                            <a href="sales_index.php?remove=<?php echo $product['ID']; ?>">Remove</a>
-                        </td>
-                    </tr>
-                <?php } ?>
+            <?php } ?>
         </table>
-                <h3>Total: <?php echo array_sum(array_column($basket, 'price')) ?></h3>
-            <button type="button" onclick="openModal('finaliseSaleModal')">Finalise Sale</button>
+        <h3>Total: <?php echo htmlspecialchars(array_sum(array_column($basket, 'price'))); ?></h3>
+        <button type="button" onclick="openModal('finaliseSaleModal')" <?php if($_SESSION['basket'] == []) echo 'disabled'?>>Finalise Sale</button>
     </div>
 </div>
 
@@ -124,16 +135,12 @@ $products = $stmt->get_result();
         <span class="close" onclick="closeModal('finaliseSaleModal')">&times;</span>
         <h2>Finalise Sale</h2>
         <p>Are you sure you want to finalise this sale?</p>
-        
-            <a href="sales_finalise.php"><button >Confirm</button></a>
-            <button type="button" onclick="closeModal('finaliseSaleModal')">Cancel</button>
-        
+        <a href="sales_chooseCustomer.php"><button>Confirm</button></a>
+        <button type="button" onclick="closeModal('finaliseSaleModal')">Cancel</button>
     </div>
 </div>
 </main>
-<?php 
-include("modalStyleAndScript.php"); 
+<?php
+include("modalStyleAndScript.php");
 include("../../includes/footer.php");
 ?>
-
-    
