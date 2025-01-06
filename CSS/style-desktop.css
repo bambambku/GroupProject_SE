@@ -23,7 +23,7 @@ body
 .decoration-bar
 {
   background-color: #59291E;
-  width: 250px;
+  width: 100%;
   height: 20px;
 }
 
@@ -305,6 +305,32 @@ th {
 /* General Conten Area END*/
 
 /* Mobile CSS */
+@media screen and (max-width: 1025px) 
+{
+  .sidebar{
+    width: 100%;
+    height: auto;
+    margin-bottom: 0;
+    position: relative;
+  }
+  body{
+    flex-direction: column;
+  }
+  .menu{
+    width: 100%;
+  }
+  .menu li{
+    width: 100%;
+  }
+  .menu-picture-container{
+    width: 100%;
+  }
+  .main-container{
+    margin-left: 0;
+    flex-direction: column;
+  }
+}
+
 
 /* Admin Css */
 .admin-background
