@@ -16,7 +16,7 @@ include('../../includes/verify_user.php');
   <script src="../../js/cssConverter.js"></script>
   <script>updateCss("Admin");</script>
 
-  <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
+  <link rel="stylesheet" href="../../CSS/style-desktop.css" ">
   
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script defer src="../../js/staffActions.js"></script>
@@ -80,7 +80,7 @@ include('../../includes/verify_user.php');
             <input type="hidden" id="staff_id">
             <input type="text" id="f_name" placeholder="First Name">
             <input type="text" id="l_name" placeholder="Last Name">
-            <input type="email" id="email" placeholder="Email">
+            <input type="email" id="email" placeholder="Email" readonly>
             <select id="role_id"></select>
             <select id="branch_id"></select>
             <button type="button" id="cancelButton" onclick="closePopup()">Cancel</button>

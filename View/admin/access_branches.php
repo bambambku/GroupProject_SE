@@ -16,7 +16,6 @@ include('../../includes/verify_user.php');
   <script>updateCss("Admin");</script>
   <link rel="stylesheet" href="../../CSS/style-desktop.css" media="screen and (min-width: 1025px)">
   
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script defer src="../../js/branchActions.js"></script>
 
 </head>
