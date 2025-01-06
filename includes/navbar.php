@@ -1,4 +1,7 @@
-<?php session_start() ?>
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} ?>
 <div class="sidebar">
 <div id="navbar-accent" class="decoration-bar"></div>
     <!-- <div class="menu-picture-container"> -->

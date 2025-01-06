@@ -26,6 +26,11 @@ include("../../includes/header2.php");
 <title>Employee</title>
 <link rel="stylesheet" href="../../CSS/employee.css">
 <meta name="description" content="Terra Corre - Sales Index">
+<style>
+    .sidebar {
+        display: none;
+    }
+    </style>
 </header>
 <body class="employee-background">
 
