@@ -3,6 +3,9 @@ session_start();
 
 include ("../../query.php");
 
+// var_dump($_SESSION);
+
+// array(6) { ["user_role"]=> int(3) ["user_firstName"]=> string(8) "Michael " ["user_surname"]=> string(7) "Obrycki" ["email_address"]=> string(22) "mobrycki@terracore.com" ["user_id"]=> int(5) ["branch_id"]=> int(1) } 
 if ($_SESSION["user_role"] != 3){
     header("Location: ../login/logout.php");
 }
@@ -18,12 +21,13 @@ $stmt->execute();
     <!-- Given that this is based off of Joe's Product Page I'm just gonna leave all CSS References to match his page so that the pages have a consistent feel. -->
     <!-- Will need to update CSS references later because I think in our wireframes it has different colours for the user roles. -->
     <link rel="stylesheet" href="../../CSS/style-desktop.css">
-    <link rel="stylesheet" href="..\..\CSS\stockManager.css">
+    <link rel="stylesheet" href="..\..\CSS\manager.css">
     <title>Product View</title>
     <script defer src="../../js/tableDropSort.js"></script>
-    <script defer src="../../js/productActions.js"></script>
+    <!-- <script defer src="../../js/staffActions.js"></script> -->
 </head>
-<body id="stock-manager-background">
+
+<body class="manager-background">
     <?php include '../../includes/navbar.php'; ?>
     <main class="main-container">
         <h1>Staff Members:</h1>
@@ -74,7 +78,8 @@ $stmt->execute();
                 </select>
                 <button id="sortButton">Sort By</button>
 
-                <table id="laptopTable">
+                <!-- Changing the ID might break tableDropSort -->
+                <table id="staffTable">
                     <thead>
                         <tr>
                             <th>Staff ID</th>

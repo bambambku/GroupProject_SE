@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    applyLowStockStyling();
+    // LowapplyStockStyling();
 });
 let currentEditingProductId = null;
 
@@ -26,7 +26,7 @@ async function updateTable() {
             body: JSON.stringify({ action: 'read' })
         });
         const allstaff = await response.json();
-        const tableBody = document.querySelector("#laptopTable tbody");
+        const tableBody = document.querySelector("#staffTable tbody");
         tableBody.querySelectorAll('tr').forEach(row => row.remove());
 
         allstaff.forEach(staff => {
@@ -45,7 +45,7 @@ async function updateTable() {
             `;
             tableBody.appendChild(row);
         });
-        applyLowStockStyling();
+        
     } catch (error) {
         console.error("Error updating table:", error);
     }
@@ -101,19 +101,19 @@ addBtn.onclick = async function() {
     }
 };
 
-// Delete Product
-document.getElementById("laptopTable").addEventListener("click", async function (event) {
+// Delete Staff Member ? Maybe Not used by manager but by admin?
+document.getElementById("staffTable").addEventListener("click", async function (event) {
     if (event.target.id.startsWith("deleteButton")) {
-        const productId = event.target.id.replace("deleteButton", ""); // Extract product ID
+        const staffID = event.target.id.replace("deleteButton", ""); // Extract product ID
 
         if (confirm(`Are you sure you want to delete this product?`)) {
             try {
-                const response = await fetch('/GroupProject_SE/View/stockManager/products.php', {
+                const response = await fetch('/GroupProject_SE/View/stockManager/manager.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         action: 'delete',
-                        productID: productId
+                        productID: staffID
                     })
                 });
                 const result = await response.json();
@@ -130,7 +130,7 @@ document.getElementById("laptopTable").addEventListener("click", async function 
 });
 
 // Edit Button
-document.getElementById("laptopTable").addEventListener("click", async function (event) {
+document.getElementById("staffTable").addEventListener("click", async function (event) {
     if (event.target.classList.contains("editButton")) {
         const productId = event.target.getAttribute('data-id');
         currentEditingProductId = productId;
@@ -243,7 +243,7 @@ sortButton.onclick = async function() {
 
         const sortedProducts = await response.json();
         
-        const tableBody = document.querySelector("#laptopTable tbody");
+        const tableBody = document.querySelector("#staffTable tbody");
         tableBody.innerHTML = '';
 
         sortedProducts.forEach(product => {
@@ -270,28 +270,8 @@ sortButton.onclick = async function() {
     } catch (error) {
         console.error("Error sorting products:", error);
     }
-    applyLowStockStyling();
 };
 
-
-function applyLowStockStyling() {
-    const rows = document.querySelectorAll('#laptopTable tbody tr');
-
-    rows.forEach(row => {
-        const quantityCell = row.querySelector('td:nth-child(10)');
-        const productNameCell = row.querySelector('td:nth-child(1)');
-
-        const quantity = parseInt(quantityCell.textContent, 10);
-
-        if (!isNaN(quantity) && quantity < 10) {
-            quantityCell.style.color = 'red';
-            productNameCell.style.color = 'red';
-        } else {
-            quantityCell.style.color = '';
-            productNameCell.style.color = '';
-        }
-    });
-}
 
 // Search Button
 
@@ -307,3 +287,33 @@ searchButton.onclick = async function(){
 
 
 
+// Table Drop Sort
+
+const sortDropdown = document.getElementById('sortDropdown');
+const table = document.getElementById('laptopTable');
+const tbody = table.querySelector('tbody')
+// Function to sort table rows
+function sortTable(columnIndex, isNumeric = true) {
+    const rows = Array.from(tbody.rows)
+    rows.sort((a, b) => {
+        const aText = a.cells[columnIndex].textContent.trim();
+        const bText = b.cells[columnIndex].textContent.trim()
+        // Compare numeric or text values
+        return isNumeric ? (parseFloat(aText) - parseFloat(bText)) : aText.localeCompare(bText);
+    })
+    // Clear and re-append sorted rows
+    tbody.innerHTML = '';
+    rows.forEach(row => tbody.appendChild(row));
+}
+
+// Event listener for dropdown change
+sortDropdown.addEventListener('change', () => {
+    switch (sortDropdown.value) {
+        case 'name': sortTable(0); break;
+        case 'price': sortTable(2); break;
+        case 'ram': sortTable(7); break;
+        case 'hard_drive': sortTable(8); break;
+        case 'size': sortTable(4); break;
+        case 'weight': sortTable(3); break;
+    }
+})
