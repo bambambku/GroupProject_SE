@@ -1,10 +1,3 @@
-var modal = document.getElementById("modalWindowStaff");
-
-
-var closeBtn = document.getElementById("closeButton");
-closeBtn.onclick = function() {
-  modal.style.display = "none";
-}
 
 
 async function updateTable() {
@@ -40,6 +33,7 @@ async function updateTable() {
 
 
 
+
 // Delete Product
 document.getElementById("user-table").addEventListener("click", async function (event) {
     if (event.target.id.startsWith("deleteButton")) {
@@ -67,4 +61,5 @@ document.getElementById("user-table").addEventListener("click", async function (
         }
     }
 });
+
 
