@@ -1,47 +1,74 @@
-<!-- <?php session_start(); ?> -->
-
+<?php session_start() ?>
 <div class="sidebar">
-<div class="decoration-barEmp"></div>
+<div id="navbar-accent" class="decoration-bar"></div>
     <!-- <div class="menu-picture-container"> -->
         <img src="../../Pictures/logo.png" alt="logo" class="menu-picture">
         <div class="underlogo">
             <h2 class="name-txt"><?php echo $_SESSION['user_firstName'] . " " . $_SESSION['user_surname']?></h2>
-            <?php 
-            
-            $sql2 = "SELECT name FROM Role WHERE ID = :id";
-            $stmt2 = $myPDO->prepare($sql2);  
-            $stmt2->bindParam(':id', $_SESSION['user_role'], PDO::PARAM_INT);
-            $stmt2->execute();
-            $user_role = $stmt2->fetch(PDO::FETCH_ASSOC);
-            $_SESSION['user_role']=$user_role;
+            <?php
+            $token = $_COOKIE['auth_token'];
+
+            // Query the database to verify the token
+            $stmt = $myPDO->prepare("SELECT s.staff_id, ut.role_name FROM staff_tokens ut
+                                   JOIN staff s ON ut.staff_id = s.staff_id
+                                   WHERE ut.token = ?");
+            $stmt->execute([$token]);
+            $user = $stmt->fetch();
+            $user_role = '';
+            switch($user['role_name']){
+                
+                case 'admin':
+                    $user_role = 'Admin';
+                    break;
+                case 'employee':
+                    $user_role = 'Employee';
+                    break;
+                case 'stockManager':
+                    $user_role ='Stock Manager';
+                    break;
+                case 'manager':
+                    $user_role = 'Manager';
+                    break;
+                case 'director':
+                    $user_role = 'Director';
+                    break;
+            }
             ?>
-            <p class="job-title-txt"><?php echo  $_SESSION['user_role']['name']?></p>
+            <p class="job-title-txt"><?php echo  $user_role?></p>
         </div>
-        <ul class="menu">
+        <ul class="nav-menu">
             <?php 
-            switch($_SESSION['user_role']['name']){
-                case("Employee"):
-                    echo "<li><a href='../employee/sales_index.php'>New Sale</a></li>";
-                    echo '<li><a href="../employee/productsEmployee.php" id="stockBtn">Stock</a></li>';
+            include ("link_classes.php");
+
+            switch ($user_role) {
+                case "Employee":
+                // Employee-specific navigation
+                    echo "<li class='" . getRoleActiveClass('sales_index.php', 'active_emp') . "'><a href='../employee/sales_index.php'>New Sale</a></li>";
+                    echo "<li class='" . getRoleActiveClass('stock.php', 'active_emp') . "'><a href=''>Stock</a></li>";
                     break;
-                case("Admin"):
-                    echo "<li><a href=''>Access Users</a></li>";
-                    echo "<li><a href=''>Create New User</a></li>";
-                    echo "<li><a href=''>Branches</a></li>";
+                case "Admin":
+                // Admin-specific navigation
+                    echo "<li class='" . getRoleActiveClass('access_users.php', 'active_admin') . "'><a href='../admin/access_users.php'>Access Users</a></li>";
+                    echo "<li class='" . getRoleActiveClass('new_account.php', 'active_admin') . "'><a href='../admin/new_account.php'>Create New User</a></li>";
+                    echo "<li class='" . getRoleActiveClass('access_branches.php', 'active_admin') . "'><a href='../admin/access_branches.php'>Access Branches</a></li>";
+                    echo "<li class='" . getRoleActiveClass('new_branch.php', 'active_admin') . "'><a href='../admin/new_branch.php'>Create New Branch</a></li>";
                     break;
-                case("Stock Manager"):
-                    echo "<li><a href=''>Stock View</a></li>";
-                    echo '<li><a href="#" id="addNewProductBtn">Add New Product</a></li>';
-                    echo "<li><a href=''>Orders</a></li>";
+                case "Stock Manager":
+                    // Stock Manager-specific navigation
+                    echo "<li class='" . getRoleActiveClass('stock_view.php', 'active_sm') . "'><a href=''>Stock View</a></li>";
+                    echo "<li class='" . getRoleActiveClass('add_product.php', 'active_sm') . "'><a href=''>Add New Product</a></li>";
+                    echo "<li class='" . getRoleActiveClass('orders.php', 'active_sm') . "'><a href=''>Orders</a></li>";
                     break;
-                case("Manager"):
-                    echo "<li><a href=''>Employee Details</a></li>";
-                    echo "<li><a href=''>Branch Report</a></li>";
-                    echo "<li><a href=''>Previous Reports</a></li>";
+                case "Manager":
+                    // Manager-specific navigation
+                    echo "<li class='" . getRoleActiveClass('employee_details.php', 'active_manager') . "'><a href=''>Employee Details</a></li>";
+                    echo "<li class='" . getRoleActiveClass('branch_report.php', 'active_manager') . "'><a href=''>Branch Report</a></li>";
+                    echo "<li class='" . getRoleActiveClass('previous_reports.php', 'active_manager') . "'><a href=''>Previous Reports</a></li>";
                     break;
-                case("Director"):
-                    echo "<li><a href='../director/director_home.php'>Dashboard</a></li>";
-                    echo "<li><a href='../director/report.php'>Reports</a></li>";
+                case "Director":
+                    // Director-specific navigation
+                    echo "<li class='" . getRoleActiveClass('director_home.php', 'active_dir') . "'><a href='../director/director_home.php'>Dashboard</a></li>";
+                    echo "<li class='" . getRoleActiveClass('report.php', 'active_dir') . "'><a href='../director/report.php'>Reports</a></li>";
                     break;
                 default:
                     break;

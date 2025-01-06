@@ -5,21 +5,42 @@ body
     outline: 0;
     font-family: sans-serif;
     display: flex;
-
  }
  .main-container /* This Will be the default setting for all the "Main". Wont go behing NAV bar. */
  {
   margin-left: 250px;
   justify-content: center;
+  
+  /* From michael2 */
   padding-bottom: 150px;
+
+  /* From DEV */
+  margin-bottom: 10%;
+  width: 100%;
  }
+
 /* NAV bar START */
-.decoration-barEmp
+.decoration-bar
 {
-    width: 100%;
-    background-color: #59291E;
-    height: 20px;
-    /* margin-left: 50px; */
+  background-color: #59291E;
+  width: 250px;
+  height: 20px;
+}
+
+.decoration-bar.admin-accent{
+  background-color: #1A4A5A;
+}
+
+.decoration-bar.sm-accent{
+  background-color: #7D4B22;
+}
+
+.decoration-bar.manager-accent{
+  background-color: #000000;
+}
+
+.decoration-bar.dir-accent{
+  background-color: #B2BF84;
 }
 
 .decoration-barStock
@@ -68,7 +89,6 @@ body
     color: #333333;
     display: flex;
     flex-direction: column;
-    margin-bottom: 50%;
     /* padding-left: 20px; */
   }
   .name-txt
@@ -95,14 +115,14 @@ body
     margin-block-end: 0; /* Got rid of the default style here */
  }
 
-  .menu {
+ /* Menu css START */
+  .nav-menu {
     list-style: none;
     width: 80%;
     padding-inline: 0;
   }
 
-
-  .menu li {
+  .nav-menu li {
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 20px;
@@ -110,10 +130,8 @@ body
     cursor: pointer;
     text-align: Left;
     background-color: #e3c0b4;
-    
     margin-block-start: 0.5em;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
-
   }
 
   .menu li:hover {
@@ -121,17 +139,86 @@ body
     transition: 0.8s;
   }
 
-  .menu a {
+
+  /* admin */
+  .nav-menu.admin-menu li{
+    background-color: #148D8D77;
+  }
+
+  .nav-menu li.active_admin{
+    background-color: #148D8D;
+  }
+
+  .nav-menu.admin-menu li:hover{
+    background-color: #148D8D;
+    transition: 0.8s;
+  }
+
+  /* employee */
+  .nav-menu li.active_emp{
+    background-color: #B86141;
+  }
+
+  /* director */
+  .nav-menu.dir-menu li{
+    background-color: #B2BF8477;
+  }
+
+  
+
+  .nav-menu li.active_dir{
+    background-color: #B2BF84;
+  }
+
+  .nav-menu.dir-menu li:hover{
+    background-color: #B2BF84;
+    transition: 0.8s;
+  }
+  /* Stock Manager (sm) */
+  .nav-menu.sm-menu li{
+    background-color: #893C1877;
+  }
+
+  .nav-menu.sm-menu li:hover{
+    background-color: #893C18;
+    transition: 0.8s;
+  }
+
+  .nav-menu li.active_sm{
+    background-color: #893C18;
+  }
+
+  /* Manager */
+  .nav-menu.manager-menu li{
+    background-color: #606B7377;
+  }
+
+  .nav-menu.manager-menu li:hover{
+    background-color: #606B73;
+    transition: 0.8s;
+  }
+
+  .nav-menu li.active_manager{
+    background-color: #606B73;
+  }
+
+  .nav-menu a {
     color: #333;
     text-decoration: none;
     display: block;
   }
+
+  /* Menu Css End */
 
   .underlogo {
     margin: 20px;
   }
 
   /*NAV bar END */
+
+
+
+
 
   /* Footer START */
   footer {
@@ -219,28 +306,296 @@ th {
 
 /* Mobile CSS */
 
-@media screen and (max-width: 1025px) 
+/* Admin Css */
+.admin-background
 {
-  .sidebar{
-    width: 100%;
-    height: auto;
-    margin-bottom: 0;
-    position: relative;
+background-color: #224F59;
+}
+
+.section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 5%; 
+  left: 25%;               
+  top: 5%;                 
+  bottom: 5%;               
+  background-color: white; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: auto; 
+  
+}
+
+.section h1{
+  margin-top:35px;
+
+}
+
+.section table {
+  margin-top:-15px;
+  flex-grow: 1;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; 
+}
+
+/* Admin table css */
+#new-account.section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 5%;
+  left: 25%;
+  top: 5%;
+  bottom: 5%;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  width: calc(100% - 30%); /* 100% width minus the left and right positioning */
+  margin: 0 0;
+  justify-content: center; /* Center vertically */
+  align-items: center;     /* Center horizontally */
+}
+
+/* Centering the h1 */
+.section h1 {
+  margin-bottom: 80px; /* Space between the heading and the form */
+}
+
+/* Form container styles */
+.form-container {
+  display: flex;
+  justify-content: center;  /* Center columns horizontally */
+  margin-left:160px;
+  gap: 5%;  /* Space between the left and right columns */
+  width: 50%;  /* Set the width to 50% of the parent .section */
+}
+
+/* Style for each column */
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;  /* Make each column take up equal width */
+}
+
+/* Flex for label/input pairs */
+.form-group {
+  display: flex;
+  align-items: center;  /* Vertically align items */
+  margin-bottom: 15px;
+}
+
+/* Label styling */
+label {
+  width: 150px;  /* Set fixed width for the labels */
+  margin-right: 10px;  /* Space between label and input field */
+  font-weight: bold;
+  text-align: right;  /* Align text to the right of the label */
+}
+
+/* Input field styling */
+input {
+  padding: 8px;
+  flex-grow: 1;  /* Make input fields take up the remaining space */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Submit button style */
+.submit-btn {
+  display: block;
+  width: 250px;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px auto 0; /* Center the button horizontally */
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+#user-table tbody {
+  display: block;
+  max-height: 700px; 
+  overflow-y: auto;
+  width: 100%;
+}
+
+#user-table thead, #user-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#user-table td{
+  text-align: center;
+}
+
+#branches-table tbody {
+  display: block;
+  max-height: 700px; 
+  overflow-y: auto;
+  width: 100%;
+}
+
+#branches-table thead, #branches-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#branches-table td{
+  text-align: center;
+}
+
+/* ADMIN CREATE NEW ACCOUNT FORM CSS */
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;  /* Space between the left and right columns */
+  width: 50%;  /* Set the width to 50% of the parent .section */
+  margin: 0 auto; /* Center form horizontally */
+}
+
+/* Style for each column */
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;  /* Make each column take up equal width */
+}
+
+/* Style each label and input field */
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Submit button style */
+.submit-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+
+/* ================= TESTING FOR POPUPS ============== ======================== */
+
+#popupForm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent dark background */
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure the popup is on top */
+  display: flex;
+}
+
+/* Popup container */
+#popupForm form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Input fields styling */
+#popupForm input,
+#popupForm select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Add some focus effect */
+#popupForm input:focus,
+#popupForm select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Style for the buttons */
+#popupForm button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#popupForm #saveButton {
+  background-color: #28a745;
+  color: #fff;
+}
+
+#popupForm #saveButton:hover {
+  background-color: #218838;
+}
+
+#popupForm #cancelButton {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+#popupForm #cancelButton:hover {
+  background-color: #c82333;
+}
+
+/* Add some spacing and center content */
+#popupForm form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#popupForm form label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  #popupForm form {
+      width: 90%;
+      padding: 15px;
   }
-  body{
-    flex-direction: column;
+  
+  #popupForm button {
+      width: 100%;
+      margin-top: 10px;
   }
-  .menu{
-    width: 100%;
-  }
-  .menu li{
-    width: 100%;
-  }
-  .menu-picture-container{
-    width: 100%;
-  }
-  .main-container{
-    margin-left: 0;
-    flex-direction: column;
-  }
-} 
+}
