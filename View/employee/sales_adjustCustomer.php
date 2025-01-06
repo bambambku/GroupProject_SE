@@ -98,7 +98,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <title>Adjust Customer</title>
-<link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
+<meta name="description" content="Terra Corre - Adjust Customer">
+<link rel="stylesheet" href="../../CSS/employee.css">
 <body class="employee-background">
 
 <?php include("../../includes/navbar.php"); ?>
@@ -132,6 +133,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <span class="error"><?php echo $townErr; ?></span><br>
 
             <button type="submit">Update Customer</button>
+            <button><a href="sales_chooseCustomer.php">Cancel</a></button>
         </form>
     </div>
 </main>
+<?php include("../../includes/footer.php"); ?>

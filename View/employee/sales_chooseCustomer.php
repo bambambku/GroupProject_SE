@@ -16,7 +16,7 @@ include("../../includes/header2.php");
 
 // session_start();
 
-if ($_SESSION['basket'] = []) {
+if ($_SESSION['basket'] == []) {
     header("Location: sales_index.php");
     exit;
 }   
@@ -48,12 +48,14 @@ try {
 }
 ?>
 
-<link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
+<link rel="stylesheet" href="../../CSS/employee.css">
+<title>Choose Customer</title>
+<meta name="description" content="Terra Corre - Choose Customer">
 </header>
 
 <body class="employee-background">
 
-<!-- <?php include("../../includes/navbar.php"); ?> -->
+<?php include("../../includes/navbar.php"); ?>
 
 <main class="main-container">
     <div class="choose-customer">
@@ -81,10 +83,10 @@ try {
                         <td><?php echo htmlspecialchars($row['address']); ?></td>
                         <td><?php echo htmlspecialchars($row['post_code']); ?></td>
                         <td><?php echo htmlspecialchars($row['town']); ?></td>
-                        <td>
+                        <td style="display: flex; flex-direction: space-between; gap: 1vw;">
                             <a href="sales_chooseCustomer.php?customer=<?php echo htmlspecialchars($row['ID']); ?>">
                                 <button>Select</button>
-                            </a>
+                            </a> 
                             <a href="sales_adjustCustomer.php?adjust=<?php echo htmlspecialchars($row['ID']); ?>">
                                 <button>Adjust</button>
                             </a>

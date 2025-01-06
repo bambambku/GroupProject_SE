@@ -2,10 +2,13 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+$saleCorrect = false;
 // logout and redirect to login if user is not logged in or not an employee 
-if ((!isset($_SESSION["user_role"]) || $_SESSION["user_role"] != 1)) {
-    header("Location: logout.php");
-}
+if ($_SESSION["user_role"] != 1) {
+    if ($_SESSION["user_role"]["name"] != 'Employee') {
+    header("Location: ../login/login.php");
+}}
 
 include("../../includes/dbconnect.php");
 include("sales_basket.php");
@@ -82,7 +85,8 @@ try {
     }
 
     echo "<p class='dont-print'>Sale recorded and stock adjusted successfully!</p>";
-    $_SESSION['basket'] = [];
+    $saleCorrect = true;
+
 } catch (Exception $e) {
     echo "<p class='dont-print'>Something went wrong while recording the sale: " . $e->getMessage() . "</p>";
 }
@@ -100,6 +104,11 @@ try {
     display: inline-block;
     vertical-align: top;
     }
+
+    .invoice {
+        padding-top: 10vh; 
+    }
+
 </style>
 
 </header>
@@ -174,7 +183,10 @@ try {
     </div>
 </main>
 
-<?php include("../../includes/footer.php"); ?>
+<?php include("../../includes/footer.php"); 
+    // if ($saleCorrect) $_SESSION['saleCorrect'] = true;
+    if ($saleCorrect) $_SESSION['basket'] = [];
+?>
 
 <script>
     footer = document.querySelector("footer");

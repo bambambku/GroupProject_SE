@@ -4,6 +4,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// if ($_SESSION["salesCorrect"] == true) {
+//     $_SESSION["basket"] = [];
+//     $_SESSION["salesCorrect"] = false;
+// }
+
 // logout and redirect to login if user is not logged in or not an employee 
 if ($_SESSION["user_role"] != 1) {
     if ($_SESSION["user_role"]["name"] != 'Employee') {
@@ -15,10 +20,12 @@ include("../../includes/dbconnect.php");
 include("sales_basket.php");
 include("../../includes/header2.php");
 
+
 ?>
 
 <title>Employee</title>
-<link rel="stylesheet" href="../../CSS/employee.css" media="screen and (min-width: 1025px)">
+<link rel="stylesheet" href="../../CSS/employee.css">
+<meta name="description" content="Terra Corre - Sales Index">
 </header>
 <body class="employee-background">
 
@@ -135,8 +142,10 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <span class="close" onclick="closeModal('finaliseSaleModal')">&times;</span>
         <h2>Finalise Sale</h2>
         <p>Are you sure you want to finalise this sale?</p>
-        <a href="sales_chooseCustomer.php"><button>Confirm</button></a>
-        <button type="button" onclick="closeModal('finaliseSaleModal')">Cancel</button>
+        <div>
+            <a href="sales_chooseCustomer.php"><button>Confirm</button></a>
+            <button type="button" onclick="closeModal('finaliseSaleModal')">Cancel</button>
+        </div>
     </div>
 </div>
 </main>
