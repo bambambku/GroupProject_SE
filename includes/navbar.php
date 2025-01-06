@@ -49,7 +49,8 @@
                 // Admin-specific navigation
                     echo "<li class='" . getRoleActiveClass('access_users.php', 'active_admin') . "'><a href='../admin/access_users.php'>Access Users</a></li>";
                     echo "<li class='" . getRoleActiveClass('new_account.php', 'active_admin') . "'><a href='../admin/new_account.php'>Create New User</a></li>";
-                    echo "<li class='" . getRoleActiveClass('access_branches.php', 'active_admin') . "'><a href='../admin/access_branches.php'>Branches</a></li>";
+                    echo "<li class='" . getRoleActiveClass('access_branches.php', 'active_admin') . "'><a href='../admin/access_branches.php'>Access Branches</a></li>";
+                    echo "<li class='" . getRoleActiveClass('new_branch.php', 'active_admin') . "'><a href='../admin/new_branch.php'>Create New Branch</a></li>";
                     break;
                 case "Stock Manager":
                     // Stock Manager-specific navigation
