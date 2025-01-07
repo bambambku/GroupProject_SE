@@ -25,7 +25,7 @@ include '../../includes/navbar.php';
 //     header("Location: ../login/login.php");
 // }}
 
-include ("../../query.php");
+// include ("../../query.php");
 if(!isset($_SESSION['branch_id'])) {
     $_SESSION['branch_id'] = 1;
 }
