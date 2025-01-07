@@ -1,0 +1,141 @@
+
+
+/* Stock Manager Background */
+.stock-manager-background {
+    background-color: #B9B099;
+}
+
+/* Table Cell Styles */
+td {
+    background-color: lightgray;
+}
+
+/* Special Class for Background */
+.special {
+    background-color: pink;
+}
+
+/* Low Stock Items */
+.low-stock {
+    color: red;
+}
+
+/* Modal Window CSS */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Form Styling */
+.modal form {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 70%;
+    max-width: 900px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Modal Label, Input, and Button Styles */
+.modal form label,
+.modal form input,
+.modal form button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    color: #954343;
+}
+
+.modal form label {
+    font-weight: bold;
+}
+
+.modal form input {
+    padding: 8px;
+    border: 1px solid #666;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff;
+}
+
+.modal form button {
+    padding: 10px;
+    background-color: #954343;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.modal form button:hover {
+    background-color: #b55b5b;
+}
+
+.modal form div {
+    width: 48%;
+    margin-right: 4%;
+    margin-bottom: 20px;
+}
+
+.modal form div:nth-child(even) {
+    margin-right: 0;
+}
+
+.modal form div input,
+.modal form div label {
+    width: 100%;
+}
+
+.modal form button {
+    width: 48%;
+    margin-right: 4%;
+}
+
+.modal form button:last-child {
+    margin-right: 0;
+}
+
+/* Close Button Styling */
+#closeButtonEdit, #closeButton {
+    background-color: #dc3545;
+    margin-right: 10px;
+}
+
+#closeButtonEdit:hover, #closeButton:hover {
+    background-color: #c82333;
+}
+
+/* Layout Adjustments */
+form input[type="text"], form input[type="number"] {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .modal form {
+        width: 90%;
+        padding: 15px;
+    }
+    .modal form div {
+        width: 100%;
+        margin-right: 0;
+    }
+    .modal form button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.2rem;
+    }
+}

@@ -1,0 +1,107 @@
+.employee-background
+{
+    background-color: #F2D683;
+    
+}
+/* Michael's CSS */
+.sales-tables {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 90%;
+    margin: auto;
+    gap: 20px;
+  }
+
+  .laptop-table {
+    height: 100%;
+    padding-top: 50px;
+  }
+  
+  .sales-tables-stock, .sales-tables-basket {
+    width: 50%;
+  }
+
+  .create-customer, .choose-customer {
+    /* width: 60%; */
+    /* margin: auto; */
+  }
+  
+  .error {
+    color: red;
+    font-style: italic;
+    font-size: small;
+  }
+
+  table, th, td {
+    border: 1px solid;
+  }
+
+  td {
+    background-color: #f5eaac;
+    font-weight: 500;
+  }
+
+  tr:hover td{
+    background-color: #ecbd2e;
+  }
+
+  th {
+    cursor: pointer;
+    user-select: none;
+}
+.sort-icon {
+    font-size: 14px;
+    margin-left: 5px;
+    color: #888;
+}
+
+#click-headers {
+  margin-bottom: 0px;
+  margin-top: 3px;
+}
+
+#laptopTable {
+  width: 90%;
+  border-collapse: collapse;
+}
+
+@media (max-width: 1200px) {
+  #laptopTable {
+    th, tr {
+      padding: 2px;
+    }
+  }}
+
+
+@media (max-width: 1025px) {
+  .sales-tables {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .sales-tables-stock, .sales-tables-basket {
+      width: 90%;
+  }
+
+  .main-container {
+      padding: 0 60px;
+  }
+
+  td, th{
+    padding: 2px;
+  }
+}
+
+.main-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.invoice {
+  padding-top: 10vh;
+}
+
