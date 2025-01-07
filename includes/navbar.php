@@ -4,17 +4,20 @@ if (session_status() === PHP_SESSION_NONE) {
 } ?>
 <div class="sidebar">
 <div id="navbar-accent" class="decoration-bar"></div>
-    <!-- <div class="menu-picture-container"> -->
         <img src="../../Pictures/logo.png" alt="logo" class="menu-picture">
         <div class="underlogo">
             <h2 class="name-txt"><?php echo $_SESSION['user_firstName'] . " " . $_SESSION['user_surname']?></h2>
+            
             <?php
+            // load the login token stored in cookies.
             $token = $_COOKIE['auth_token'];
 
-            // Query the database to verify the token
             $stmt = $myPDO->prepare("SELECT s.staff_id, ut.role_name FROM staff_tokens ut
                                    JOIN staff s ON ut.staff_id = s.staff_id
                                    WHERE ut.token = ?");
+
+            // get the staff id and user role from the token.
+
             $stmt->execute([$token]);
             $user = $stmt->fetch();
             $user_role = '';
@@ -79,54 +82,5 @@ if (session_status() === PHP_SESSION_NONE) {
             ?>
             <li class="bttn-logout"><a href="../login/logout.php">Logout</a></li>
         </ul>
-    <!-- </div> -->
 </div>   
 
-<!-- 
-
-CREATE DYNAMIC NAVBAR BASED ON USER ROLE
-===========================================
-If the user is Employee {
-    Set the '<ul class="menu"> ... </ul> to have only the employee benchmark pages / actions
-} else if {
-    ... and so on...
-}
-
-
-Manager:
-===========
-[|] Employee Details
-[|] Branch Report
-[|] Previous Reports
-[x] Sign Out
-
-Director: 
-===========
-[] Dashboard
-[] Reports
-[x] Sign Out
-
-
-EMPLOYEE:
-==========
-[|] New Sale
-[|] Stock
-[x] Sign Out
-
-ADMIN:
-==========
-[|] Access Users
-[|] Create New User
-[|] Branches
-[x] Sign Out
-
-Stock Manager:
-==============
-[|] Stock View
-[|] Add New Product
-[|] Orders
-[x] Sign Out
-
-* ALL BASED ON MOCKPLUS WIREFRAME { https://rp.mockplus.com/editor/4p5Fn3_WL/kWbvBYf71 } AS OF { 21/11/2024 } *
-
--->

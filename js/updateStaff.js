@@ -1,4 +1,3 @@
-// updateStaff.js
 
 function viewStaff(staffId) {
     var xhr = new XMLHttpRequest();
@@ -29,20 +28,20 @@ function viewStaff(staffId) {
 
                 // Populate the roles dropdown
                 var roleSelect = document.getElementById('role_id');
-                roleSelect.innerHTML = ''; // Clear existing options
+                roleSelect.innerHTML = ''; 
                 roles.forEach(function(role) {
                     var option = document.createElement('option');
                     option.value = role.ID;
                     option.text = role.name;
                     if (role.ID == staff.role_id) {
-                        option.selected = true; // Set the current role as selected
+                        option.selected = true; 
                     }
                     roleSelect.appendChild(option);
                 });
 
                 // Populate the branches dropdown
                 var branchSelect = document.getElementById('branch_id');
-                branchSelect.innerHTML = ''; // Clear existing options
+                branchSelect.innerHTML = ''; 
                 branches.forEach(function(branch) {
                     var option = document.createElement('option');
                     option.value = branch.ID;
@@ -89,7 +88,7 @@ function saveStaff() {
     xhr.open('POST', '../admin/save_staff.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    // Form data to send to the server
+    // Form data to send to the db
     var data = 'staff_id=' + staffId + 
                '&f_name=' + encodeURIComponent(fName) + 
                '&l_name=' + encodeURIComponent(lName) + 

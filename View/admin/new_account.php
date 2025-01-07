@@ -2,13 +2,10 @@
 include ('../../includes/dbconnect.php');
 include('../../includes/verify_user.php');
 
-// Process the form submission (AJAX)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // Check if all required fields are set
     if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fname']) && isset($_POST['sname']) && isset($_POST['branchId']) && isset($_POST['role'])) {
 
-        // Sanitize and assign POST data
         $email = $_POST["email"];
         $pass = $_POST["password"];
         $fname = $_POST["fname"];
@@ -22,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt_check->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt_check->execute();
         
-        // Fetch the count of emails found
         $emailExists = $stmt_check->fetchColumn();
 
         if ($emailExists > 0) {
@@ -30,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit; // Stop further processing if email exists
         }
 
-        // Proceed with inserting the new user if email is unique
         $sql = "INSERT INTO staff (email, password, f_name, l_name, branch_id, role_id) 
                 VALUES (:email, :password, :firstname, :surname, :branch_id, :role_id)";
         
@@ -42,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':branch_id', $branchId, PDO::PARAM_INT);
         $stmt->bindParam(':role_id', $roleId, PDO::PARAM_INT);
 
-        // Execute the query
         if ($stmt->execute()) {
             echo "Account created successfully!";
         } else {
@@ -136,7 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
 
-        <!-- Submit Button -->
         <button type="submit" class="submit-btn" value="new-user" name="new-user">Submit</button>
     </form>
 </div>

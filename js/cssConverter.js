@@ -1,5 +1,5 @@
 
-
+// Gets user role and applies role-specific classes to navbar.
 function updateCss(role) {
     var accent = document.getElementById('navbar-accent');
     var menu = document.querySelector('ul.nav-menu');

@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 xhr.onload = function() {
                     if (xhr.status === 200) {
-                        console.log('AJAX Response:', xhr.responseText);  // Log the response for debugging
                         alert(xhr.responseText);  // Display response in alert for user feedback
                     } else {
                         console.error('AJAX Error:', xhr.statusText);

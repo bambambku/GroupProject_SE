@@ -2,7 +2,6 @@
 
 
 
-// Add Button Modal
 var modal = document.getElementById("modalWindowBranches");
 
 
@@ -23,14 +22,12 @@ async function updateTable() {
         const branches = await response.json();
         const tableBody = document.querySelector("#branches-table tbody");
         
-        // Remove all existing rows from the table
         tableBody.querySelectorAll('tr').forEach(row => row.remove());
 
         // Loop through each branch in the response
         branches.forEach(branch => {
             const row = document.createElement("tr");
             
-            // Fill in the row with branch data and staff count
             row.innerHTML = `
                 <td>${branch.branch_id}</td>
                 <td>${branch.branch_name}</td>

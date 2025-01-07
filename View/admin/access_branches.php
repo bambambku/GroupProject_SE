@@ -47,7 +47,7 @@ include('../../includes/verify_user.php');
     </thead>
     <tbody>
         <?php
-        // Updated SQL query to get the number of staff per branch
+        // SQL query to get the number of staff per branch
         $sql = "
         SELECT 
             branch.ID, 
@@ -73,7 +73,7 @@ include('../../includes/verify_user.php');
             echo "<td>" . $row['branch_name'] . "</td>";
             echo "<td>" . $row['town'] . "</td>";
             echo "<td>" . $row['post_code'] . "</td>";
-            echo "<td>" . $row['num_staff'] . "</td>"; // Display the number of staff
+            echo "<td>" . $row['num_staff'] . "</td>"; 
             echo "<td>" . 
             "<button id='deleteButton" . $row['ID'] . "' class='delete-button'>Delete</button>" .  
             "</td>";

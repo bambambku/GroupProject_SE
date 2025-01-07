@@ -15,5 +15,6 @@ if (strpos($current_page, 'employee') !== false) {
 } elseif (strpos($current_page, 'admin') !== false) {
     check_role(5);
 }
-
+ // Checks if the role is part of the directory 
+ // to see if the user has access.
 ?>

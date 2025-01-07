@@ -36,14 +36,12 @@ if (isset($_SESSION["user_role"])) {
                         die("Database connection failed: " . implode(":", $myPDO->errorInfo()));
                     }
                   
-                    // Test with a simpler query
                     try {
-                        $sql = "SELECT * FROM Staff WHERE email = :email";  // Adjust column name if needed
+                        $sql = "SELECT * FROM Staff WHERE email = :email";  
                         $stmt = $myPDO->prepare($sql);
                         $stmt->bindParam(':email', $email_address, PDO::PARAM_STR);
                         $stmt->execute();
 
-                        // Checking if the statement prepared properly / isn't empty
                         if ($stmt) {
                             $user = $stmt->fetch(PDO::FETCH_ASSOC);
                             if ($user) {
@@ -53,7 +51,6 @@ if (isset($_SESSION["user_role"])) {
                                     $stmt = $myPDO->prepare("INSERT INTO staff_tokens (staff_id, role_name, token) VALUES (?, ?, ?)");
                                     
 
-                                    // Set the token as a secure cookie
                                     
                                     
 
@@ -114,21 +111,22 @@ if (isset($_SESSION["user_role"])) {
 
 <!-- 
 
-######## Login info - {Delete when submitting} ########
-{This is just for everyone who is testing their pages}
+######## Login info - {ONLY FOR NON-PUBLIC DOMAIN} ########
+{This is just for everyone who is working on / testing their pages}
+    {or for demo usage, wouldn't be kept in deployment}
 
 __________________________________________________________________
 | Email                     | Password | Role          | Role ID |
 ==================================================================
-| lhattersley@terracore.com |   1234   | Employee      |    1    |
+| mobrycki@terracore.com    |   1234   | Employee      |    1    | 
 ------------------------------------------------------------------
-| cstarling@terracore.com   |   1234   | Stock Manager |    2    |
+| jfrancois@terracore.com   |   1234   | Stock Manager |    2    |
 ------------------------------------------------------------------
-| mobrycki@terracore.com    |   1234   | Manager       |    3    |
+| lhattersley@terracore.com |   1234   | Manager       |    3    |
 ------------------------------------------------------------------
 | skovacs@terracore.com     |   1234   | Director      |    4    |
 ------------------------------------------------------------------
-| jfrancois@terracore.com   |   1234   | Admin         |    5    |
+| cstarling@terracore.com   |   1234   | Admin         |    5    |
 ------------------------------------------------------------------
 
 Wireframe Link [ https://rp.mockplus.com/editor/4p5Fn3_WL/2SNRE91EZy ]

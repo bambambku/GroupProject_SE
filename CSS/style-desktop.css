@@ -60,7 +60,7 @@ body
     width: 100%;
     background-color: #7D4B22;
     height: 20px;
-    /* margin-left: 50px; */
+    
 }
 
 
@@ -69,7 +69,7 @@ body
     width: 100%;
     background-color: #1A4A5A;
     height: 20px;
-    /* margin-left: 50px; */
+    
 }
 
 
@@ -78,7 +78,6 @@ body
     width: 100%;
     background-color: #B2BF84;
     height: 20px;
-    /* margin-left: 50px; */
 }
 
 
@@ -87,7 +86,6 @@ body
     width: 100%;
     background-color: #000000;
     height: 20px;
-    /* margin-left: 50px; */
 }
 
 .sidebar-padding{
@@ -101,11 +99,10 @@ body
     color: #333333;
     display: flex;
     flex-direction: column;
-    /* padding-left: 20px; */
   }
   .name-txt
   {
-    margin-block: 0; /* Got rid of the default style here */
+    margin-block: 0; 
   }
 
   .menu-picture 
@@ -117,14 +114,11 @@ body
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);
 
   }
- /* .menu-picture-container
- {
- } */
 
  .job-title-txt
  {
     margin-block-start: 0;
-    margin-block-end: 0; /* Got rid of the default style here */
+    margin-block-end: 0; 
  }
 
  /* Menu css START */
@@ -138,7 +132,6 @@ body
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 20px;
-    /* width: 250px; */
     cursor: pointer;
     text-align: Left;
     background-color: #e3c0b4;
@@ -152,7 +145,7 @@ body
   }
 
 
-  /* admin */
+  /* admin-specific classes */
   .nav-menu.admin-menu li{
     background-color: #148D8D77;
   }
@@ -166,12 +159,12 @@ body
     transition: 0.8s;
   }
 
-  /* employee */
+  /* employee-specific classes */
   .nav-menu li.active_emp{
     background-color: #B86141;
   }
 
-  /* director */
+  /* director-specific classes */
   .nav-menu.dir-menu li{
     background-color: #B2BF8477;
   }
@@ -186,7 +179,7 @@ body
     background-color: #B2BF84;
     transition: 0.8s;
   }
-  /* Stock Manager (sm) */
+  /* Stock Manager-specific classes (sm) */
   .nav-menu.sm-menu li{
     background-color: #893C1877;
   }
@@ -200,7 +193,7 @@ body
     background-color: #893C18;
   }
 
-  /* Manager */
+  /* Manager-specific classes */
   .nav-menu.manager-menu li{
     background-color: #606B7377;
   }

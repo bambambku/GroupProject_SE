@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     if (form) {
         form.addEventListener('submit', function(event) {
-            event.preventDefault();  // Prevent form submission to handle validation
+            event.preventDefault();  
 
             // Get form fields
             
@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 xhr.onload = function() {
                     if (xhr.status === 200) {
-                        console.log('AJAX Response:', xhr.responseText);  // Log the response for debugging
                         alert(xhr.responseText);  // Display response in alert for user feedback
                     } else {
                         console.error('AJAX Error:', xhr.statusText);

@@ -2,13 +2,10 @@
 include ('../../includes/dbconnect.php');
 include('../../includes/verify_user.php');
 
-// Process the form submission (AJAX)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // Check if all required fields are set
     if (isset($_POST['name']) && isset($_POST['address']) && isset($_POST['post_code']) && isset($_POST['town'])) {
 
-        // Sanitize and assign POST data
         $name = $_POST["name"];
         $address = $_POST["address"];
         $post_code = $_POST["post_code"];
@@ -21,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt_check->bindParam(':post_code', $post_code, PDO::PARAM_STR);
         $stmt_check->execute();
         
-        // Fetch the count of branches found
         $branchExists = $stmt_check->fetchColumn();
 
         if ($branchExists > 0) {
@@ -29,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit; // Stop further processing if branch exists
         }
 
-        // Proceed with inserting the new branch if branch is unique
         $sql = "INSERT INTO branch (name, address, post_code, town) 
                 VALUES (:name, :address, :post_code, :town)";
         
@@ -39,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':post_code', $post_code, PDO::PARAM_STR);
         $stmt->bindParam(':town', $town, PDO::PARAM_STR);
 
-        // Execute the query
         if ($stmt->execute()) {
             echo "Branch created successfully!";
         } else {
@@ -95,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
 
-        <!-- Submit Button -->
         <button type="submit" class="submit-btn" value="new-branch" name="new-branch">Submit</button>
     </form>
 </div>

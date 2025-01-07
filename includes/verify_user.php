@@ -1,6 +1,5 @@
 <?php
 
-// Include PDO connection to SQLite
 require_once 'dbconnect.php';
 
 if (isset($_COOKIE['auth_token'])) {
@@ -19,7 +18,7 @@ if (isset($_COOKIE['auth_token'])) {
     if ($user) {
 
         $currentPage = $_SERVER['REQUEST_URI'];
-        
+        // Checks to see if user role is part of the directory
         if (strpos($currentPage, $user['role_name']) === false) {       
             header("Location: ../login/logout.php");
         } 
@@ -31,11 +30,3 @@ if (isset($_COOKIE['auth_token'])) {
     header("Location: ../login/logout.php");
 }
 
-//     } else {
-//         header("Location: ../login/logout.php");
-//         exit;
-//     }
-// } else {
-//     header("Location: ../login/logout.php");
-//     exit;
-// }

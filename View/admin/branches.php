@@ -9,7 +9,7 @@ try {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Switch case for each CRUD operation related to Branches
+// Switch case for each CRUD - Not all complete but a starting point for further development.
 if (!empty($data) && isset($data['action'])) {
     $action = $data['action'];
     try {
@@ -115,12 +115,12 @@ if (!empty($data) && isset($data['action'])) {
                 try {
                     $db->beginTransaction();
 
-                    // Before deleting a branch, we need to delete the associated staff records, or you could set foreign key constraints to cascade delete
+                    
                     $stmt = $db->prepare("DELETE FROM staff WHERE branch_id = :branchID");
                     $stmt->bindValue(':branchID', $data['branchID'], PDO::PARAM_INT);
                     $stmt->execute();
 
-                    // Now, delete the branch
+                    // delete the branch
                     $stmt = $db->prepare("DELETE FROM Branch WHERE ID = :branchID");
                     $stmt->bindValue(':branchID', $data['branchID'], PDO::PARAM_INT);
                     $stmt->execute();
