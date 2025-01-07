@@ -30,7 +30,6 @@ include('../../includes/verify_user.php');
 <body class="manager-background">
   <div class="section">
     <h1>User Details</h1>
-    <?php var_dump($_SESSION["branch_id"]);?>
 <table class="table table-striped table-bordered" id="user-table">
     <thead>
         <tr>
