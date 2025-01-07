@@ -65,9 +65,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     break;
                 case "Manager":
                     // Manager-specific navigation
-                    echo "<li class='" . getRoleActiveClass('employee_details.php', 'active_manager') . "'><a href=''>Employee Details</a></li>";
+                    echo "<li class='" . getRoleActiveClass('employee_details.php', 'active_manager') . "'><a href='../manager/viewStaff.php'>Employee Details</a></li>";
                     echo "<li class='" . getRoleActiveClass('branch_report.php', 'active_manager') . "'><a href=''>Branch Report</a></li>";
-                    echo "<li class='" . getRoleActiveClass('previous_reports.php', 'active_manager') . "'><a href=''>Previous Reports</a></li>";
+                    // echo "<li class='" . getRoleActiveClass('previous_reports.php', 'active_manager') . "'><a href=''>Previous Reports</a></li>";
                     break;
                 case "Director":
                     // Director-specific navigation
