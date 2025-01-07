@@ -1,0 +1,66 @@
+<?php
+include ("../../includes/dbconnect.php");
+
+$data = $_GET;
+$branch_id = $data['branch_id'];
+$start_date = $data['start_date'];
+$end_date = $data['end_date'];
+$report = unserialize($data['report']);
+$overall_income = $data['overall_income'];
+$most_sold_product = unserialize($data['most_sold_product']);
+$least_sold_product = unserialize($data['least_sold_product']);
+$top_selling_employee = unserialize($data['top_selling_employee']);
+
+$branch_query = $myPDO->prepare("SELECT name FROM Branch WHERE ID = :branch_id");
+$branch_query->bindValue(':branch_id', $branch_id, PDO::PARAM_INT);
+$branch_query->execute();
+$branch = $branch_query->fetch(PDO::FETCH_ASSOC);
+$branch_name = $branch['name'];
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="..\..\CSS\director.css">
+
+    <title class="dont-print">Print Report</title>
+</head>
+<body>
+    <main class="main-container">
+        <div class="director-content-out">
+            <div class="director-report-wrapper-print">
+                <!-- Using script here to call the print function of the page, hiding buttons and anything that is unrelateable to the page -->
+            <button class="dont-print directorbttn-print " type="button" onclick="window.print();">Print</button>
+                <h2>Report</h2>
+                <p><strong>Branch:</strong> <?php echo htmlspecialchars($branch_name); ?></p>
+                <p><strong>Date:</strong> <?php echo htmlspecialchars($start_date . " - " . $end_date); ?></p>
+                <table class="director-report-tb">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Total Sold</th>
+                        <th>Income</th>
+                    </tr>
+                    <?php foreach ($report as $item): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($item['name']); ?></td>
+                            <td><?php echo htmlspecialchars($item['total_sold']); ?></td>
+                            <td><?php echo htmlspecialchars($item['total_income']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+                <h3>Overall Income: <?php echo htmlspecialchars($overall_income); ?></h3>
+                <?php if ($most_sold_product): ?>
+                    <p>Best Selling Product: <?php echo htmlspecialchars($most_sold_product['name']); ?>, <?php echo htmlspecialchars($most_sold_product['total_sold']); ?> sold</p>
+                <?php endif; ?>
+                <?php if ($least_sold_product): ?>
+                    <p>Least Selling Product: <?php echo htmlspecialchars($least_sold_product['name']); ?>, <?php echo htmlspecialchars($least_sold_product['total_sold']); ?> sold</p>
+                <?php endif; ?>
+                <?php if ($top_selling_employee): ?>
+                    <p>Top Selling Employee: <?php echo htmlspecialchars($top_selling_employee['f_name'] . ' ' . $top_selling_employee['l_name']); ?>, <?php echo htmlspecialchars($top_selling_employee['total_income']); ?> earned</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
