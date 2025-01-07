@@ -84,7 +84,7 @@ include('../../includes/verify_user.php');
             <input type="text" id="l_name" placeholder="Last Name">
             <input type="email" id="email" placeholder="Email" readonly>
             <select id="role_id"></select>
-            <select id="branch_id"></select>
+            <select id="branch_id" disabled></select>
             <button type="button" id="cancelButton" onclick="closePopup()">Cancel</button>
             <button type="button" id="saveButton" onclick="saveStaff()">Save</button>
         </form>
