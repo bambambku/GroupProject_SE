@@ -71,7 +71,7 @@ if (isset($_SESSION["user_role"])) {
                                         header("Location: ../stockManager/productsView.php");
                                     } elseif ($user['role_id'] == 3) {
                                         $stmt->execute([$user['staff_id'], 'manager', $token]);
-                                        header("Location: ../manager/m_home.php");
+                                        header("Location: ../manager/viewStaff.php");
                                     } elseif ($user['role_id'] == 4) {
                                         $stmt->execute([$user['staff_id'], 'director', $token]);
                                         header("Location: ../director/director_home.php");

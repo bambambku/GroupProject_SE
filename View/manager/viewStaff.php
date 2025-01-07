@@ -9,14 +9,15 @@ include('../../includes/verify_user.php');
 <html lang="en-GB">
 
 <head>
-  <title>TerraCore :: Admin</title>
+  <title>TerraCore :: Manager</title>
   <?php include('../../includes/header.php'); ?>
   <?php include ('../../includes/navbar.php'); ?>
   
   <script src="../../js/cssConverter.js"></script>
-  <script>updateCss("Admin");</script>
+  <script>updateCss("Manager");</script>
 
   <link rel="stylesheet" href="../../CSS/style-desktop.css" ">
+  <link rel="stylesheet" href="../../CSS/manager.css" ">
   
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script defer src="../../js/staffActions.js"></script>
@@ -26,9 +27,10 @@ include('../../includes/verify_user.php');
 </head>
 
 
-<body class="admin-background">
+<body class="manager-background">
   <div class="section">
     <h1>User Details</h1>
+    <?php var_dump($_SESSION["branch_id"]);?>
 <table class="table table-striped table-bordered" id="user-table">
     <thead>
         <tr>
@@ -53,7 +55,8 @@ include('../../includes/verify_user.php');
           JOIN 
           branch ON staff.branch_id = branch.ID
           JOIN 
-          role ON staff.role_id = role.ID;
+          role ON staff.role_id = role.ID
+          WHERE staff.branch_id = ". $_SESSION["branch_id"] ." ;
           ";
           $stmt = $myPDO->prepare($sql);
           $stmt->execute();
