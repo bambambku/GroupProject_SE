@@ -1,33 +1,26 @@
-.stock-manager-background
-{
+
+
+/* Stock Manager Background */
+.stock-manager-background {
     background-color: #B9B099;
 }
 
+/* Table Cell Styles */
 td {
     background-color: lightgray;
 }
+
+/* Special Class for Background */
 .special {
     background-color: pink;
 }
 
-/* General Conten Area For S.Manager START */
-/*LEFT*/
-/* B9B099 */
-/*RIGHT*/
-
-/* General Conten Area For S.Manager END */
-
-/* Sales Basket START */
-/* Sales Nasket END */
-
 /* Low Stock Items */
-
 .low-stock {
     color: red;
 }
 
-/* Modal Window CSS (For CRUD Stock Manager) */
-
+/* Modal Window CSS */
 .modal {
     display: none;
     position: fixed;
@@ -41,22 +34,26 @@ td {
     z-index: 1000;
 }
 
+/* Modal Form Styling */
 .modal form {
     background-color: #333;
     color: #fff;
     padding: 20px;
     border-radius: 8px;
-    width: 300px;
+    width: 70%;
+    max-width: 900px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-wrap: wrap;
 }
 
-
+/* Modal Label, Input, and Button Styles */
 .modal form label,
 .modal form input,
 .modal form button {
     display: block;
     width: 100%;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
     color: #954343;
 }
 
@@ -85,4 +82,60 @@ td {
 
 .modal form button:hover {
     background-color: #b55b5b;
+}
+
+.modal form div {
+    width: 48%;
+    margin-right: 4%;
+    margin-bottom: 20px;
+}
+
+.modal form div:nth-child(even) {
+    margin-right: 0;
+}
+
+.modal form div input,
+.modal form div label {
+    width: 100%;
+}
+
+.modal form button {
+    width: 48%;
+    margin-right: 4%;
+}
+
+.modal form button:last-child {
+    margin-right: 0;
+}
+
+/* Close Button Styling */
+#closeButtonEdit, #closeButton {
+    background-color: #dc3545;
+    margin-right: 10px;
+}
+
+#closeButtonEdit:hover, #closeButton:hover {
+    background-color: #c82333;
+}
+
+/* Layout Adjustments */
+form input[type="text"], form input[type="number"] {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .modal form {
+        width: 90%;
+        padding: 15px;
+    }
+    .modal form div {
+        width: 100%;
+        margin-right: 0;
+    }
+    .modal form button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.2rem;
+    }
 }

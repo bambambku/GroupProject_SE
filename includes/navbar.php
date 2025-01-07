@@ -61,7 +61,6 @@ if (session_status() === PHP_SESSION_NONE) {
                     break;
                 case "Stock Manager":
                     // Stock Manager-specific navigation
-                    echo "<li class='" . getRoleActiveClass('stock_view.php', 'active_sm') . "'><a href=''>Stock View</a></li>";
                     echo '<li><a href="#" id="addNewProductBtn">Add New Product</a></li>';
                     break;
                 case "Manager":

@@ -31,34 +31,72 @@ $stmt->execute();
     <div class="general-content-bttn-area">
     </div>
     <div class="general-content-in">
-        <div id="modalWindowProducts" class="modal">
-            <form>
-                <label for="Name">Product name:</label><br>
-                <input type="text" id="productName" name="productName"><br>
-                <label for="Description">Description:</label><br>
-                <input type="text" id="productDescription" name="productDescription"><br>
-                <label for="Price">Price:</label><br>
-                <input type="text" id="productPrice" name="productPrice"><br>
-                <label for="Weight">Weight:</label><br>
-                <input type="text" id="productWeight" name="productWeight"><br>
-                <label for="Size">Size:</label><br>
-                <input type="text" id="productSize" name="productSize"><br>
-                <label for="CPU">CPU:</label><br>
-                <input type="text" id="productCPU" name="productCPU"><br>
-                <label for="GPU">GPU:</label><br>
-                <input type="text" id="productGPU" name="productGPU"><br>
-                <label for="RAM">RAM:</label><br>
-                <input type="text" id="productRAM" name="productRAM"><br>
-                <label for="Hard-Drive">Hard-Drive:</label><br>
-                <input type="text" id="productHard-Drive" name="productHard-Drive"><br>
-                <label for="productStock">Quantity:</label><br>
-                <input type="number" id="productStock" name="productStock"><br>
-                <label for="productBranch">Branch:</label><br>
-                <input type="number" id="productBranch" name="productBranch"><br>
-                <button type="button" id="closeButton">Close</button>
-                <button type="button" id="addButton">Add</button>
-            </form>       
+    <div id="modalWindowProducts" class="modal">
+    <form>
+        <input type="hidden" id="editProductId">
+        
+        <div>
+            <label for="productName">Product name:</label><br>
+            <input type="text" id="productName" name="productName">
         </div>
+        
+        <div>
+            <label for="productDescription">Description:</label><br>
+            <input type="text" id="productDescription" name="productDescription">
+        </div>
+
+        <div>
+            <label for="productPrice">Price:</label><br>
+            <input type="text" id="productPrice" name="productPrice">
+        </div>
+
+        <div>
+            <label for="productWeight">Weight:</label><br>
+            <input type="text" id="productWeight" name="productWeight">
+        </div>
+
+        <div>
+            <label for="productSize">Size:</label><br>
+            <input type="text" id="productSize" name="productSize">
+        </div>
+
+        <div>
+            <label for="productCPU">CPU:</label><br>
+            <input type="text" id="productCPU" name="productCPU">
+        </div>
+
+        <div>
+            <label for="productGPU">GPU:</label><br>
+            <input type="text" id="productGPU" name="productGPU">
+        </div>
+
+        <div>
+            <label for="productRAM">RAM:</label><br>
+            <input type="text" id="productRAM" name="productRAM">
+        </div>
+
+        <div>
+            <label for="productHardDrive">Hard-Drive:</label><br>
+            <input type="text" id="productHardDrive" name="productHardDrive">
+        </div>
+
+        <div>
+            <label for="productStock">Quantity:</label><br>
+            <input type="number" id="productStock" name="productStock">
+        </div>
+
+        <div>
+            <label for="productBranch">Branch:</label><br>
+            <input type="number" id="productBranch" name="productBranch">
+        </div>
+
+        <div>
+            <button type="button" id="closeButton">Close</button>
+            <button type="button" id="addButton">Add</button>
+        </div>
+    </form>       
+</div>
+
         <select id="sortSelect">
         <option value="lowStock">Low Stock</option>
         <option value="priceAsc">Price Ascending</option>
@@ -105,32 +143,55 @@ $stmt->execute();
             </tbody>
         </table>
         <div id="modalWindowProductsEdit" class="modal" style="display: none;">
-        <form>
+    <form>
         <input type="hidden" id="editProductId">
+        <div>
             <label for="editProductName">Product name:</label><br>
-            <input type="text" id="editProductName" name="editProductName"><br>
+            <input type="text" id="editProductName" name="editProductName">
+        </div>
+        <div>
             <label for="editProductDescription">Description:</label><br>
-            <input type="text" id="editProductDescription" name="editProductDescription"><br>
+            <input type="text" id="editProductDescription" name="editProductDescription">
+        </div>
+        <div>
             <label for="editProductPrice">Price:</label><br>
-            <input type="text" id="editProductPrice" name="editProductPrice"><br>
+            <input type="text" id="editProductPrice" name="editProductPrice">
+        </div>
+        <div>
             <label for="editProductWeight">Weight:</label><br>
-            <input type="text" id="editProductWeight" name="editProductWeight"><br>
+            <input type="text" id="editProductWeight" name="editProductWeight">
+        </div>
+        <div>
             <label for="editProductSize">Size:</label><br>
-            <input type="text" id="editProductSize" name="editProductSize"><br>
+            <input type="text" id="editProductSize" name="editProductSize">
+        </div>
+        <div>
             <label for="editProductCPU">CPU:</label><br>
-            <input type="text" id="editProductCPU" name="editProductCPU"><br>
+            <input type="text" id="editProductCPU" name="editProductCPU">
+        </div>
+        <div>
             <label for="editProductGPU">GPU:</label><br>
-            <input type="text" id="editProductGPU" name="editProductGPU"><br>
+            <input type="text" id="editProductGPU" name="editProductGPU">
+        </div>
+        <div>
             <label for="editProductRAM">RAM:</label><br>
-            <input type="text" id="editProductRAM" name="editProductRAM"><br>
+            <input type="text" id="editProductRAM" name="editProductRAM">
+        </div>
+        <div>
             <label for="editProductHardDrive">Hard Drive:</label><br>
-            <input type="text" id="editProductHardDrive" name="editProductHardDrive"><br>
+            <input type="text" id="editProductHardDrive" name="editProductHardDrive">
+        </div>
+        <div>
             <label for="editProductStock">Quantity:</label><br>
-            <input type="number" id="editProductStock" name="editProductStock"><br>
+            <input type="number" id="editProductStock" name="editProductStock">
+        </div>
+        <div>
             <button type="button" id="closeButtonEdit">Close</button>
             <button type="button" id="saveEditButton">Save</button>
-        </form>
         </div>
+    </form>
+</div>
+
     </div>            
 </div>
 </main>
